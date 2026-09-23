@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "haruhime",
-      "description": "osu! skills for Claude: the osu! API v2, tournament content rules and official support, the hinai beatmap mirror, and the @haruhime packages.",
+      "description": "osu! skills for Claude: the osu! API v2, tournament content rules and official support, the hinai beatmap mirror, and the @haruhimemoe packages.",
       "source": "./",
       "category": "development"
     }

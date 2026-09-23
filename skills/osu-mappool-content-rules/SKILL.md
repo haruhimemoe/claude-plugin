@@ -1,6 +1,6 @@
 ---
 name: osu-mappool-content-rules
-description: Use when deciding whether a beatmap may go in a mappool for an officially supported (badged) osu! tournament, reviewing a pool for DMCA or artist-permission problems, or checking pools in code with @haruhime/compliance or omc-api
+description: Use when deciding whether a beatmap may go in a mappool for an officially supported (badged) osu! tournament, reviewing a pool for DMCA or artist-permission problems, or checking pools in code with @haruhimemoe/compliance or omc-api
 ---
 
 # osu! mappool content rules
@@ -29,12 +29,12 @@ Featured Artist tracks (a set with a `track_id`) are always licensed for osu!, e
 
 The wiki's artist table has three groups: **Allowed**, **Allowed, with exceptions** (each with a note; this is where "only Featured Artist tracks" and single-track bans live) and **Disallowed**. Always read the current page: artists opt in and out, and the page shows when that section was last updated.
 
-## In code: `@haruhime/compliance`
+## In code: `@haruhimemoe/compliance`
 
 A dependency-free TypeScript port of [hburn7/omc-api](https://github.com/hburn7/omc-api)'s rules, the engine behind the osu! Mappool Compliance checker and the Tournament Committee's tools. omc-api's own service doesn't take outside callers.
 
 ```ts
-import { evaluateBeatmapset, factsFromOsuBeatmapset, verdictText } from "@haruhime/compliance";
+import { evaluateBeatmapset, factsFromOsuBeatmapset, verdictText } from "@haruhimemoe/compliance";
 
 const facts = factsFromOsuBeatmapset(row.beatmapset); // from GET /api/v2/beatmaps?ids[]=…
 if (facts) {
@@ -72,4 +72,4 @@ if (facts) {
 
 - osu! wiki, [Official tournament support](https://osu.ppy.sh/wiki/en/Tournaments/Official_support), "Eligibility" (page last updated 2025-10-09), checked 2026-09-23.
 - osu! wiki, [Content usage permissions](https://osu.ppy.sh/wiki/en/Rules/Content_usage_permissions) ("Allowed, with exceptions" last updated 2026-02-18), checked 2026-09-23.
-- [@haruhime/compliance](https://github.com/haruhimemoe/compliance) 0.1.0, rules from omc-api `bb356b3` (2026-06-28), checked 2026-09-23.
+- [@haruhimemoe/compliance](https://github.com/haruhimemoe/compliance) 0.1.0, rules from omc-api `bb356b3` (2026-06-28), checked 2026-09-23.
