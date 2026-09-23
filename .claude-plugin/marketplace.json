@@ -1,5 +1,5 @@
 {
-  "$schema": "https://code.claude.com/schemas/marketplace-schema.json",
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "haruhimemoe",
   "description": "osu! tournament and tooling skills from haruhime.moe.",
   "owner": {
@@ -10,7 +10,7 @@
     {
       "name": "haruhime",
       "description": "osu! skills for Claude: the osu! API v2, tournament content rules and official support, mappools and pack keys, the hinai beatmap mirror, haruhime.moe branding, and the @haruhimemoe packages.",
-      "source": "./",
+      "source": "./plugins/haruhime",
       "category": "development"
     }
   ]

@@ -4,7 +4,7 @@ A Claude Code plugin of osu! skills. Skills only: no MCP servers, hooks or comma
 
 ## Writing a skill
 
-- One folder per skill in `skills/`, kebab-case, with `SKILL.md`. The frontmatter `name` equals the folder.
+- One folder per skill in `plugins/haruhime/skills/`, kebab-case, with `SKILL.md`. The frontmatter `name` equals the folder.
 - `description` says only **when** to use the skill, starting with "Use when". Never summarize the skill's steps there.
 - Keep `SKILL.md` under 900 words. Move long tables and endpoint lists to a reference file next to it and link it.
 - Summarize sources in your own words and link to them. Never paste osu! wiki text: it's CC BY-NC.
@@ -12,6 +12,8 @@ A Claude Code plugin of osu! skills. Skills only: no MCP servers, hooks or comma
 - When a skill covers a `@haruhimemoe/*` package, link its README and don't repeat its API. The README is the source of truth.
 - A reference file may copy one of our own docs (like `osu-mappool-data/pack-key-format.md`, from the pool repo) when an agent needs it offline. Say at its top where it comes from, and recopy it when the source changes.
 - Test a new or changed skill: ask a fresh agent the questions the skill should answer, without it and then with it. The skill ships when the "with" answers are right.
-- Every skill has at least one eval case in `evals/<case>/` (a `prompt.md` phrased the way a user would ask, a `skill-fired` grader, and a grader on the answer). Prefer `regex` graders; use `llm` only where wording varies. Grant only `Skill` (plus `Read` when the skill has a reference file the answer needs): with more tools, agents explore the empty workspace or read skill files directly instead of loading the skill. `evals/no-trigger-unrelated` checks that no skill loads for an unrelated request.
-- Run `node scripts/validate.mjs` and `claude plugin validate . --strict` before committing.
-- Run the evals when a skill or its description changes. They call the model on your account: `claude plugin eval . --runs 1 --max-cost-usd 5` while iterating, the default 3 runs before a release.
+- Every skill has at least one eval case in `plugins/haruhime/evals/<case>/` (`scripts/validate.mjs` checks) (a `prompt.md` phrased the way a user would ask, a `skill-fired` grader, and a grader on the answer). Prefer `regex` graders; use `llm` only where wording varies. Grant only `Skill` (plus `Read` when the skill has a reference file the answer needs): with more tools, agents explore the empty workspace or read skill files directly instead of loading the skill. The `no-trigger-*` cases check that no skill loads for unrelated or near-miss requests; negative graders use the same `(?:[\w-]+:)?` prefix pattern as positive ones.
+- Run `node scripts/validate.mjs`, `claude plugin validate . --strict` and `claude plugin validate plugins/haruhime --strict` before committing.
+- Skills describe only what's public: link public sources, never private repos or notes.
+- Keep maintainer-only steps (releasing a package) out of skills; they belong in that package's repo.
+- Run the evals when a skill or its description changes. They call the model on your account: `claude plugin eval plugins/haruhime --runs 1 --max-cost-usd 5` while iterating. Ask the owner before running them, the default 3 runs before a release.

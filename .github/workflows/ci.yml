@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     name: validate skills
@@ -18,12 +22,15 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: .nvmrc
 
-      - name: Validate
+      - name: Validate skills
         run: node scripts/validate.mjs
 
-      # Claude Code's own manifest check (no auth needed). Pinned so a CLI release can't turn CI
-      # red on its own; bump it on purpose.
-      - name: Validate manifests
+      # Claude Code's own checks (no auth needed): the marketplace at the root, then the plugin.
+      # Pinned so a CLI release can't turn CI red on its own; bump it on purpose.
+      - name: Validate marketplace
         run: npx -y @anthropic-ai/claude-code@2.1.280 plugin validate . --strict
+
+      - name: Validate plugin
+        run: npx -y @anthropic-ai/claude-code@2.1.280 plugin validate plugins/haruhime --strict
