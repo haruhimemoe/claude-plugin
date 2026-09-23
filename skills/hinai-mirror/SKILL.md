@@ -17,7 +17,7 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 | Can it be downloaded? | `GET /api/s/{setId}/availability` | `{ id, availability: { download_disabled, more_information }, video, cached }`. `download_disabled: true`: don't try. `null`: unknown, try |
 
 - Ids: pools and `/beatmaps` use **difficulty** ids; downloads use **set** ids (`beatmapset_id`).
-- Covers aren't in the metadata. Build them: `https://assets.ppy.sh/beatmaps/{setId}/covers/{card|list|cover}[@2x].jpg`.
+- Covers aren't in the metadata. Build them from the set id: `coverUrl(setId, "card" | "list" | "cover")` from `@haruhimemoe/osu/shapes`, or by hand, `https://assets.ppy.sh/beatmaps/{setId}/covers/{size}[@2x].jpg`. Same URL whether the metadata came from the mirror or from osu!.
 - Metadata fields match osu!'s beatmap (`difficulty_rating`, `cs`, `ar`, `accuracy` = OD, `drain` = HP, `bpm`, `total_length`, `checksum`, and a `beatmapset` with title, artist, creator). Code that parses osu!'s `/api/v2/beatmaps` rows can parse these.
 - When the mirror doesn't know an id, fall back to the osu! API from your server (`osu-api-v2`).
 
@@ -29,6 +29,16 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 - **Check the bytes:** a real `.osz` is a zip and starts with `PK\x03\x04`. Reject anything else.
 - CORS exposes `retry-after`, `content-disposition`, `x-hinai-request-id` and `x-hinai-forensics`, so browsers can show progress and back off.
 - Debugging: every response has `x-hinai-request-id`, and `x-hinai-forensics` is a ready-made lookup URL for that request. Include both when reporting a problem.
+
+## In code: `@haruhimemoe/hinai`
+
+`bun add @haruhimemoe/hinai zod` (zod 4.0.16+, a peer). It depends on `@haruhimemoe/osu` for the shapes only, so it's safe in browsers. One `createHinaiClient()` has `getBeatmaps(ids, { signal })` (`{ found: Map<id, BeatmapMeta>, missing }`), `getAvailability(setId)` and `downloadSet(setId, { video, signal, onProgress })`, which resolves to a `Blob` and checks the zip signature for you.
+
+- **`userAgent` is for servers.** In a browser it's ignored (pages can't set it, and a custom header would force a CORS preflight), so leave it out there.
+- **Every failure is a `HinaiError`** with `code`, `status`, `retryable`, `retryAfterMs`, `hint` and `requestId`. Retry only when `retryable` is true, waiting `backoffDelayMs(attempt, error.retryAfterMs)`: the mirror's `Retry-After` when it sent one (capped at 60 s), else 1 s, 2 s, 4 s. Stop after a few attempts.
+- **An abort rejects with `signal.reason`**, not a `HinaiError` (and not a generic `AbortError` unless that's what you aborted with). Check `signal.aborted` before treating it as a failure.
+- Metadata and availability time out after 10 s (`timeoutMs`); a download only times out while waiting for headers, then streams as long as it takes.
+- API details: [README](https://github.com/haruhimemoe/hinai#readme).
 
 ## Etiquette
 
@@ -43,8 +53,13 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 - Assuming the mirror covers every map. Some sets are missing or download-disabled; show that, don't fail the whole batch.
 - Trusting a 200 without checking for the zip signature.
 
+## Related
+
+- `osu-api-v2` for maps the mirror doesn't know; `osu-mappool-data` for the pools these ids go in; `haruhimemoe-packages` for the other packages.
+
 ## Sources
 
 - hinai OpenAPI 2.1.23, https://mirror.hinamizawa.ai/api/v1/hinai/openapi.json, checked 2026-09-23.
 - hinai docs, https://mirror.hinamizawa.ai/docs, checked 2026-09-23.
 - packs.haruhime.moe's hinai integration notes (production use), checked 2026-09-23.
+- [@haruhimemoe/hinai README](https://github.com/haruhimemoe/hinai#readme) 0.1.0, checked 2026-09-23.

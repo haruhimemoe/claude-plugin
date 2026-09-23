@@ -22,3 +22,8 @@ jobs:
 
       - name: Validate
         run: node scripts/validate.mjs
+
+      # Claude Code's own manifest check (no auth needed). Pinned so a CLI release can't turn CI
+      # red on its own; bump it on purpose.
+      - name: Validate manifests
+        run: npx -y @anthropic-ai/claude-code@2.1.280 plugin validate . --strict

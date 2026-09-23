@@ -3,7 +3,8 @@
  * @desc Checks every skills/<name>/SKILL.md: frontmatter with `name` equal to the folder and a
  *       `description` that starts with "Use when" and stays under 1024 characters, a body under
  *       the word budget, relative links that resolve, and a "Sources" section with a "checked"
- *       date. Also checks the plugin manifests parse and agree on name and version.
+ *       date. Also checks the plugin manifests parse and agree on name and version, and that
+ *       the README's skill table lists exactly the skills there are.
  *       Run: node scripts/validate.mjs
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
@@ -21,8 +22,10 @@ const fail = (where, message) => errors.push(`${where}: ${message}`);
 
 const plugin = JSON.parse(readFileSync(path.join(ROOT, ".claude-plugin/plugin.json"), "utf8"));
 const market = JSON.parse(readFileSync(path.join(ROOT, ".claude-plugin/marketplace.json"), "utf8"));
-if (!market.plugins?.some((entry) => entry.name === plugin.name)) {
-  fail("marketplace.json", `no plugin named ${plugin.name}`);
+const entry = market.plugins?.find((candidate) => candidate.name === plugin.name);
+if (!entry) fail("marketplace.json", `no plugin named ${plugin.name}`);
+else if (entry.version !== undefined && entry.version !== plugin.version) {
+  fail("marketplace.json", `version ${entry.version} differs from plugin.json's ${plugin.version}`);
 }
 
 const skills = readdirSync(SKILLS, { withFileTypes: true }).filter((entry) => entry.isDirectory());
@@ -62,6 +65,15 @@ for (const { name: dir } of skills) {
     }
   }
 }
+
+// The README's skill table lists every skill, and only those.
+const readme = readFileSync(path.join(ROOT, "README.md"), "utf8");
+const listed = new Set([...readme.matchAll(/^\| `([a-z0-9-]+)` \|/gm)].map((row) => row[1]));
+for (const { name: dir } of skills) {
+  if (!listed.has(dir)) fail("README.md", `skill table has no row for ${dir}`);
+  listed.delete(dir);
+}
+for (const extra of listed) fail("README.md", `skill table lists ${extra}, which has no folder`);
 
 if (errors.length > 0) {
   console.error(errors.join("\n"));
