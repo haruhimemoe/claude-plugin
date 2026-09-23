@@ -17,3 +17,4 @@ A Claude Code plugin of osu! skills. Skills only: no MCP servers, hooks or comma
 - Skills describe only what's public: link public sources, never private repos or notes.
 - Keep maintainer-only steps (releasing a package) out of skills; they belong in that package's repo.
 - Run the evals when a skill or its description changes. They call the model on your account: `claude plugin eval plugins/haruhime --runs 1 --max-cost-usd 5` while iterating. Ask the owner before running them, the default 3 runs before a release.
+- Note every change in `CHANGELOG.md` under `## [Unreleased]`, in the right [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) section.
