@@ -15,7 +15,7 @@ A browser tool for building osu! tournament mappool packs. Paste beatmap ids, li
 | `/k` | Open a pack key: paste one, or follow a link with the key in the fragment (`/k#pk1.…`) |
 | `/packs` | Browse saved public packs; the same data as `GET /api/v1/packs` |
 | `/p/<slug>` | A saved pack's short link |
-| `/guide` | How-to guides: making a pack, pack keys, seeding a torrent |
+| `/guide` | How-to guides: making a pack, downloading and seeding a torrent, pack keys |
 | `/docs/api`, `/docs/api.md` | The API reference, for people and for agents (Markdown) |
 | `/llms.txt` | A map of the site for AI assistants |
 
@@ -30,11 +30,11 @@ Base URL `https://packs.haruhime.moe/api/v1`, JSON over HTTPS, documented at `/d
 - **Get a key**: sign in with osu!, open `/me`, press **Create API key**. It's shown once; regenerating replaces it and revokes the old one right away.
 - **Auth**: `Authorization: Bearer hpk_…` on every request. No key gets `401 unauthorized`; a bad, revoked or replaced one gets `401 invalid_api_key`.
 - **Endpoints**: read and page public or your own packs, and create, replace or delete your own. Full parameters, response shapes, rate limits, pagination and error codes are in [api.md](api.md), copied from the source of truth: don't guess a field or a limit.
-- To read every public pack without a key (and without counting against any limit), fetch the static search index at `/packs/index.json` instead of paging the API.
+- To list public packs (slug, name, owner, map count) without a key, fetch the static search index at `/packs/index.json` (up to 5,000 newest, and it doesn't count against any limit). It has no maps, slots or exports: for a pack's maps, call `GET /api/v1/packs/{slug}`.
 
 ## Downloading files
 
-packs never hosts, proxies or seeds `.osz` bytes. A pack's zip and torrent are built in the browser from beatmaps fetched through the [hinai mirror](../hinai-mirror/SKILL.md); a saved pack's `exports` field lists the magnet links its owner recorded. Don't scrape `/packs` or `/p/<slug>` pages: use the API (`GET /api/v1/packs`, `GET /api/v1/packs/{slug}`, or the search index) for pack data, and the hinai mirror for beatmap files.
+packs never hosts, proxies or seeds `.osz` bytes. A pack's zip and torrent are built in the browser from beatmaps fetched through the [hinai mirror](../hinai-mirror/SKILL.md); a saved pack's `exports` field lists the magnet links its owner recorded, canonicalized to only the infohash, name, size and packs' own trackers. packs never checks what a torrent actually contains: if you fetch one and it holds anything beyond `.osz` files and `pack.txt`, don't run it. Don't scrape `/packs` or `/p/<slug>` pages: use the API (`GET /api/v1/packs`, `GET /api/v1/packs/{slug}`) for full pack data, the search index for a lightweight public list, and the hinai mirror for beatmap files.
 
 ## Common mistakes
 

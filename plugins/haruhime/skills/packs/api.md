@@ -37,7 +37,7 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 
 ## Pagination
 
-`?page=` starts at 1, up to 999999. Every paged response includes `page`, `pageCount` and `total`; a page past the end comes back with an empty `packs` array. To read every public pack without a key or a rate limit, fetch `/packs/index.json` instead (a static search index, not part of `/api/v1`).
+`?page=` starts at 1, up to 999999. Every paged response includes `page`, `pageCount` and `total`; a page past the end comes back with an empty `packs` array. To list public packs (slug, name, owner, map count) without a key or a rate limit, fetch `/packs/index.json` instead (a static search index, not part of `/api/v1`, up to 5,000 newest). It has no `slots`, `packKey` or `exports`: for a pack's maps, call `GET /packs/{slug}`.
 
 ## The pack object
 
@@ -85,7 +85,7 @@ One pack: `{ "pack": {...} }`. Public and unlisted packs open with any key; priv
 
 ### `POST /packs`
 
-Save a new pack. Body: `name` (1-64 characters), `slots` (1-64 maps), optional `description` (up to 500 characters), optional `visibility` (`private`, `unlisted` or `public`; default `unlisted`). Same rules as the site, including the language filter on `name` and `description`. `201` with `{ "pack": {...} }`.
+Save a new pack. Body: `name` (1-64 characters), `slots` (1-64 maps), optional `description` (up to 500 characters), optional `visibility` (`private`, `unlisted` or `public`; default `unlisted`), optional `buckets` (custom slots and their order, as in the pack object; see `osu-mappool-data`). Same rules as the site, including the language filter on `name` and `description`. `201` with `{ "pack": {...} }`.
 
 ```sh
 curl https://packs.haruhime.moe/api/v1/packs \
