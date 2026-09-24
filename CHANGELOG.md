@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Skill `packs`, for building, sharing and downloading osu! mappool packs with packs.haruhime.moe and its API.
+- `packs` covers map usage (`GET /beatmaps/{id}/usage` and `GET /beatmaps/usage`, no key), archive packs and their read-only `archive` field, and the search index's stats, `x`, `xk` and `xu`.
 
 ## [0.1.0] - 2026-09-23
 
