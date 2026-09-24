@@ -2,7 +2,7 @@
 
 # packs API reference
 
-Base URL: `https://packs.haruhime.moe/api/v1`. Every request needs `Authorization: Bearer hpk_…` (a key is `hpk_` plus 43 letters, digits, `-` and `_`), except map usage, which needs none. No CORS headers are sent, by design.
+Base URL: `https://packs.haruhime.moe/api/v1`. Every request needs `Authorization: Bearer hpk_…` (a key is `hpk_` plus 43 letters, digits, `-` and `_`). No CORS headers are sent, by design.
 
 ## Rate limits
 
@@ -10,13 +10,12 @@ Per account unless noted, fixed one-minute (or one-hour) windows:
 
 | Limit | Window | Notes |
 | --- | --- | --- |
-| 60 requests | 1 minute | every `/api/v1` call that needs a key, all methods |
+| 60 requests | 1 minute | every `/api/v1` call, all methods |
 | 10 writes | 1 minute | `POST`/`PUT`/`DELETE`; counts toward the 60 too. Saving, editing or deleting a pack or its magnet links on the site itself counts against the same 10 |
 | 20 failed key attempts | 1 minute | per IP address (an IPv6 /64 counts as one) |
 | 10 new keys | 1 hour | per account, from `/me` |
-| 60 map usage requests | 1 minute | per IP address; no key, and they don't count toward the account's 60 |
 
-Counters start over at the top of each window. Every response carries `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset` (seconds until the window resets); on a `401` these describe the failed-attempt limit for your IP address instead. Map usage answers are the exception: a CDN can answer them from its cache, so they carry `Cache-Control` and no rate-limit headers (a `429` still carries all four). Over a limit: `429` with `Retry-After` in seconds. Wait that long before retrying.
+Counters start over at the top of each window. Every response carries `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset` (seconds until the window resets); on a `401` these describe the failed-attempt limit for your IP address instead. Over a limit: `429` with `Retry-After` in seconds. Wait that long before retrying.
 
 ## Errors
 
@@ -24,7 +23,7 @@ Always `{ "error": { "code": "...", "message": "..." } }`. `code` is stable; `me
 
 | Status | Code | Meaning |
 | --- | --- | --- |
-| 400 | `bad_request` | the body, `page` or a beatmap id isn't valid; the message says what to fix |
+| 400 | `bad_request` | the body or `page` isn't valid; the message says what to fix |
 | 401 | `unauthorized` | no key sent |
 | 401 | `invalid_api_key` | the key is wrong, revoked or replaced |
 | 404 | `not_found` | the pack doesn't exist, or it's private/hidden and not yours (the API doesn't say which) |
@@ -38,7 +37,7 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 
 ## Pagination
 
-`?page=` starts at 1, up to 999999. Every paged response includes `page`, `pageCount` and `total`; a page past the end comes back with an empty `packs` array. To list public packs (slug, name, owner, map count) without a key or a rate limit, fetch `/packs/index.json` instead (a static search index, not part of `/api/v1`, up to 5,000 packs: community packs newest created first, then archive packs newest created first; `t` is when a pack was created, an archive pack's when it was imported). Entries carry stats in short form once known: `r` star rating range, `a` average stars, `l` length range in seconds, `b` BPM range, `m` mods and `g` rulesets (comma-separated), `k` for `complete`. Archive packs also carry `x` (always `1`), `xk` (the source: `otdb`, `otr` or `wybin`) and `xu` (the pool's page there). It has no `slots`, `packKey` or `exports`: for a pack's maps, call `GET /packs/{slug}`.
+`?page=` starts at 1, up to 999999. Every paged response includes `page`, `pageCount` and `total`; a page past the end comes back with an empty `packs` array. To list public packs (slug, name, owner, map count) without a key or a rate limit, fetch `/packs/index.json` instead (a static search index, not part of `/api/v1`, up to 5,000 packs, newest created first; `t` is when a pack was created). Entries carry stats in short form once known: `r` star rating range, `a` average stars, `l` length range in seconds, `b` BPM range, `m` mods and `g` rulesets (comma-separated), `k` for `complete`. It has no `slots`, `packKey` or `exports`: for a pack's maps, call `GET /packs/{slug}`.
 
 ## The pack object
 
@@ -72,7 +71,6 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 - `exports` lists the owner's recorded magnet links, newest first.
 - `hiddenAt` appears only on your own packs, when a moderator hid one.
 - `stats` sums up the pack's maps (see Pack stats). It's worked out a few seconds after a save, so it's missing from the answer to `POST` and to a `PUT` that changes the maps or slots (read the pack again a little later), and from a pack whose stats aren't worked out yet.
-- `archive` appears only on archive packs (past tournament pools, hosted by `haruhime archive`). Read-only: `POST` and `PUT` ignore it.
 
 ### Pack stats
 
@@ -82,49 +80,6 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 - `modes`: the rulesets of its maps (`osu`, `taiko`, `fruits`, `mania`). `count`: the number of maps.
 - `complete`: `false` when a map or a rating with mods couldn't be looked up; the numbers then cover the maps that could, and it's retried later. A map osu! says doesn't exist is left out and doesn't make it `false`. A range is `null` when no map gave a value.
 - `computedAt`: when the stats were worked out.
-
-### Archive packs
-
-```json
-"archive": {
-  "tournament": "osu! World Cup 2023",
-  "round": "Grand Finals",
-  "year": 2023,
-  "badged": null,
-  "fingerprint": "5e0c…",
-  "sources": [
-    { "kind": "otdb", "id": "657", "url": "https://otdb.sheppsu.me/db/mappools/657/", "importedAt": "2026-09-24T12:00:00.000Z" }
-  ]
-}
-```
-
-- `tournament`, `round`, `year`: read from the pool's name at its source; `round` is `null` when the name has no round packs knows, `year` when it has no year.
-- `badged`: whether the tournament was badged; `null` until a source says.
-- `fingerprint`: the pool's identity, a sha256 of its sorted `beatmapId:mods` entries. The same pool from two sources is one pack with two sources; a pool that changed maps is a new pack.
-- `sources`: where the pool came from, first import first: `kind` (`otdb`, `otr` or `wybin`), the pool's `id` there, its `url`, `importedAt`.
-
-## Map usage
-
-Which archive packs used a map. Only public archive packs count; community packs don't.
-
-```json
-{
-  "beatmapId": 129891,
-  "count": 2,
-  "entries": [
-    { "slug": "V1StGXR8_Z", "tournament": "osu! World Cup 2023", "round": "Grand Finals", "year": 2023, "badged": null, "slot": "NM1", "mods": "NM", "fingerprint": "5e0c…" }
-  ]
-}
-```
-
-- `entries`: one per slot the map filled, most recent `year` first, then pools without a year. A pack's page is `https://packs.haruhime.moe/p/` plus its `slug`.
-- `count`: how many pools used the map. A pool with the map in two slots has two entries and counts once.
-- `tournament`, `round`, `year`, `badged`: as in the pack's `archive`.
-- `slot`: the slot label in that pool (`NM1`, `HDHR2`, `TB1`), or just the number for a map without a slot.
-- `mods`: what the slot plays with: a built-in slot's code (`NM`, `HD`, `HR`, `DT`, `FM`, `TB`), a custom slot's forced mods (`HDHR`), `FM` for free mod, `NM` for none and for a map without a slot.
-- `fingerprint`: the pool's fingerprint, as in its pack's `archive`. To show a pool without counting it, leave out the entries whose `fingerprint` is that pool's own.
-
-A map no archive pack used comes back with `count` 0 and no entries, never a 404. Usage changes when pools are imported or a moderator hides or deletes one; answers can be up to an hour old.
 
 ## Endpoints
 
@@ -162,13 +117,5 @@ Replace one of your own packs. Send the whole pack, as for `POST`; leaving out `
 ### `DELETE /packs/{slug}`
 
 Delete one of your own packs. `204`, no body, or `404` if it isn't yours.
-
-### `GET /beatmaps/{id}/usage`
-
-The archive pools one map was used in, in the Map usage shape. `id` is a beatmap (difficulty) id. No key.
-
-### `GET /beatmaps/usage`
-
-The same for up to 100 maps: `?ids=129891,75`. Each id is answered once, in the order sent: `{ "beatmaps": [...] }`. No key.
 
 The full reference, including the OpenAPI 3.1 document, is at https://packs.haruhime.moe/docs/api and https://packs.haruhime.moe/api/v1/openapi.json.

@@ -9,8 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Skill `packs`, for building, sharing and downloading osu! mappool packs with packs.haruhime.moe and its API.
-- `packs` covers map usage (`GET /beatmaps/{id}/usage` and `GET /beatmaps/usage`, no key), archive packs and their read-only `archive` field, and the search index's stats, `x`, `xk` and `xu`.
-- `packs` covers pack `stats`, the `/packs` filters, sort and pinned packs, Copy ID and "Used in N pools" on pack pages, and the archived pools guide.
+- `packs` covers pack `stats`, the `/packs` filters, sort and pinned packs, and Copy ID on pack pages.
 - Skill `haruhime-ui`, for building a haruhime.moe tool's pages with `@haruhimemoe/ui`: setup, the theme and `--hue`, which component fits a job, client and server components, and accessibility.
 - `llms.txt`, listing every skill with a link to its `SKILL.md`.
 
