@@ -6,6 +6,8 @@ Read [AGENTS.md](AGENTS.md) first: it has the rules for writing and testing a sk
 
 The plugin lives in `plugins/haruhime/` (its manifest, `skills/` and `evals/`). The marketplace manifest and the dev tooling stay at the root, so an install copies only the plugin. One folder per skill under `plugins/haruhime/skills/`, with a `SKILL.md`.
 
+A new or renamed skill also needs a row in the README's skill table and a line in `llms.txt`.
+
 ## Setup
 
 No install step: the scripts use only Node's standard library. Use the Node version in `.nvmrc` (24).

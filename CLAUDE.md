@@ -1,6 +1,3 @@
 @AGENTS.md
 
-# Claude-specific notes
-
-- Never push, tag or publish without the owner's OK.
-- User instructions override this file.
+Follow AGENTS.md above. Don't push, tag or publish, or run `claude plugin eval`, unless you're asked to.

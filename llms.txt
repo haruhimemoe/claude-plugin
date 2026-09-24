@@ -1,0 +1,38 @@
+# haruhime: osu! skills for Claude
+
+> The `haruhime` Claude Code plugin, from the `haruhimemoe` marketplace: skills for building osu! tools. They cover the osu! API v2, the content rules and official support for osu! tournaments, mappool data and pack keys, the hinai beatmap mirror, packs.haruhime.moe and its API, and the `@haruhimemoe/*` npm packages, including the shared UI components and brand kit. Skills only: no MCP server, hooks or commands. Each skill is short and links the source it summarizes. MIT license.
+
+Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin`, then `/plugin install haruhime@haruhimemoe`. Each skill loads on its own when a request matches its description.
+
+## Skills
+
+- [osu-api-v2](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-api-v2/SKILL.md): Calling the osu! API v2: OAuth and scopes, rate limits, beatmaps, beatmapsets, star ratings with mods, and `@haruhimemoe/osu`.
+- [osu-mappool-content-rules](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-mappool-content-rules/SKILL.md): Whether a map may be used in an officially supported (badged) tournament, by hand or with `@haruhimemoe/compliance`.
+- [osu-official-tournament-support](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-official-tournament-support/SKILL.md): Planning a tournament that wants badges and official support: eligibility, screening, badges, tools, and what to send the osu! team.
+- [hinai-mirror](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/hinai-mirror/SKILL.md): Beatmap metadata and `.osz` downloads from mirror.hinamizawa.ai without osu! credentials, by hand or with `@haruhimemoe/hinai`: limits, errors, retries and etiquette.
+- [osu-mappool-data](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-mappool-data/SKILL.md): A mappool in code: slots, custom slots and their mods, pasted pools, and pack keys (`pk1.` to `pk3.`), with `@haruhimemoe/pool` or in another language.
+- [packs](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/packs/SKILL.md): Making, opening, sharing or downloading a mappool pack with packs.haruhime.moe, and its API: keys, endpoints, map usage and archive packs.
+- [haruhimemoe-packages](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhimemoe-packages/SKILL.md): Which `@haruhimemoe/*` package does what (pool, osu, hinai, compliance, ui, brand), where each runs, and installing them.
+- [haruhime-ui](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-ui/SKILL.md): Building a haruhime.moe tool's pages, or another Next.js page, with `@haruhimemoe/ui`: setup, the theme, which component fits, client vs server, accessibility.
+- [haruhime-brand](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-brand/SKILL.md): The wordmark, icons, link preview, README banners and palette for haruhime.moe and its tools, with `@haruhimemoe/brand`.
+
+## Reference files
+
+- [osu-api-v2/client.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-api-v2/client.md): The `@haruhimemoe/osu` client's results, rate budget and errors.
+- [osu-mappool-data/pack-key-format.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-mappool-data/pack-key-format.md): A copy of the pack key spec from `@haruhimemoe/pool`, with every version's byte layout and the decoder rules.
+- [packs/api.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/packs/api.md): The packs API in detail: rate limits, errors, the pack object, stats, archive packs, map usage and every endpoint.
+
+## Related
+
+- [haruhime.moe llms.txt](https://www.haruhime.moe/llms.txt): The haruhime.moe site and its tools.
+- [packs.haruhime.moe llms.txt](https://packs.haruhime.moe/llms.txt): The packs pages, guides, public packs index and API.
+- [haruhimemoe llms.txt](https://github.com/haruhimemoe/.github/blob/main/llms.txt): Every haruhimemoe tool and package.
+- [Component showcase](https://www.haruhime.moe/ui): Every `@haruhimemoe/ui` component in its states.
+
+## Optional
+
+- [README](https://github.com/haruhimemoe/claude-plugin#readme): Install, update and the skill list.
+- [CHANGELOG](https://github.com/haruhimemoe/claude-plugin/blob/main/CHANGELOG.md): What changed in each version.
+- [CONTRIBUTING](https://github.com/haruhimemoe/claude-plugin/blob/main/CONTRIBUTING.md): Layout, checks and evals for contributors.
+- [AGENTS.md](https://github.com/haruhimemoe/claude-plugin/blob/main/AGENTS.md): Conventions for AI agents writing or changing a skill.
+- [SECURITY](https://github.com/haruhimemoe/claude-plugin/blob/main/SECURITY.md): How to report a vulnerability.

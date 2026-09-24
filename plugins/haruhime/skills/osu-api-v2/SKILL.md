@@ -48,7 +48,7 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 
 - **`@haruhimemoe/osu/shapes`** is browser-safe: `BeatmapMeta`, osu!'s row schemas, `coverUrl`, `beatmapUrl`, `userUrl`, `OSU_OAUTH`, `OSU_SIGN_IN_SCOPES`, `toOsuUser`. Client components import from here.
 - **`@haruhimemoe/osu`** adds `createOsuClient` for servers. It holds your client secret: **never import the root entry in browser code.**
-- Before writing code with the client, read [client.md](client.md): what lands in `unchecked` vs `missing`, when a call throws instead, the shared rate budget (`beforeCall`), and `OsuApiError`'s codes.
+- Before writing code with the client, read [client.md](client.md): what lands in `unchecked` vs `missing`, how `getBeatmapsets` keys its sets, when a call throws instead, the shared rate budget (`beforeCall`), and `OsuApiError`'s codes.
 
 ## Common mistakes
 
@@ -68,4 +68,4 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 - osu! API v2 documentation, https://osu.ppy.sh/docs (terms of use, scopes, beatmaps, attributes), checked 2026-09-23.
 - osu! wiki, [osu!api](https://osu.ppy.sh/wiki/en/osu!api), checked 2026-09-23.
 - Production use of these calls at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) 0.1.0, checked 2026-09-23.
+- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) 0.1.0, checked 2026-09-24.

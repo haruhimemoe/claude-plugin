@@ -10,13 +10,13 @@ Per account unless noted, fixed one-minute (or one-hour) windows:
 
 | Limit | Window | Notes |
 | --- | --- | --- |
-| 60 requests | 1 minute | every `/api/v1` call, all methods |
+| 60 requests | 1 minute | every `/api/v1` call that needs a key, all methods |
 | 10 writes | 1 minute | `POST`/`PUT`/`DELETE`; counts toward the 60 too. Saving, editing or deleting a pack or its magnet links on the site itself counts against the same 10 |
 | 20 failed key attempts | 1 minute | per IP address (an IPv6 /64 counts as one) |
 | 10 new keys | 1 hour | per account, from `/me` |
 | 60 map usage requests | 1 minute | per IP address; no key, and they don't count toward the account's 60 |
 
-Every response carries `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset` (seconds until the window resets); on a `401` these describe the failed-attempt limit instead. Map usage answers are the exception: a CDN can answer them from its cache, so they carry `Cache-Control` and no rate-limit headers (a `429` still carries all four). Over a limit: `429` with `Retry-After` in seconds. Wait that long before retrying.
+Counters start over at the top of each window. Every response carries `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset` (seconds until the window resets); on a `401` these describe the failed-attempt limit for your IP address instead. Map usage answers are the exception: a CDN can answer them from its cache, so they carry `Cache-Control` and no rate-limit headers (a `429` still carries all four). Over a limit: `429` with `Retry-After` in seconds. Wait that long before retrying.
 
 ## Errors
 
@@ -53,6 +53,12 @@ A `401` also sends `WWW-Authenticate: Bearer`.
     { "mod": "HD", "index": 1, "beatmapId": 75 }
   ],
   "exports": [],
+  "stats": {
+    "srMin": 2.55, "srMax": 7.81, "srAvg": 5.18,
+    "lenMin": 142, "lenMax": 258, "bpmMin": 120, "bpmMax": 222,
+    "mods": ["NM", "HD"], "modes": ["osu"], "count": 2,
+    "complete": true, "computedAt": "2026-09-22T12:00:05.000Z"
+  },
   "packKey": "pk1.…",
   "ownerName": "player1",
   "createdAt": "2026-09-22T12:00:00.000Z",
@@ -61,12 +67,21 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 ```
 
 - `slots` holds beatmap (difficulty) ids only, by slot. No titles, star ratings or other beatmap data: look those up via the osu! API or a mirror (see `hinai-mirror`).
-- `buckets` appears only when the pack has custom slots or a non-default slot order.
+- `buckets` appears only when the pack has custom slots or a non-default slot order. Custom slots carry their color and mods.
 - `packKey` is the pack's pack key; anyone can open it at `https://packs.haruhime.moe/k#` plus the key.
 - `exports` lists the owner's recorded magnet links, newest first.
 - `hiddenAt` appears only on your own packs, when a moderator hid one.
-- `stats` sums up the pack's maps (star rating, length and BPM ranges, mods, rulesets, count, `complete`, `computedAt`). It's worked out a few seconds after a save, so it's missing from the answer to `POST` and to a `PUT` that changes the maps.
+- `stats` sums up the pack's maps (see Pack stats). It's worked out a few seconds after a save, so it's missing from the answer to `POST` and to a `PUT` that changes the maps (read the pack again a little later), and from a pack whose stats aren't worked out yet.
 - `archive` appears only on archive packs (past tournament pools, hosted by `haruhime archive`). Read-only: `POST` and `PUT` ignore it.
+
+### Pack stats
+
+- `srMin`, `srMax`, `srAvg`: star rating, 2 decimals. A slot that forces EZ, HR, DT, HT or FL counts with its rating with those mods; every other slot (NM, HD, FM, TB, free mod) with the plain rating.
+- `lenMin`, `lenMax` (seconds) and `bpmMin`, `bpmMax`: after DT (1.5 times as fast) and HT (0.75 times).
+- `mods`: the pack's built-in slots (`NM`, `HD`, `HR`, `DT`, `FM`, `TB`) and the mods its custom slots force (`EZ`, `HD`, `HR`, `DT`, `HT`, `FL`; a custom free mod slot counts as `FM`), in that order.
+- `modes`: the rulesets of its maps (`osu`, `taiko`, `fruits`, `mania`). `count`: the number of maps.
+- `complete`: `false` when a map or a rating with mods couldn't be looked up; the numbers then cover the maps that could, and it's retried later. A map osu! says doesn't exist is left out and doesn't make it `false`. A range is `null` when no map gave a value.
+- `computedAt`: when the stats were worked out.
 
 ### Archive packs
 
@@ -83,10 +98,10 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 }
 ```
 
-- `tournament`, `round`, `year`: read from the pool's name at its source; `round` and `year` are `null` when the name has none.
+- `tournament`, `round`, `year`: read from the pool's name at its source; `round` is `null` when the name has no round packs knows, `year` when it has no year.
 - `badged`: whether the tournament was badged; `null` until a source says.
-- `fingerprint`: the pool's identity, a sha256 of its sorted `beatmapId:mods` entries. The same pool from two sources is one pack with two sources.
-- `sources`: where the pool came from, first import first: `kind`, the pool's `id` there, its `url`, `importedAt`.
+- `fingerprint`: the pool's identity, a sha256 of its sorted `beatmapId:mods` entries. The same pool from two sources is one pack with two sources; a pool that changed maps is a new pack.
+- `sources`: where the pool came from, first import first: `kind` (`otdb`, `otr` or `wybin`), the pool's `id` there, its `url`, `importedAt`.
 
 ## Map usage
 
@@ -109,7 +124,7 @@ Which archive packs used a map. Only public archive packs count; community packs
 - `mods`: what the slot plays with: a built-in slot's code (`NM`, `HD`, `HR`, `DT`, `FM`, `TB`), a custom slot's forced mods (`HDHR`), `FM` for free mod, `NM` for none and for a map without a slot.
 - `fingerprint`: the pool's fingerprint, as in its pack's `archive`. To show a pool without counting it, leave out the entries whose `fingerprint` is that pool's own.
 
-A map no archive pack used comes back with `count` 0 and no entries, never a 404. Answers can be up to an hour old.
+A map no archive pack used comes back with `count` 0 and no entries, never a 404. Usage changes when pools are imported or a moderator hides or deletes one; answers can be up to an hour old.
 
 ## Endpoints
 
@@ -131,7 +146,7 @@ One pack: `{ "pack": {...} }`. Public and unlisted packs open with any key; priv
 
 ### `POST /packs`
 
-Save a new pack. Body: `name` (1-64 characters), `slots` (1-64 maps), optional `description` (up to 500 characters), optional `visibility` (`private`, `unlisted` or `public`; default `unlisted`), optional `buckets` (custom slots and their order, as in the pack object; see `osu-mappool-data`). Same rules as the site, including the language filter on `name` and `description`. `201` with `{ "pack": {...} }`.
+Save a new pack. Body: `name` (1-64 characters), `slots` (1-64 maps), optional `description` (up to 500 characters), optional `visibility` (`private`, `unlisted` or `public`; default `unlisted`), optional `buckets` (custom slots and their order, as in the pack object; see `osu-mappool-data`). Same rules as the site, including the slur filter on `name` and `description`. `201` with `{ "pack": {...} }`, without `stats` yet.
 
 ```sh
 curl https://packs.haruhime.moe/api/v1/packs \

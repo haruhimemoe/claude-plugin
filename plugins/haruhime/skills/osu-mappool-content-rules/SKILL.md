@@ -45,13 +45,13 @@ if (facts) {
 
 - `null` from `factsFromOsuBeatmapset` means a compact beatmapset: fetch `GET /api/v2/beatmapsets/{id}`.
 - Verdicts are per **set**. Check each set once, apply the verdict to every difficulty in it.
-- `reason` on a disallowed verdict: `dmca`, `artist`, `fa_only`, `source` or `rightsholder`.
+- `reason`, set on almost every disallowed verdict: `dmca`, `artist`, `fa_only`, `source` or `rightsholder`. A per-track override in the data can leave it out. Branch on `status`.
 - `potential` means a person must read `notes` (markdown) and decide.
 - The package README has the full rule order, reasons and known deviations: https://github.com/haruhimemoe/compliance#readme
 
 ## Limits
 
-- The data is a snapshot (`UPSTREAM.committedAt` in the package). It can lag the wiki. gxxberlol's two banned tracks ("KICKICKICKICKICKICKIKI" and "newb artist rave", added to the wiki on 2026-04-18) aren't in omc's data, so code says ok for them. Igorrr moved to "allowed, with exceptions" on the wiki, but the data still says disallowed, so code refuses his allowed collaborations too. Check the wiki for any verdict you're unsure of.
+- The data is a snapshot (`UPSTREAM.committedAt` in the package). It can lag the wiki. gxxberlol's two banned tracks ("KICKICKICKICKICKICKIKI" and "newb artist rave", added to the wiki on 2026-04-18) aren't in omc's data, so code says ok for them. Mlumìn // SoundWarper (added 2026-02-07, only one track allowed without asking) isn't in the data either, so code says ok for all their tracks. Igorrr moved to "allowed, with exceptions" on the wiki, but the data still says disallowed, so code refuses his allowed collaborations too. MEGAREX tracks are allowed only on a Featured Artist listing, but one that isn't in the data's track list and has no MEGAREX source reads as ok. Check the wiki for any verdict you're unsure of.
 - Tags follow omc-api exactly (comma split), so tools agree with the Tournament Committee's; the `source` field catches most banned sources.
 - A tool's answer is a guide. The Tournament Committee decides.
 - Visual assets (backgrounds, storyboards, videos) follow the same permission rules, but no tool checks them.
@@ -72,4 +72,4 @@ if (facts) {
 
 - osu! wiki, [Official tournament support](https://osu.ppy.sh/wiki/en/Tournaments/Official_support), "Eligibility" (page last updated 2025-10-09), checked 2026-09-23.
 - osu! wiki, [Content usage permissions](https://osu.ppy.sh/wiki/en/Rules/Content_usage_permissions) (the "Allowed, with exceptions" section says last updated 2026-02-18; rows were added after, e.g. gxxberlol on 2026-04-18), checked 2026-09-23.
-- [@haruhimemoe/compliance](https://github.com/haruhimemoe/compliance) 0.1.0, rules from omc-api `bb356b3` (2026-06-28), checked 2026-09-23.
+- [@haruhimemoe/compliance](https://github.com/haruhimemoe/compliance) 0.1.0, rules from omc-api `bb356b3` (2026-06-28), and its README's "Limits", checked 2026-09-24.

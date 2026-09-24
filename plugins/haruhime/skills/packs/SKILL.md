@@ -13,9 +13,10 @@ A browser tool for building osu! tournament mappool packs. Paste beatmap ids, li
 | --- | --- |
 | `/new` | Build a pack: paste ids/links/a pool, edit slots, download or share |
 | `/k` | Open a pack key: paste one, or follow a link with the key in the fragment (`/k#pk1.…`) |
-| `/packs` | Browse saved public packs (community packs, then archive packs: past tournament pools); the same data as `GET /api/v1/packs` |
-| `/p/<slug>` | A saved pack's short link |
-| `/guide` | How-to guides: making a pack, downloading and seeding a torrent, pack keys |
+| `/packs` | Browse public packs: pinned packs on top, then community packs, then archive packs (past tournament pools). Search, filters (star rating, mods, length, BPM, mode, map count, source) and sort |
+| `/p/<slug>` | A saved pack's short link: its maps (each with Copy ID and, when archive pools used it, "Used in N pools"), downloads and magnet links |
+| `/me` | Your saved packs and your API key |
+| `/guide` | How-to guides: making a pack, downloading and seeding a torrent, pack keys, archived pools |
 | `/docs/api`, `/docs/api.md` | The API reference, for people and for agents (Markdown) |
 | `/llms.txt` | A map of the site for AI assistants |
 
@@ -29,9 +30,9 @@ Base URL `https://packs.haruhime.moe/api/v1`, JSON over HTTPS, documented at `/d
 
 - **Get a key**: sign in with osu!, open `/me`, press **Create API key**. It's shown once; regenerating replaces it and revokes the old one right away.
 - **Auth**: `Authorization: Bearer hpk_…` on every request except map usage. No key gets `401 unauthorized`; a bad, revoked or replaced one gets `401 invalid_api_key`.
-- **Endpoints**: read and page public or your own packs, create, replace or delete your own, and look up which archive pools used a map. Full parameters, response shapes, rate limits, pagination and error codes are in [api.md](api.md), copied from the source of truth: don't guess a field or a limit.
+- **Endpoints**: read and page public or your own packs, create, replace or delete your own, and look up which archive pools used a map. Pack objects carry `stats` (star rating, length and BPM ranges, mods, rulesets) a few seconds after a save. Full parameters, response shapes, rate limits, pagination and error codes are in [api.md](api.md), copied from the source of truth: don't guess a field or a limit.
 - **Map usage**: `GET /beatmaps/{id}/usage`, or `GET /beatmaps/usage?ids=` for up to 100 beatmap (difficulty) ids at once, says which archive pools used a map: each entry's pack slug, tournament, round, year, slot, mods and the pool's fingerprint, most recent year first, and `count` in pools. No key: 60 requests a minute per IP address, answered from a CDN cache, so an answer can be up to an hour old.
-- **Archive packs** are past tournament pools (from otdb) hosted by the `haruhime archive` account. Their pack objects carry a read-only `archive` field (tournament, round, year, fingerprint, sources); `POST` and `PUT` ignore it.
+- **Archive packs** are past tournament pools imported from otdb, hosted by the `haruhime archive` account. Their pack objects carry a read-only `archive` field (tournament, round, year, fingerprint, sources); `POST` and `PUT` ignore it.
 - To list public packs (slug, name, owner, map count) without a key, fetch the static search index at `/packs/index.json` (up to 5,000 packs, community packs first, and it doesn't count against any limit). Entries carry stats in short form, and archive packs `x`, `xk` and `xu` (see [api.md](api.md)). It has no maps, slots or exports: for a pack's maps, call `GET /api/v1/packs/{slug}`.
 
 ## Downloading files
@@ -57,4 +58,4 @@ packs never hosts, proxies or seeds `.osz` bytes. A pack's zip and torrent are b
 - packs API reference, https://packs.haruhime.moe/docs/api and https://packs.haruhime.moe/docs/api.md, checked 2026-09-24.
 - Archived pools guide, https://packs.haruhime.moe/guide/archived-pools, checked 2026-09-24.
 - Pack key guide, https://packs.haruhime.moe/guide/pack-key, checked 2026-09-23.
-- Site map for assistants, https://packs.haruhime.moe/llms.txt, checked 2026-09-23.
+- Site map for assistants, https://packs.haruhime.moe/llms.txt, checked 2026-09-24.
