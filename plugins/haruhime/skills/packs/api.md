@@ -71,7 +71,7 @@ A `401` also sends `WWW-Authenticate: Bearer`.
 - `packKey` is the pack's pack key; anyone can open it at `https://packs.haruhime.moe/k#` plus the key.
 - `exports` lists the owner's recorded magnet links, newest first.
 - `hiddenAt` appears only on your own packs, when a moderator hid one.
-- `stats` sums up the pack's maps (see Pack stats). It's worked out a few seconds after a save, so it's missing from the answer to `POST` and to a `PUT` that changes the maps (read the pack again a little later), and from a pack whose stats aren't worked out yet.
+- `stats` sums up the pack's maps (see Pack stats). It's worked out a few seconds after a save, so it's missing from the answer to `POST` and to a `PUT` that changes the maps or slots (read the pack again a little later), and from a pack whose stats aren't worked out yet.
 - `archive` appears only on archive packs (past tournament pools, hosted by `haruhime archive`). Read-only: `POST` and `PUT` ignore it.
 
 ### Pack stats
@@ -146,7 +146,7 @@ One pack: `{ "pack": {...} }`. Public and unlisted packs open with any key; priv
 
 ### `POST /packs`
 
-Save a new pack. Body: `name` (1-64 characters), `slots` (1-64 maps), optional `description` (up to 500 characters), optional `visibility` (`private`, `unlisted` or `public`; default `unlisted`), optional `buckets` (custom slots and their order, as in the pack object; see `osu-mappool-data`). Same rules as the site, including the slur filter on `name` and `description`. `201` with `{ "pack": {...} }`, without `stats` yet.
+Save a new pack. Body: `name` (1-64 characters), `slots` (1-64 maps), optional `description` (up to 500 characters), optional `visibility` (`private`, `unlisted` or `public`; default `unlisted`), optional `buckets` (custom slots and their order, as in the pack object, at most 8 custom slots; see `osu-mappool-data`). Same rules as the site, including the slur filter on `name`, `description` and custom slot names. `201` with `{ "pack": {...} }`, without `stats` yet.
 
 ```sh
 curl https://packs.haruhime.moe/api/v1/packs \
@@ -157,7 +157,7 @@ curl https://packs.haruhime.moe/api/v1/packs \
 
 ### `PUT /packs/{slug}`
 
-Replace one of your own packs. Send the whole pack, as for `POST`; leaving out `description` clears it. Changing the maps, slots or name clears any recorded magnet links (they no longer match). `200` with `{ "pack": {...} }`, or `404` if it isn't yours.
+Replace one of your own packs. Send the whole pack, as for `POST`; leaving out `description` clears it, and leaving out `visibility` makes the pack unlisted. Changing the maps, slots or name clears any recorded magnet links (they no longer match). `200` with `{ "pack": {...} }`, or `404` if it isn't yours.
 
 ### `DELETE /packs/{slug}`
 

@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `osu-api-v2`: `getBeatmapsets` keys its sets by difficulty id, any error status on a `/beatmaps` call throws (not only 429 and 5xx), and bad ids given to the batch lookups never throw.
 - `osu-mappool-content-rules`: the Mlumìn // SoundWarper and MEGAREX gaps in the compliance data, and disallowed verdicts without a `reason`.
 - `haruhime-brand`: adding a product no longer tells you to release a version. Releases are cut by the maintainers.
+- `haruhime-brand`: `brandFiles` and `previewHtml` load the native PNG renderer too, not only `svgToPng` and the CLI.
 
 ## [0.1.0] - 2026-09-23
 
@@ -34,5 +35,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `haruhimemoe` marketplace; install with `/plugin install haruhime@haruhimemoe`.
 - A `claude plugin eval` suite with a case for every skill and near-miss negatives.
 
-[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/haruhimemoe/claude-plugin/releases/tag/v0.1.0
+[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/f73398f844d71f60ebedf5d89ec648c29bdb9f7d...HEAD
+[0.1.0]: https://github.com/haruhimemoe/claude-plugin/tree/f73398f844d71f60ebedf5d89ec648c29bdb9f7d

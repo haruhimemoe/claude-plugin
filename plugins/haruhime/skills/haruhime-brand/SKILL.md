@@ -62,7 +62,7 @@ wordmarkSvg(PRODUCTS.pools, { background: "light" });
 bannerSvg(PRODUCTS.haruhime, { background: "light" });
 ```
 
-Importing the package doesn't load the native PNG renderer; only `svgToPng` (and the CLI) does, so palettes and SVGs work even where it isn't installed. Still, keep it to build time and Node 22.12+, never a browser or edge runtime. A hue outside 0–359 throws `RangeError` in `palette` and every drawing function, and so does a name that isn't lowercase `a-z0-9-` starting with a letter in `brandFiles`. The bundled fonts are subset to printable ASCII. Any other character (accents, CJK, tabs, non-breaking spaces) throws instead of drawing a blank box, so names, marks and taglines stay ASCII.
+Importing the package doesn't load the native PNG renderer; only `svgToPng`, `brandFiles`, `previewHtml` and the CLI do, so palettes and SVGs work even where it isn't installed. Still, keep it to build time and Node 22.12+, never a browser or edge runtime. A hue outside 0–359 throws `RangeError` in `palette` and every drawing function, and so does a name that isn't lowercase `a-z0-9-` starting with a letter in `brandFiles`. The bundled fonts are subset to printable ASCII. Any other character (accents, CJK, tabs, non-breaking spaces) throws instead of drawing a blank box, so names, marks and taglines stay ASCII.
 
 ## Adding a product
 

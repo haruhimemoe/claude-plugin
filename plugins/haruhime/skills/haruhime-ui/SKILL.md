@@ -56,7 +56,7 @@ A tool's favicon, wordmark files and link preview image come from `@haruhimemoe/
 - Import everything from `@haruhimemoe/ui`, in Server and Client Components alike.
 - The client components are `CopyButton`, `Chip`, `ChipGroup`, `RangeSlider` and `FilterPanel`. Each file carries its own `"use client"`. Everything else is server-safe.
 - A Server Component can't pass a function to a Client Component. Callback props (`onChange`, `onPressedChange`, `onClear`) must come from your own `"use client"` file that holds the state, like a `PackFilters` component. Plain data (`CopyButton`'s `text`, `Chip`'s `pressed`) works from a Server Component. `Pagination` takes a function (`hrefFor`) but is a Server Component, so that's fine anywhere.
-- `SiteHeader` and `NavLinks` are Server Components with a small client list that sets `aria-current`, and they keep tailwind-merge out of the browser (0.2.0 and later). In 0.1.0 `NavLinks` is a client component, so the nav always hydrates.
+- `SiteHeader` and `NavLinks` are Server Components (0.2.0 and later). A small client list sets `aria-current`, only when a link can be the current page: with only external or text-only links, nothing in the nav hydrates. Rendered from a Server Component, they keep tailwind-merge out of the browser. Inside a Client Component (a header with a menu toggle), they merge classes in the browser, so tailwind-merge ships in that page's bundle. In 0.1.0 `NavLinks` is a client component, so the nav always hydrates.
 - Every component takes its element's native props. `ref` is a normal prop (React 19). `className` is merged last with tailwind-merge and wins on conflict: `<Select className="w-auto">` drops the built-in `w-full`.
 
 ## Accessibility
@@ -72,7 +72,8 @@ The package's tests run axe-core (WCAG 2.0 to 2.2, A and AA) on every component 
 
 ## Common mistakes
 
-- No `postcss.config.mjs`, or no theme import: the components render unstyled, with no build error.- Passing `onChange` or `onClear` from a Server Component page.
+- No `postcss.config.mjs`, or no theme import: the components render unstyled, with no build error.
+- Passing `onChange` or `onClear` from a Server Component page.
 - Using it outside Next.js 16 or with Tailwind 3. It needs `next/link` and `next/navigation`.
 - Hex colors or a new palette in app CSS. Use the tokens and `--hue`.
 
