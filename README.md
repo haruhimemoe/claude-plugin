@@ -1,6 +1,6 @@
 # haruhime: osu! skills for Claude
 
-A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills for building osu! tools: the osu! API v2, the rules for officially supported tournaments, the hinai beatmap mirror, and the `@haruhimemoe/*` packages.
+A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills for building osu! tools: the osu! API v2, the rules for officially supported tournaments, the hinai beatmap mirror, the packs.haruhime.moe pack builder, and the `@haruhimemoe/*` packages.
 
 Skills only. No MCP server, no hooks, no commands. Each skill is short and points at the source it summarizes (the osu! wiki, the osu! API docs, a package README) so it stays true when those change.
 
@@ -20,6 +20,7 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | `osu-official-tournament-support` | Planning a tournament that wants badges and official support: eligibility, screening, badges, what to send the osu! team. |
 | `hinai-mirror` | Getting beatmap metadata or `.osz` downloads from mirror.hinamizawa.ai, by hand or with `@haruhimemoe/hinai`. |
 | `osu-mappool-data` | Modeling a mappool in code: slots, custom slots and their mods, pasted pools, and pack keys (`pk1.`…), with `@haruhimemoe/pool` or in another language. |
+| `packs` | Making, opening, sharing or downloading a mappool pack with packs.haruhime.moe, by hand or through its API. |
 | `haruhimemoe-packages` | Building on the `@haruhimemoe/*` packages: which one does what, what runs in the browser, edge or build, and installing them. |
 | `haruhime-brand` | Giving a haruhime.moe tool its wordmark, icons, link preview and palette with `@haruhimemoe/brand`. |
 
