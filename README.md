@@ -23,12 +23,22 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | `haruhimemoe-packages` | Building on the `@haruhimemoe/*` packages: which one does what, what runs in the browser, edge or build, and installing them. |
 | `haruhime-brand` | Giving a haruhime.moe tool its wordmark, icons, link preview and palette with `@haruhimemoe/brand`. |
 
-## Develop
+## Update
 
-- The plugin lives in `plugins/haruhime/` (its manifest, `skills/` and `evals/`); the marketplace manifest and the dev tooling stay at the root, so installs copy only the plugin.
-- One folder per skill under `plugins/haruhime/skills/`, with a `SKILL.md`. See [AGENTS.md](AGENTS.md) for the rules.
-- `node scripts/validate.mjs` checks the frontmatter, word budget, links, sources and this README's skill table. `claude plugin validate . --strict` and `claude plugin validate plugins/haruhime --strict` check the manifests. CI runs all three.
-- `plugins/haruhime/evals/` is a [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) suite: realistic questions per skill, graded on whether the skill loaded and the answer has the facts, against a no-plugin baseline. It uses your Claude account, so CI doesn't run it: `claude plugin eval plugins/haruhime --runs 1 --max-cost-usd 5`.
+```sh
+/plugin marketplace update haruhimemoe
+/plugin update haruhime@haruhimemoe
+```
+
+Restart Claude Code to load the new version.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
