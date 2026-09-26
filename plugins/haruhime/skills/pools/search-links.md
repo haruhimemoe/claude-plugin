@@ -9,7 +9,7 @@ Base: `https://pools.haruhime.moe/search`. The query string is the whole search:
 - A value that can't be read counts as unset, never an error. The one exception is `map` on the pools tab: a value that isn't a beatmap ID or link shows an error.
 - Params that don't belong to the search are ignored (`status` on a played-in-pools search, say).
 - `q` is trimmed and cut to 100 characters. On the pools and played-in-pools searches every word must appear in the text it's matched against; all-maps passes it to the mirror.
-- `page` is a whole number from 1; anything past 200 reads as 200. 50 results a page.
+- `page` counts from 1, and a page past 200 reads as 200. An unreadable page reads as 1. 50 results a page.
 - On the pools and played-in-pools searches, a row missing a value a range filters on is left out, and the page says how many.
 
 ## Which search
@@ -48,7 +48,7 @@ Write `low-high`, `low-` (no top) or `-high` (no bottom). A bare number (`sr=6`,
 | --- | --- |
 | `q` | Tournament, round or pool name |
 | `year`, `maps` | Ranges |
-| `sr` | A range; matches pools whose star range overlaps it (pools with every map's stars known) |
+| `sr` | A range; matches pools whose star range overlaps it. Only pools with every map's stars, length and BPM known can match; the rest count as missing data |
 | `badged` | `yes`, `no` or `unknown` (unset for any). The page shows the filter only once some pools' badged is known |
 | `map` | A beatmap ID or difficulty link the pool contains, up to 200 characters |
 | `sort` | `year` (default, newest first), `name` (A to Z), `maps` (most maps) |

@@ -5,7 +5,7 @@ description: Use when someone looks for past osu! tournament mappools or the tou
 
 # pools (pools.haruhime.moe)
 
-A site of past osu! tournament mappools, in beta: things can move, and some pools are still missing. Pools come from several places: some past pools from otdb's public export (by Sheppsu, with his permission), pools sent by tournament hosts, and community submissions, with more to come. Each pool page names its sources. Never say the pools all come from otdb.
+A site of past osu! tournament mappools, in beta: things can move, and some pools are still missing. Pools come from several places: some past pools from otdb's public export (by Sheppsu, with his permission), pools sent by tournament hosts, and community submissions, and maybe more sources later. Each pool page names its sources. Never say the pools all come from otdb.
 
 Visitors only read: only admins sign in, with osu!. pools never hosts beatmap files, and every star rating on it is without mods.
 
@@ -48,7 +48,7 @@ Every param, value and bound: [search-links.md](search-links.md).
 
 ## Open in packs
 
-Every pool is published on packs.haruhime.moe as a plain pack owned by `haruhime pools`. **Open in packs** on a pool page opens it there (its `/p/<slug>` page, or `/k#` with its pack key), where maps download from the mirror straight to the browser. See `packs`.
+Every pool is published on packs.haruhime.moe as a plain pack owned by `haruhime pools`. **Open in packs** on a pool page opens it there (its `/p/<slug>` page while packs lists it, else `/k#` with its pack key), where maps download from the mirror straight to the browser. See `packs`.
 
 ## Sending a pool
 
