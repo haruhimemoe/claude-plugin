@@ -1,6 +1,6 @@
 ---
 name: osu-api-v2
-description: Use when writing code that calls the osu! API v2 (osu.ppy.sh/api/v2) or imports @haruhimemoe/osu, including its browser-safe /shapes types, links and cover image URLs in client components; setting up "sign in with osu!" OAuth or scopes; fetching beatmaps, beatmapsets or star ratings with mods; or deciding how often a tool may call osu!
+description: Use when writing code that calls the osu! API v2 (osu.ppy.sh/api/v2) or imports @haruhimemoe/osu, including its browser-safe /shapes types, links and cover image URLs in client components or its /collections reader and writer for osu!stable's collection.db; setting up "sign in with osu!" OAuth or scopes; fetching beatmaps, beatmapsets or star ratings with mods; or deciding how often a tool may call osu!
 ---
 
 # osu! API v2
@@ -44,10 +44,11 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 
 ## In code: `@haruhimemoe/osu`
 
-`bun add @haruhimemoe/osu zod` (zod 4.0.16+, a peer). Two entry points:
+`bun add @haruhimemoe/osu zod` (zod 4.0.16+, a peer). Three entry points:
 
 - **`@haruhimemoe/osu/shapes`** is browser-safe: `BeatmapMeta`, osu!'s row schemas, `coverUrl`, `beatmapUrl`, `userUrl`, `OSU_OAUTH`, `OSU_SIGN_IN_SCOPES`, `toOsuUser`. Client components import from here.
-- **`@haruhimemoe/osu`** adds `createOsuClient` for servers. It holds your client secret: **never import the root entry in browser code.**
+- **`@haruhimemoe/osu/collections`** is browser-safe and doesn't load zod: `readCollectionDb` and `writeCollectionDb` for osu!stable's `collection.db`, `addToCollection`, and `lazerImportFiles` for osu!lazer's setup wizard import. A collection lists difficulty MD5s (`BeatmapMeta.checksum`), not ids. The README's "Collections" section has the rules and error codes.
+- **`@haruhimemoe/osu`** adds `createOsuClient` for servers and re-exports the other two. It holds your client secret: **never import the root entry in browser code.** Typechecking it needs TypeScript 5.7 or later (or `skipLibCheck`).
 - Before writing code with the client, read [client.md](client.md): what lands in `unchecked` vs `missing`, how `getBeatmapsets` keys its sets, when a call throws instead, the shared rate budget (`beforeCall`), and `OsuApiError`'s codes.
 
 ## Common mistakes
@@ -68,4 +69,4 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 - osu! API v2 documentation, https://osu.ppy.sh/docs (terms of use, scopes, beatmaps, attributes), checked 2026-09-23.
 - osu! wiki, [osu!api](https://osu.ppy.sh/wiki/en/osu!api), checked 2026-09-23.
 - Production use of these calls at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) 0.1.0, checked 2026-09-24.
+- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) 0.2.0, checked 2026-09-25.

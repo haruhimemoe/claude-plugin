@@ -62,4 +62,4 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 - hinai OpenAPI 2.1.23, https://mirror.hinamizawa.ai/api/v1/hinai/openapi.json, checked 2026-09-24.
 - hinai docs, https://mirror.hinamizawa.ai/docs and https://mirror.hinamizawa.ai/llms.txt ("Integration" and "Downloads"), checked 2026-09-24.
 - Production use of the mirror at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/hinai README](https://github.com/haruhimemoe/hinai#readme) 0.1.0, checked 2026-09-24.
+- [@haruhimemoe/hinai README](https://github.com/haruhimemoe/hinai#readme) 0.2.0, checked 2026-09-25.

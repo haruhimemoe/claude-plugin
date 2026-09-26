@@ -10,5 +10,5 @@
 - `OsuApiError` has `code` (`timeout`, `network`, `bad_response`, `http_error`, `budget`; later versions may add codes), `status` (null without a response), `retryAfterMs` (from `Retry-After` on 429/503, capped at 60 s) and `cause`. A refused `getStarRating` rejects with code `budget`.
 - Other errors: a bad `getStarRating` id, `fallbackLimit`, `timeoutMs` or `baseUrl` throws `RangeError`; bad credentials or `userAgent` throw `TypeError`. Bad ids given to `getBeatmaps` or `getBeatmapsets` never throw: `getBeatmaps` puts them in `missing`, and `getBeatmapsets` leaves them out of both lists.
 - `baseUrl` receives your client secret (token requests go there too). Point it only at osu! or a local test server; it refuses plain http except on `localhost` and `127.0.0.1`.
-- TypeScript needs `moduleResolution` `node16`, `nodenext` or `bundler` to resolve `@haruhimemoe/osu/shapes`, and the `DOM` lib or `@types/node`.
+- TypeScript needs `moduleResolution` `node16`, `nodenext` or `bundler` to resolve `@haruhimemoe/osu/shapes` and `/collections`, and the `DOM` lib or `@types/node`. The root entry re-exports `/collections`, whose types need TypeScript 5.7 or later: importing even just `createOsuClient` needs 5.7, or `skipLibCheck`.
 - The [README](https://github.com/haruhimemoe/osu#readme) has the full API and a MongoDB budget example.

@@ -6,7 +6,7 @@ Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin
 
 ## Skills
 
-- [osu-api-v2](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-api-v2/SKILL.md): Calling the osu! API v2: OAuth and scopes, rate limits, beatmaps, beatmapsets, star ratings with mods, and `@haruhimemoe/osu`.
+- [osu-api-v2](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-api-v2/SKILL.md): Calling the osu! API v2: OAuth and scopes, rate limits, beatmaps, beatmapsets, star ratings with mods, and `@haruhimemoe/osu`, including its `/collections` reader and writer for osu!stable's `collection.db`.
 - [osu-mappool-content-rules](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-mappool-content-rules/SKILL.md): Whether a map may be used in an officially supported (badged) tournament, by hand or with `@haruhimemoe/compliance`.
 - [osu-official-tournament-support](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-official-tournament-support/SKILL.md): Planning a tournament that wants badges and official support: eligibility, screening, badges, tools, and what to send the osu! team.
 - [hinai-mirror](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/hinai-mirror/SKILL.md): Beatmap metadata and `.osz` downloads from mirror.hinamizawa.ai without osu! credentials, by hand or with `@haruhimemoe/hinai`: limits, errors, retries and etiquette.
