@@ -1,3 +1,5 @@
+<p align="center"><a href="https://github.com/haruhimemoe/claude-plugin"><picture><source media="(prefers-color-scheme: light)" srcset="https://www.haruhime.moe/brand/repos/claude-plugin-banner-on-light.svg"><img alt="haruhime claude-plugin" src="https://www.haruhime.moe/brand/repos/claude-plugin-banner.svg" width="640"></picture></a></p>
+
 # haruhime: osu! skills for Claude
 
 A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills for building osu! tools: the osu! API v2, the rules for officially supported tournaments, the hinai beatmap mirror, the packs.haruhime.moe pack builder, and the `@haruhimemoe/*` packages, including the shared UI components and brand kit.
