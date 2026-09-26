@@ -11,7 +11,7 @@ Small, separate packages, one repo each under github.com/haruhimemoe, shared by 
 | --- | --- | --- |
 | A pool's shape, slots, mods, pasted pools, pack keys (`pk1.`…) | `@haruhimemoe/pool` | anywhere: browsers, servers, Bun, edge runtimes |
 | osu! data shapes (`BeatmapMeta`), links and cover image URLs (`coverUrl`), sign-in endpoints and scopes | `@haruhimemoe/osu/shapes` | browsers and servers |
-| Reading and writing osu!stable's `collection.db`, and the zip osu!lazer imports | `@haruhimemoe/osu/collections` | browsers and servers (no zod) |
+| Reading and writing osu!stable's `collection.db`, and the files osu!lazer's setup wizard imports | `@haruhimemoe/osu/collections` | browsers and servers (doesn't load zod) |
 | Calling the osu! API (beatmaps, sets, star ratings) with your client secret | `@haruhimemoe/osu` | **server only** |
 | Difficulty metadata and `.osz` downloads with no osu! credentials | `@haruhimemoe/hinai` | browsers, workers and servers |
 | Whether a map's music is allowed in a badged tournament (DMCA, restricted artists) | `@haruhimemoe/compliance` | servers, Bun, Deno, browsers (through a bundler) |
@@ -23,7 +23,7 @@ Small, separate packages, one repo each under github.com/haruhimemoe, shared by 
 - **Sign in with osu!:** `OSU_OAUTH`, `OSU_SIGN_IN_SCOPES` and `toOsuUser` from `@haruhimemoe/osu/shapes`; the token exchange runs in your server route (see `osu-api-v2`).
 - **Map metadata in the browser:** `@haruhimemoe/hinai`. The osu! API needs a secret, so browsers never call it; your server does, for maps the mirror doesn't know.
 - **Checking a pool's music:** get each set's fields with `@haruhimemoe/osu` on the server, then `factsFromOsuBeatmapset` and `evaluateBeatmapset` from `@haruhimemoe/compliance` (see `osu-mappool-content-rules`).
-- **Adding maps to a player's osu! collections:** `@haruhimemoe/osu/collections`, in the page, so the player's file never reaches your server (see `osu-api-v2`).
+- **Adding maps to a player's osu! collections:** `@haruhimemoe/osu/collections`, in the page: the player's file never has to reach your server (see `osu-api-v2`).
 - **Sharing a pool:** `encodePackKey` / `decodePackKey` from `@haruhimemoe/pool` (see `osu-mappool-data`).
 - **A tool's pages:** `@haruhimemoe/ui`. Add `@import "@haruhimemoe/ui/theme.css";` after `@import "tailwindcss";` in the global stylesheet, and set `--hue` to the product's hue (see `haruhime-ui`).
 - **Branding a new app:** `bunx haruhime-brand <product>` (see `haruhime-brand`).
