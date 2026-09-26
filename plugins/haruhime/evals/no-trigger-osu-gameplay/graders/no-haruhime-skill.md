@@ -1,7 +1,7 @@
 ---
 type: tool_used
 tool: Skill
-input_match: '"skill"\s*:\s*"(?:[\w-]+:)?(?:osu-|hinai-|haruhime|packs)'
+input_match: '"skill"\s*:\s*"(?:[\w-]+:)?(?:osu-|hinai-|haruhime|packs|pools)'
 min: 0
 max: 0
 arm: both

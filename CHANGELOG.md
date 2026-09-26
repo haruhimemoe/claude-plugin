@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `packs` covers the "Add to osu! collection" card on `/new`, `/k` and `/p/<slug>`: the osu!stable `collection.db` flow, the osu!lazer zip for the setup wizard import, and that the file stays in the browser.
 - Skill `haruhime-ui`, for building a haruhime.moe tool's pages with `@haruhimemoe/ui`: setup, the theme and `--hue`, which component fits a job, client and server components, and accessibility.
 - `llms.txt`, listing every skill with a link to its `SKILL.md`.
+- Skill `pools`, for pools.haruhime.moe (in beta): past tournament pools from otdb, tournament hosts and community submissions, searching pools and every osu! map (Check first, Unranked and explicit maps), search and map history links with the old-links rule, the check, Open in packs, sending a pool, and that there's no public API. `pools/search-links.md` lists every search param, and an eval case covers it.
 - A README banner, and the haruhime.moe Discord server wherever the docs list help (README, CONTRIBUTING, SECURITY and `llms.txt`).
 
 ### Changed
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhimemoe-packages` covers `@haruhimemoe/ui` (the theme import, Next.js 16 only) next to pool, osu, hinai, compliance and brand, and says where each package runs.
 - `osu-api-v2` and `haruhimemoe-packages` cover `@haruhimemoe/osu` 0.2.0 and its browser-safe `/collections` entry point (osu!stable's `collection.db` and the osu!lazer import), and keep hinai 0.2.x with osu 0.2.x.
 - `packs` says pools.haruhime.moe is in beta and gets its pools from tournament hosts, community submissions and sources like otdb.
+- The plugin description, README and `llms.txt` cover pools.haruhime.moe, and the `no-trigger-*` evals fail if `pools` loads.
 - `haruhime-ui` covers ui 0.3.0: `DiscordIcon` and `SiteFooter`'s `discordHref`.
 - `hinai-mirror` and `haruhimemoe-packages` checked against hinai 0.2.0.
 - `haruhime-brand` covers brand 0.3.0: the parent haruhime brand, README banners and the 11 files the CLI writes. Sites take the palette tokens from `@haruhimemoe/ui`'s `theme.css`.
