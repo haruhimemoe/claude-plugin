@@ -80,4 +80,4 @@ The package's tests run axe-core (WCAG 2.0 to 2.2, A and AA) on every component 
 ## Sources
 
 - [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#readme) 0.3.0, checked 2026-09-25.
-- Component showcase, https://www.haruhime.moe/ui (running 0.1.0), checked 2026-09-25.
+- Component showcase, https://www.haruhime.moe/ui (running 0.3.0), checked 2026-09-26.
