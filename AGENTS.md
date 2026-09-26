@@ -24,11 +24,13 @@ A Claude Code plugin of osu! skills. Skills only: no MCP servers, hooks or comma
 - Every skill has at least one eval case in `plugins/haruhime/evals/<case>/` (`scripts/validate.mjs` checks) (a `prompt.md` phrased the way a user would ask, a `skill-fired` grader, and a grader on the answer). Prefer `regex` graders; use `llm` only where wording varies. Grant only `Skill` (plus `Read` when the skill has a reference file the answer needs): with more tools, agents explore the empty workspace or read skill files directly instead of loading the skill. The `no-trigger-*` cases check that no skill loads for unrelated or near-miss requests; negative graders use the same `(?:[\w-]+:)?` prefix pattern as positive ones.
 - Adding, renaming or removing a skill: update the skill table in `README.md` (`scripts/validate.mjs` checks it), the list in `llms.txt`, and the manifests' description when the plugin's scope changes.
 - Skills describe only what's public: link public sources, never private repos or notes.
+- pools.haruhime.moe is in beta. It gets pools from tournament hosts, community submissions and sources like otdb: never say its pools come "from otdb" alone.
 - Keep maintainer-only steps (releasing a package) out of skills; they belong in that package's repo.
 
 ## Checks and changes
 
 - Run `node scripts/validate.mjs`, `claude plugin validate . --strict` and `claude plugin validate plugins/haruhime --strict` before committing.
 - Run the evals when a skill or its description changes. They call the model and bill the account they run on, so ask before running them: `claude plugin eval plugins/haruhime --runs 1 --max-cost-usd 5` while iterating, the default 3 runs before a release.
+- The haruhime.moe Discord server (https://discord.gg/bKy9kjMV4y) goes wherever the docs list help: `README.md`, `CONTRIBUTING.md`, `SECURITY.md` and `llms.txt`.
 - Note every change in `CHANGELOG.md` under `## [Unreleased]`, in the right [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) section. Never edit a released entry.
 - Don't bump the version, tag or publish. Releases are cut by the maintainers.

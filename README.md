@@ -36,6 +36,10 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 
 Restart Claude Code to load the new version.
 
+## Help
+
+Ask questions in the haruhime.moe [Discord server](https://discord.gg/bKy9kjMV4y), and report bugs in [GitHub issues](https://github.com/haruhimemoe/claude-plugin/issues). Report security issues privately, as [SECURITY.md](SECURITY.md) describes.
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).

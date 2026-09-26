@@ -28,10 +28,12 @@ Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin
 - [packs.haruhime.moe llms.txt](https://packs.haruhime.moe/llms.txt): The packs pages, guides, public packs index and API.
 - [haruhimemoe llms.txt](https://github.com/haruhimemoe/.github/blob/main/llms.txt): Every haruhimemoe tool and package.
 - [Component showcase](https://www.haruhime.moe/ui): Every `@haruhimemoe/ui` component in its states.
+- [pools.haruhime.moe](https://pools.haruhime.moe): osu! tournament mappools, in beta, from tournament hosts, community submissions and sources like otdb. It publishes them to packs as packs owned by haruhime pools.
+- [Discord](https://discord.gg/bKy9kjMV4y): The haruhime.moe Discord server, for questions and help.
 
 ## Optional
 
-- [README](https://github.com/haruhimemoe/claude-plugin#readme): Install, update and the skill list.
+- [README](https://github.com/haruhimemoe/claude-plugin#readme): Install, update, the skill list and where to get help.
 - [CHANGELOG](https://github.com/haruhimemoe/claude-plugin/blob/main/CHANGELOG.md): What changed in each version.
 - [CONTRIBUTING](https://github.com/haruhimemoe/claude-plugin/blob/main/CONTRIBUTING.md): Layout, checks and evals for contributors.
 - [AGENTS.md](https://github.com/haruhimemoe/claude-plugin/blob/main/AGENTS.md): Conventions for AI agents writing or changing a skill.
