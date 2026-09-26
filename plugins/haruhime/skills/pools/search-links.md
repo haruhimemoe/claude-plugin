@@ -58,7 +58,7 @@ Write `low-high`, `low-` (no top) or `-high` (no bottom). A bare number (`sr=6`,
 | Param | Values |
 | --- | --- |
 | `q` | Title, artist or mapper, passed to the mirror |
-| `status` | `ranked` (default, includes approved), `loved`, `qualified`, `pending`, `graveyard`, `any` |
+| `status` | `ranked` (default, includes approved), `loved`, `qualified`, `pending`, `graveyard`. One at a time; there is no "any" (an old `status=any` link opens as Ranked) |
 | `sr`, `len`, `bpm` | Ranges |
 | `explicit` | `show` to include explicit maps; they're hidden otherwise |
 

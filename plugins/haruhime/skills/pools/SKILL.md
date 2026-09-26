@@ -34,7 +34,7 @@ Check first and the hidden count are guidance: the osu! Tournament Committee dec
 ## Links
 
 - Pools: `https://pools.haruhime.moe/search?q=…` (no `tab`).
-- All osu! maps: `/search?tab=maps`, plus `status` (`loved`, `qualified`, `pending`, `graveyard` or `any`; none for Ranked), `sr`, `len`, `bpm`, `explicit=show`, `q`.
+- All osu! maps: `/search?tab=maps`, plus `status` (`loved`, `qualified`, `pending` or `graveyard`; none for Ranked), `sr`, `len`, `bpm`, `explicit=show`, `q`.
 - Played in pools: `/search?tab=maps&scope=played`, plus `ar`, `od`, `cs`, `played=HR,DT`, `used`, `last`, `sort`.
 - Ranges are `low-high`, `low-` or `-high`: `sr=6-7`, `bpm=180-`. `len` takes seconds or `m:ss`. Every search takes `page` (1 to 200).
 - **Old links:** `scope` (`all` or `played`) wins when given. Without it, a `tab=maps` link carrying `ar`, `od`, `cs`, `played`, `used`, `last` or `sort` reads as played in pools, anything else as all maps, so links from before the all-maps search still work. Write `scope=played` on every played-in-pools link.
