@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Skill `packs`, for building, sharing and downloading osu! mappool packs with packs.haruhime.moe and its API.
 - `packs` covers pack `stats`, the `/packs` filters, sort and pinned packs, and Copy ID on pack pages.
+- `packs` covers the "Add to osu! collection" card on `/new`, `/k` and `/p/<slug>`: the osu!stable `collection.db` flow, the osu!lazer zip for the setup wizard import, and that the file stays in the browser.
 - Skill `haruhime-ui`, for building a haruhime.moe tool's pages with `@haruhimemoe/ui`: setup, the theme and `--hue`, which component fits a job, client and server components, and accessibility.
 - `llms.txt`, listing every skill with a link to its `SKILL.md`.
 

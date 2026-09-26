@@ -1,6 +1,6 @@
 ---
 name: packs
-description: Use when someone wants to make, open, share or download an osu! mappool pack, mentions packs.haruhime.moe, pack keys (`pk1.`, `pk2.` or `pk3.`), short links (`/p/<slug>`), or the packs API and its API keys (`hpk_…`)
+description: Use when someone wants to make, open, share or download an osu! mappool pack, mentions packs.haruhime.moe, pack keys (`pk1.`, `pk2.` or `pk3.`), short links (`/p/<slug>`), adding a pack's maps to an osu! collection (`collection.db`) from packs, or the packs API and its API keys (`hpk_…`)
 ---
 
 # packs (packs.haruhime.moe)
@@ -16,7 +16,7 @@ A browser tool for building osu! tournament mappool packs. Paste beatmap ids, li
 | `/packs` | Browse public packs: pinned packs on top, then the rest, newest first. Search, filters (star rating, mods, length, BPM, mode, map count) and sort |
 | `/p/<slug>` | A saved pack's short link: its maps (each with Copy ID), downloads and magnet links |
 | `/me` | Your saved packs and your API key |
-| `/guide` | How-to guides: making a pack, downloading and seeding a torrent, pack keys |
+| `/guide` | How-to guides: making a pack, osu! collections, downloading and seeding a torrent, pack keys |
 | `/docs/api`, `/docs/api.md` | The API reference, for people and for agents (Markdown) |
 | `/llms.txt` | A map of the site for AI assistants |
 
@@ -38,6 +38,15 @@ Base URL `https://packs.haruhime.moe/api/v1`, JSON over HTTPS, documented at `/d
 
 packs never hosts, proxies or seeds `.osz` bytes. A pack's zip and torrent are built in the browser from beatmaps fetched through the [hinai mirror](../hinai-mirror/SKILL.md); a saved pack's `exports` field lists the magnet links its owner recorded, canonicalized to only the infohash, name, size and packs' own trackers. packs never checks what a torrent actually contains: if you fetch one and it holds anything beyond `.osz` files and `pack.txt`, don't run it. Don't scrape `/packs` or `/p/<slug>` pages: use the API (`GET /api/v1/packs`, `GET /api/v1/packs/{slug}`) for full pack data, the search index for a lightweight public list, and the hinai mirror for beatmap files.
 
+## osu! collections
+
+The "Add to osu! collection" card on `/new`, `/k` and `/p/<slug>` adds a pack's maps to an osu! collection, by each difficulty's MD5 checksum from the map info the page loaded. It lists the maps it can't add, and why. Maps not downloaded yet show up in osu! once downloaded.
+
+- **osu!stable:** close osu!, pick `collection.db` (next to `osu!.db`), choose a collection or name a new one, and download the whole file with the maps added. Keep a copy of the old file, put the new one in the osu! folder named exactly `collection.db`, then start osu! (it ignores and overwrites a file swapped while it runs).
+- **osu!lazer:** type the collection's exact name and download a zip of `collection.db` and an empty `osu!.import.cfg`. Extract it and import the folder with lazer's setup wizard, Collections only. Desktop only.
+
+The browser reads the file; it's never uploaded or kept. Steps: `/guide/osu-collections`.
+
 ## Common mistakes
 
 - Calling the API from a browser, or shipping a key inside client-side code: there's no CORS, on purpose.
@@ -55,4 +64,5 @@ packs never hosts, proxies or seeds `.osz` bytes. A pack's zip and torrent are b
 
 - packs API reference, https://packs.haruhime.moe/docs/api and https://packs.haruhime.moe/docs/api.md, checked 2026-09-24.
 - Pack key guide, https://packs.haruhime.moe/guide/pack-key, checked 2026-09-23.
+- osu! collections guide, https://packs.haruhime.moe/guide/osu-collections, checked 2026-09-25.
 - Site map for assistants, https://packs.haruhime.moe/llms.txt, checked 2026-09-24.
