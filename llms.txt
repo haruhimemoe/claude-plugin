@@ -22,6 +22,7 @@ Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin
 - [osu-api-v2/client.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-api-v2/client.md): The `@haruhimemoe/osu` client's results, rate budget and errors.
 - [osu-mappool-data/pack-key-format.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-mappool-data/pack-key-format.md): A copy of the pack key spec from `@haruhimemoe/pool`, with every version's byte layout and the decoder rules.
 - [packs/api.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/packs/api.md): The packs API in detail: rate limits, errors, the pack object, stats and every endpoint.
+- [haruhime-ui/components.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-ui/components.md): Which `@haruhimemoe/ui` component fits each job, with the version each one arrived in and which are client components.
 - [pools/search-links.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/pools/search-links.md): The map browser's `?browse=` link and what it shows, every pools.haruhime.moe search param with its values and bounds, the old-links rule, and example links.
 
 ## Related

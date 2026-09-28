@@ -1,13 +1,13 @@
 ---
 name: haruhime-ui
-description: Use when building a haruhime.moe tool's pages or another Next.js page with @haruhimemoe/ui, setting up its Tailwind theme (theme.css, --hue), choosing which of its components fits a job, deciding what needs a Client Component, checking its accessibility, or when its components render unstyled
+description: Use when building a haruhime.moe tool's pages or another Next.js page with @haruhimemoe/ui, setting up its Tailwind theme (theme.css, --hue), choosing which of its components fits a job (confirms, tables, tabs, badges, filters, star ratings), deciding what needs a Client Component, checking its accessibility, or when its components render unstyled
 ---
 
 # @haruhimemoe/ui
 
-React components for the haruhime.moe tools, for **Next.js 16 (app router) only**: the osu!-web-style palette as a Tailwind 4 theme, plus buttons, cards, form fields, filters and the site shell. Every component is shown in its states at https://www.haruhime.moe/ui (the page names the version it runs). The [README](https://github.com/haruhimemoe/ui#readme) lists every prop: read it instead of guessing one.
+React components for the haruhime.moe tools, for **Next.js 16 (app router) only**: the osu!-web-style palette as a Tailwind 4 theme, plus buttons, links, badges, form fields and confirms, filters, tables, osu! beatmap pieces and the site shell. Every component is shown in its states at https://www.haruhime.moe/ui (the page names the version it runs). The [README](https://github.com/haruhimemoe/ui#readme) lists every prop: read it instead of guessing one.
 
-Anything marked "0.2.0 and later" or "0.3.0 and later" needs that version. Check the installed one.
+This covers 0.4.0, the current release. Anything marked with a version (0.2.0, 0.3.0, 0.4.0) isn't in the one before it. Check the installed version.
 
 ## Setup
 
@@ -34,29 +34,22 @@ Tokens: `b1` to `b6` backgrounds (lightest to darkest), `c1` to `c4` text (brigh
 
 ## Which component
 
-| Need | Use |
-| --- | --- |
-| Page frame: skip link, header, `<main>`, footer | `PageShell`, `SiteHeader` (nav links as data), `SiteFooter` (`discordHref` adds a Discord link, 0.3.0 and later); `NavLinks` for your own header |
-| The page's one `<h1>`, lead, meta and actions | `PageHeader` |
-| A panel | `Card` (`headingLevel`, 0.2.0 and later) |
-| Buttons, and links that look like them | `Button`, `ButtonLink`, `buttonClasses` for other elements |
-| Status text | `Notice` (`info`, `warning`, `error`) |
-| Docs, MDX or legal text | `Prose` |
-| Form fields with label, hint and error | `TextInput`, `Textarea`, `Select`, `Checkbox`; `fieldClasses` for a bare control |
-| Copy to clipboard | `CopyButton` |
-| Previous and next page | `Pagination` |
-| schema.org data | `JsonLd` |
-| Filters like osu!'s beatmap listing | `FilterPanel` of `FilterRow`s, with `ChipGroup` (or `Chip`) and `RangeSlider` |
-| Icons | `GitHubIcon`, `DiscordIcon` (0.3.0 and later), `HaruhimeWordmark`, `HaruhimeWordmarkLink` |
+Look for a component before writing markup: [components.md](components.md) maps each job to one. In short:
 
-A tool's favicon, wordmark files and link preview image come from `@haruhimemoe/brand`, not from this package.
+- **Frame:** `PageShell`, `SiteHeader`, `SiteFooter`, `PageHeader`; `LinkTabs` for link tabs and `HeaderMenu` for the account menu (0.4.0).
+- **Content:** `Card`, `Notice`, `Prose`, `JsonLd`; `Badge`, `TextLink`, `Disclosure` and the `Table` primitives (0.4.0).
+- **Actions and forms:** `Button`, `ButtonLink`, `CopyButton`, `Pagination` (button mode 0.4.0), the fields; `AsyncButton`, `InlineConfirm`, `TypeToConfirm` and `RadioGroup` (0.4.0).
+- **Filters:** `FilterPanel`, `FilterRow`, `ChipGroup`, `Chip` (`unavailableReason` 0.4.0), `RangeSlider`; `ChoiceChips` (0.4.0) for one choice.
+- **osu!:** `StarRating`, `BeatmapStats` and `ModBadge` (0.4.0). **Classes:** `cx` (0.4.0).
+
+Never write a `window.confirm()` or a modal for a destructive action: use `InlineConfirm`, or `TypeToConfirm` when it can't be undone. A tool's favicon, wordmark files and link preview image come from `@haruhimemoe/brand`, not from this package.
 
 ## Server and client
 
 - Import everything from `@haruhimemoe/ui`, in Server and Client Components alike.
-- The client components are `CopyButton`, `Chip`, `ChipGroup`, `RangeSlider` and `FilterPanel`. Each file carries its own `"use client"`. Everything else is server-safe.
-- A Server Component can't pass a function to a Client Component. Callback props (`onChange`, `onPressedChange`, `onClear`) must come from your own `"use client"` file that holds the state, like a `PackFilters` component. Plain data (`CopyButton`'s `text`, `Chip`'s `pressed`) works from a Server Component. `Pagination` takes a function (`hrefFor`) but is a Server Component, so that's fine anywhere.
-- `SiteHeader` and `NavLinks` are Server Components (0.2.0 and later). A small client list sets `aria-current`, only when a link can be the current page: with only external or text-only links, nothing in the nav hydrates. Rendered from a Server Component, they keep tailwind-merge out of the browser. Inside a Client Component (a header with a menu toggle), they merge classes in the browser, so tailwind-merge ships in that page's bundle.
+- The client components are `CopyButton`, `Chip`, `ChipGroup`, `RangeSlider`, `FilterPanel` and, from 0.4.0, `AsyncButton`, `InlineConfirm`, `Disclosure`, `ChoiceChips`, `RadioGroup`, `TypeToConfirm` and `HeaderMenu`. Each file carries its own `"use client"`. Everything else is server-safe.
+- A Server Component can't pass a function to a Client Component. Callback props (`onChange`, `onPressedChange`, `onClear`, `onConfirm`, `action`) must come from your own `"use client"` file that holds the state, like a `PackFilters` component. Plain data (`CopyButton`'s `text`, `Chip`'s `pressed`) works from a Server Component. `Pagination` with `hrefFor` is a Server Component, so that's fine anywhere; its button mode (`onPageChange`) is a callback.
+- `SiteHeader` and `NavLinks` are Server Components (0.2.0). A small client list sets `aria-current` only when a link can be the current page.
 - Every component takes its element's native props. `ref` is a normal prop (React 19). `className` is merged last with tailwind-merge and wins on conflict: `<Select className="w-auto">` drops the built-in `w-full`.
 
 ## Accessibility
@@ -66,18 +59,22 @@ The package's tests run axe-core (WCAG 2.0 to 2.2, A and AA) on every component 
 - Give each field a unique `id`: the label, hint and error hang off it. An `error` sets `aria-invalid` and is announced.
 - Inside a `FilterRow`, give `ChipGroup` and `RangeSlider` `hideLabel`, so each row is announced once.
 - A `live` info or warning `Notice` is only reliably announced when its text changes while mounted: keep it mounted, `<Notice live>{saved ? "Saved." : ""}</Notice>`. Error notices are always announced.
-- A `Card` with a `title` is a region landmark. Under another heading, use `headingLevel={3}` (0.2.0 and later).
+- A `Card` with a `title` is a region landmark. Under another heading, use `headingLevel={3}`.
+- A chip that can't be picked right now (EZ while HR is on): `unavailableReason`, not `disabled`, so keyboard users still reach it and hear why.
+- When an `InlineConfirm` removes its own item, move focus somewhere sensible yourself, such as the list's heading.
+- Give a `Table` a `caption` (`hideCaption` when a heading already names it).
 - You write the text: `aria-label` on icon-only buttons, meaningful `label` props, a label on any link around `GitHubIcon` or `DiscordIcon` (they're hidden from screen readers).
 - At a hue other than 333, check contrast and set `--h1-l` or `--h2-l` (Setup, step 4).
 
 ## Common mistakes
 
 - No `postcss.config.mjs`, or no theme import: the components render unstyled, with no build error.
-- Passing `onChange` or `onClear` from a Server Component page.
+- Passing `onChange`, `onConfirm` or `onClear` from a Server Component page.
 - Using it outside Next.js 16 or with Tailwind 3. It needs `next/link` and `next/navigation`.
 - Hex colors or a new palette in app CSS. Use the tokens and `--hue`.
+- Hand-rolling a table, tabs, a badge or a star pill the package has.
 
 ## Sources
 
-- [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#readme) 0.3.0, checked 2026-09-25.
-- Component showcase, https://www.haruhime.moe/ui (running 0.3.0), checked 2026-09-26.
+- [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#readme) and [CHANGELOG](https://github.com/haruhimemoe/ui/blob/main/CHANGELOG.md) 0.4.0, checked 2026-09-28.
+- Component showcase, https://www.haruhime.moe/ui (running 0.4.0), checked 2026-09-28.
