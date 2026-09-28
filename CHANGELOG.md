@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhime-brand`: adding a product no longer tells you to release a version. Releases are cut by the maintainers.
 - `haruhime-brand`: `brandFiles` and `previewHtml` load the native PNG renderer too, not only `svgToPng` and the CLI.
 - `haruhime-brand`: sheets.haruhime.moe isn't live yet, so the product table no longer links it.
+- `packs`: `api.md` is a fresh copy of the live API docs, so it has what had drifted: `description` left out when empty, `ownerName` `Unknown player`, a moderator's hide and the pin on `PUT`, pinned packs not marked by `GET /packs`, and the search index's `s`, `n`, `o`, `c`, `d` and `u` fields. The page list adds `/p/<slug>/edit` and `/brand`.
 
 ## [0.1.0] - 2026-09-23
 
