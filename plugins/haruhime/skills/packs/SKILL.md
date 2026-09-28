@@ -31,7 +31,7 @@ Base URL `https://packs.haruhime.moe/api/v1`, JSON over HTTPS, documented at `/d
 - **Get a key**: sign in with osu!, open `/me`, press **Create API key**. It's shown once; regenerating replaces it and revokes the old one right away.
 - **Auth**: `Authorization: Bearer hpk_…` on every request. No key gets `401 unauthorized`; a bad, revoked or replaced one gets `401 invalid_api_key`.
 - **Endpoints**: read and page public or your own packs, and create, replace or delete your own. Pack objects carry `stats` (star rating, length and BPM ranges, mods, rulesets) a few seconds after a save. Full parameters, response shapes, rate limits, pagination and error codes are in [api.md](api.md), copied from the source of truth: don't guess a field or a limit.
-- Packs whose `ownerName` is `haruhime pools` come from pools.haruhime.moe (in beta), which collects tournament pools from hosts, community submissions and sources like otdb. They're ordinary packs.
+- `ownerName: "haruhime pools"` marks ordinary packs from pools.haruhime.moe (in beta): shared built pools, and past pools from hosts, community submissions and sources like otdb.
 - To list public packs (slug, name, owner, map count) without a key, fetch the static search index at `/packs/index.json` (up to 5,000 packs, newest created first, and it doesn't count against any limit). Entries carry stats in short form (see [api.md](api.md)). It has no maps, slots or exports: for a pack's maps, call `GET /api/v1/packs/{slug}`.
 
 ## Downloading files

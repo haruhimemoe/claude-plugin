@@ -2,7 +2,7 @@
 
 # haruhime: osu! skills for Claude
 
-A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills for building osu! tools: the osu! API v2, the rules for officially supported tournaments, the hinai beatmap mirror, the packs.haruhime.moe pack builder, the pools.haruhime.moe tournament pool search, and the `@haruhimemoe/*` packages, including the shared UI components and brand kit.
+A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills for building osu! tools: the osu! API v2, the rules for officially supported tournaments, the hinai beatmap mirror, the packs.haruhime.moe pack builder, the pools.haruhime.moe pool builder, and the `@haruhimemoe/*` packages, including the shared UI components and brand kit.
 
 Skills only. No MCP server, no hooks, no commands. Each skill is short and points at the source it summarizes (the osu! wiki, the osu! API docs, a package README) so it stays true when those change.
 
@@ -23,7 +23,7 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | `hinai-mirror` | Getting beatmap metadata or `.osz` downloads from mirror.hinamizawa.ai, by hand or with `@haruhimemoe/hinai`. |
 | `osu-mappool-data` | Modeling a mappool in code: slots, custom slots and their mods, pasted pools, and pack keys (`pk1.`…), with `@haruhimemoe/pool` or in another language. |
 | `packs` | Making, opening, sharing or downloading a mappool pack with packs.haruhime.moe, by hand or through its API. |
-| `pools` | Finding past tournament pools and where a map was played before on pools.haruhime.moe (in beta), searching osu! maps to pool, building its search links, and sending it a pool. |
+| `pools` | Building an osu! tournament mappool on pools.haruhime.moe (in beta): searching maps under a mod, the editor, co-editors, visibility and its pack on packs, plus past pools as reference, search and map browser links, and sending a past pool. |
 | `haruhimemoe-packages` | Building on the `@haruhimemoe/*` packages (pool, osu, hinai, compliance, ui, brand): which one does what, where each runs, and installing them. |
 | `haruhime-ui` | Building a haruhime.moe tool's pages, or another Next.js page, with `@haruhimemoe/ui`: setup, the theme, which component fits, client vs server, accessibility. |
 | `haruhime-brand` | Giving haruhime.moe or one of its tools its wordmark, icons, link preview, README banners and palette with `@haruhimemoe/brand`. |

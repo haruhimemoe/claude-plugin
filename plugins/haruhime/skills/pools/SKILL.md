@@ -1,73 +1,81 @@
 ---
 name: pools
-description: Use when someone looks for past osu! tournament mappools or the tournaments a map was played in, searches osu! maps for a pool on pools.haruhime.moe, checks or sends (submits) a pool there, or mentions pools.haruhime.moe or its links (`/search`, `/pools/<id>`, `/maps/<id>`)
+description: Use when someone wants to build, edit or share an osu! tournament mappool on pools.haruhime.moe, search osu! maps for a pool under a mod (star rating, AR or OD with HR, DT or a combo), add co-editors or download a built pool on packs, looks for past tournament pools or where a map was played before, checks or sends a pool, or mentions pools.haruhime.moe or its links (`/new`, `/pools/<id>`, `/pools/<id>/edit`, `/search`, `/maps/<id>`)
 ---
 
 # pools (pools.haruhime.moe)
 
-A site of past osu! tournament mappools, in beta: things can move, and some pools are still missing. Pools come from several places: some past pools from otdb's public export (by Sheppsu, with his permission), pools sent by tournament hosts, and community submissions, and maybe more sources later. Each pool page names its sources. Never say the pools all come from otdb.
+Build an osu! tournament mappool: sign in with osu!, search maps under a mod, fill slots, check the content rules, see where maps were played before, share with co-editors and download on packs. In beta, osu!standard only; it never hosts beatmap files.
 
-Visitors only read: only admins sign in, with osu!. pools never hosts beatmap files, and every star rating on it is without mods.
+Past tournament pools are reference: some come from otdb's public export (by Sheppsu, with his permission), others from tournament hosts and community submissions; each pool page names its sources. Never say they all come from otdb.
 
 ## Pages
 
-| Page | What it's for |
-| --- | --- |
-| `/search` | Search pools, every osu! map, or the maps played in pools |
-| `/pools/<id>` | A pool: maps with slot, stars, length, BPM and Copy ID, notes, sources, Open in packs |
-| `/maps/<beatmap id>` | A map's history: every current pool that played it, newest first |
-| `/check` | Check a pool against the content rules |
-| `/data` | Where the data comes from, and corrections |
-| `/submit` | How to send a pool |
-| `/llms.txt` | For AI assistants: the pages, every current pool, the most used maps |
+`/new` (make a pool), `/pools/<id>/edit` (the editor, for the owner and editors), `/pools/<id>` (a pool, built here with a `b-` id, or past), `/account` (your pools; delete your account), `/search`, `/maps/<beatmap id>` (every past pool that played a map), `/check` (the content rules check), `/submit` and `/data` (sending past pools; where they come from), `/llms.txt` (for AI assistants).
 
-Find pool ids through search or `/llms.txt`; don't build them.
+## Making a pool
 
-## Searching
+Anyone with an osu! account signs in and makes a pool at `/new`. It starts private and empty; one person owns at most 50. In the editor:
 
-- **Pools:** by tournament, round or name, year, stars, map count, badged (once known) or a map the pool contains.
-- **All osu! maps** (the maps tab's default): every osu! map through the [hinai mirror](../hinai-mirror/SKILL.md), osu!standard only, by title, artist or mapper, status (Ranked by default), stars, length and BPM. Sets officially supported tournaments can't use are left out and counted. Sets that need a closer look say **Check first**, with the reason. Graveyard, pending and WIP sets are tagged **Unranked**: they can change or disappear. Explicit maps are hidden unless asked for. Each difficulty says how many pools played it.
-- **Played in pools:** only maps from the site's pools, with AR, OD, CS, played as (NM, HD, HR, DT, FM, TB, EZ, HT, FL), times used and last year used too.
+- **Buckets:** NM, HD, HR, DT, FM, TB and up to 8 custom buckets (no mods, forced mods or freemod). At most 64 maps, no map twice.
+- **Keyboard moves:** buttons move a map up, down or to another bucket, or remove it; no drag needed.
+- **Paste** slot lines (`NM1 129891`), IDs or links to add maps or replace them.
+- **Saving:** each change saves at once; if someone else changed the pool first, it reloads and says yours wasn't saved.
+- **Summary:** each bucket's star range under its mods, beatmapsets in more than one slot, maps past pools played, and the content rules check.
 
-Check first and the hidden count are guidance: the osu! Tournament Committee decides.
+## The map browser
+
+It searches osu! maps under a **mod lens** (NM, HD, HR, DT, EZ, HT, FL, or a combo like HDHR the hinai mirror has data for). A bucket's **Find maps** opens it under that bucket's mods.
+
+- **Filters:** text, one status (Ranked by default), star rating, BPM, length, AR and OD under the lens, hiding the pool's maps or maps played in past pools. **Sort:** most favourited, pp, stars, BPM or length.
+- **Add** puts a difficulty at the end of the bucket matching the lens, or asks which.
+- Qualified and Pending have no mod data: they're searched without mods.
+- Ranked, Loved and Graveyard mod searches can include explicit maps; "Show explicit maps" only covers Qualified and Pending.
+- Sets officially supported tournaments can't use are left out and counted.
+
+## Mod values
+
+Values with mods come from the hinai mirror and can differ slightly from osu!'s. Without mirror data, a slot says "no mod data". Pool slots, built and past, show values under the slot's mods (NM, FM, TB and freemod slots without). `/search` ratings are without mods.
+
+## Sharing
+
+- **Editors:** the owner adds up to 10 by osu! username, even before they sign in. Editors change maps and details, and can leave; the owner removes them.
+- **Visibility** (owner only): private (default), unlisted (anyone with the link) or public (in search).
+- **Packs:** an unlisted or public pool with maps gets a pack on packs.haruhime.moe, owned by `haruhime pools`, crediting the builders and kept in step. The pool page shows **Download on packs**; the editor, **Update pack now**. Going private, or deleting the pool or account, removes it.
+- **Start from this pool** (`/new?from=<id>`), on a past or built pool you can see, copies its maps into a new private pool.
+
+## Search and past pools
+
+Search covers past tournament pools (the default), public built pools or both; every osu! map through the [hinai mirror](../hinai-mirror/SKILL.md), with **Check first** and **Unranked** tags; and the maps played in past pools. Built pools never count as played. The check and Check first are guidance: the osu! Tournament Committee decides.
 
 ## Links
 
-- Pools: `https://pools.haruhime.moe/search?q=…` (no `tab`).
-- All osu! maps: `/search?tab=maps`, plus `status` (`loved`, `qualified`, `pending` or `graveyard`; none for Ranked), `sr`, `len`, `bpm`, `explicit=show`, `q`.
-- Played in pools: `/search?tab=maps&scope=played`, plus `ar`, `od`, `cs`, `played=HR,DT`, `used`, `last`, `sort`.
-- Ranges are `low-high`, `low-` or `-high`: `sr=6-7`, `bpm=180-`. `len` takes seconds or `m:ss`. Every search takes `page` (1 to 200).
-- **Old links:** `scope` (`all` or `played`) wins when given. Without it, a `tab=maps` link carrying `ar`, `od`, `cs`, `played`, `used`, `last` or `sort` reads as played in pools, anything else as all maps, so links from before the all-maps search still work. Write `scope=played` on every played-in-pools link.
-- Map history: `https://pools.haruhime.moe/maps/<beatmap id>`, a difficulty id, not a set id. A map no pool has is a 404.
+- Map browser: `/pools/<id>/edit?browse=<query>`, its query URL-encoded as one value: `?browse=lens%3DHR%26sr%3D5-6` opens it under HR at 5 to 6 stars.
+- Pools: `/search?q=…`, plus `type=built` or `type=both`.
+- All osu! maps: `/search?tab=maps`, plus `status`, `sr`, `len`, `bpm`, `explicit=show`, `q`.
+- Played in pools: `/search?tab=maps&scope=played`, plus `ar`, `od`, `cs`, `played=HR,DT`, `used`, `last`, `sort`. Always write `scope=played`: `?tab=maps&q=…` alone searches all osu! maps.
+- Ranges: `sr=6-7`, `bpm=180-`.
+- `/maps/<beatmap id>` takes a difficulty id, not a set id.
 
-Every param, value and bound: [search-links.md](search-links.md).
+Every param, the old-links rule and the browser's details: [search-links.md](search-links.md).
 
-## Check a pool
+## Sending a past pool
 
-`/check` takes beatmap IDs or links, slot lines (`NM1 129891`) or a pack key, up to 64 maps. Each map's beatmapset is checked against the content rules for officially supported tournaments: not allowed, needs a closer look, couldn't check, or all clear. It's a guide, not a ruling. The rules: `osu-mappool-content-rules`.
-
-## Open in packs
-
-Every pool is published on packs.haruhime.moe as a plain pack owned by `haruhime pools`. **Open in packs** on a pool page opens it there (its `/p/<slug>` page while packs lists it, else `/k#` with its pack key), where maps download from the mirror straight to the browser. See `packs`.
-
-## Sending a pool
-
-`/submit`: no form. Tournament hosts and community members post in the haruhime.moe Discord server (https://discord.gg/bKy9kjMV4y) or email contact@haruhime.moe with the tournament, round, year, a forum or sheet link, the maps (a packs link is easiest) and who to credit. An admin checks each pool by hand; one whose maps match a pool already there joins its sources. Corrections go to the same places (`/data#corrections`).
+`/submit`: hosts and community members send past pools, with the maps and who to credit, in the haruhime.moe Discord server (https://discord.gg/bKy9kjMV4y) or to contact@haruhime.moe. An admin checks each by hand. Past pools open on packs with **Open in packs**.
 
 ## No public API
 
-pools has no public API. The routes behind its pages serve the site only: don't script them or invent endpoints. Share results as search or map links; in code, read pools as packs through the packs API.
+pools has no public API. Its `/api` routes serve its own pages, and writes need a signed-in session: don't script them or invent endpoints. Share links instead; in code, read past pools and shared built pools as packs through the packs API (see `packs`).
 
 ## Common mistakes
 
+- Calling pools a past-pool list, or saying only admins sign in.
 - Saying every pool comes from otdb.
-- A beatmapset id in `/maps/<id>`.
-- A played-in-pools link without `scope=played`: `?tab=maps&q=…` alone searches all osu! maps.
-- Star ratings read as with mods, or `/check` read as a ruling.
+- Taking mirror mod ratings as osu!'s exact values, or `/search` ratings as with mods.
+- Promising a mod search leaves out explicit maps.
+- A set id in `/maps/<id>`, or a played-in-pools link without `scope=played`.
 
 ## Sources
 
-- pools.haruhime.moe README, https://github.com/haruhimemoe/pools.haruhime.moe#readme, checked 2026-09-26.
-- Search, https://pools.haruhime.moe/search, and Check a pool, https://pools.haruhime.moe/check, checked 2026-09-26.
-- Data, https://pools.haruhime.moe/data, and Submit a pool, https://pools.haruhime.moe/submit, checked 2026-09-26.
-- Site map for assistants, https://pools.haruhime.moe/llms.txt, checked 2026-09-26.
+- pools.haruhime.moe README, https://github.com/haruhimemoe/pools.haruhime.moe#readme, checked 2026-09-27.
+- Pages: https://pools.haruhime.moe/new, `/search`, `/check`, `/data`, `/submit` and `/llms.txt`, checked 2026-09-27.
