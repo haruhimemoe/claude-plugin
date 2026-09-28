@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhime-ui` covers ui 0.4.0: `InlineConfirm`, `TypeToConfirm`, `AsyncButton`, `Disclosure`, `RadioGroup`, `ChoiceChips`, `Badge`, `TextLink` and `linkClasses`, `LinkTabs`, `HeaderMenu`, the `Table` primitives, `StarRating`, `BeatmapStats`, `ModBadge`, `cx`, `Chip`'s `unavailableReason` and `Pagination`'s button mode. The component list moved to `haruhime-ui/components.md`, and an eval case covers the confirms.
 - `osu-api-v2` covers osu 0.3.0: the `/format` entry point, a `userAgent` that must be printable ASCII, `retryAfterMs` null for a malformed `Retry-After`, and `OSU_BEATMAPSET_FALLBACK_LIMIT`.
 - `hinai-mirror` covers hinai 0.3.0: it needs osu 0.3.x, the `/testing` msw mocks, a server `userAgent` or `baseUrl` that throws `RangeError`, an already-aborted signal and a safe `forensicsUrl`. Client details moved to `hinai-mirror/client.md`.
+- `osu-mappool-data` covers pool 0.2.0: the `clash` and `digits` code rules, `changesStarRating`, `ratingMods`, `speedRate`, `displayPoolName` for untrusted key names, and the `/content-filter` and `/service` entry points. `pack-key-format.md` checked against 0.2.0 (the spec is unchanged).
 
 ### Fixed
 

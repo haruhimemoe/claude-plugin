@@ -1,4 +1,4 @@
-<!-- Copy of docs/pack-key.md from @haruhimemoe/pool 0.1.0 (https://github.com/haruhimemoe/pool/blob/main/docs/pack-key.md). The pool repo is the source of truth: when it adds a version, copy it again and update the "checked" date in SKILL.md. -->
+<!-- Copy of docs/pack-key.md from @haruhimemoe/pool 0.2.0 (unchanged since 0.1.0) (https://github.com/haruhimemoe/pool/blob/main/docs/pack-key.md). The pool repo is the source of truth: when it adds a version, copy it again and update the "checked" date in SKILL.md. -->
 
 # Pack keys
 
