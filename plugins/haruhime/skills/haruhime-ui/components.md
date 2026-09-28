@@ -2,7 +2,7 @@
 
 # @haruhimemoe/ui: which component
 
-"(client)" marks a component whose file carries `"use client"`. "0.4.0" marks one that isn't in 0.3.0 (0.2.0 and 0.3.0 likewise). Import everything from `@haruhimemoe/ui`.
+"(client)" marks a component whose file carries `"use client"`. "0.5.0" marks one that isn't in 0.4.0 (0.2.0, 0.3.0 and 0.4.0 likewise). Import everything from `@haruhimemoe/ui`.
 
 ## Page frame
 
@@ -13,6 +13,7 @@
 | Footer: link columns, fine print, wordmark, GitHub and Discord icons | `SiteFooter` (`discordHref` 0.3.0, `discordLabel` 0.4.0) |
 | Account menu in the header: avatar button, links, a sign-out button | `HeaderMenu` (client, 0.4.0). A disclosure, not an ARIA menu |
 | A row of link tabs (Pools / Maps), each its own URL | `LinkTabs` (0.4.0). You mark the `current` item |
+| Tabs that switch panels on the same page (Source / Preview) | `Tabs` (client, 0.5.0): ARIA tabs, arrows, Home and End. The panels are yours; `tabId` and `tabPanelId` give the ids that tie them |
 | The page's one `<h1>`, lead, meta and actions | `PageHeader` |
 
 ## Content
@@ -40,6 +41,9 @@
 | Confirm something that can't be undone by typing its name | `TypeToConfirm` (client, 0.4.0) |
 | Fields with label, hint and error | `TextInput`, `Textarea`, `Select`, `Checkbox`; `fieldClasses` for a bare control |
 | One choice from a list, with hints | `RadioGroup` (client, 0.4.0) |
+| Who can see it: private, unlisted or public, each with its line | `VisibilitySelect` (client, 0.5.0), as radios or a select; `VISIBILITIES`, `VISIBILITY_TEXT` for the default words |
+| "1,234 / 60,000 characters", rose once over | `CharCounter` (0.5.0). You pass `count` and `limit`, so any counting rule works |
+| "Report this" with a reason field | `ReportDisclosure` (client, 0.5.0): `onSubmit(reason)` returns a `ReportResult` (`{ ok: true }` shows a status line, `{ ok: false, message }` keeps the text for a retry) |
 | Previous and next page | `Pagination`: links (`hrefFor`), or buttons (`onPageChange`, 0.4.0) for results fetched in place, where `pageCount` may be `null` with `hasNext` |
 
 ## Filters

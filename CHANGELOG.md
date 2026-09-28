@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-28
+
+### Added
+
+- Skill `osu-bbcode`, for osu! BBCode in userpages, forum posts and beatmap descriptions: the tags osu! reads and what it does with them (`[centre]`, not `[center]`; sizes clamped to 30..200 with osu!'s 50, 85, 100 and 150; list titles; boxes and spoilerboxes; the imagemap line format; profile links; YouTube ids and links; the 60,000 character limit), the gotchas (crossed tags, a tag inside itself, SVG flags filling their width), and `@haruhimemoe/bbcode` 0.2.0: `parse`, `serialize`, `render`, `lint`, `count`, `LIMITS`, `TAGS`, `/helpers` (`escapeBBCode`, `flag` defaulting to the legacy PNG, `gradient` and its character cost), `/imagemap`, `/flags`, `/template` (`{{key}}` fields and `FIELD_KINDS`) and `/styles.css`. It says bb.haruhime.moe, the editor built on it, is launching soon. `osu-bbcode/tags.md` has every tag, newline handling and imagemaps; the `bbcode-userpage` eval case covers it.
+
+### Changed
+
+- haruhime.moe is described as osu! tools for players, mappers and hosts, not only tournament tools: the plugin and marketplace descriptions, README, `llms.txt` and AGENTS.md. The plugin's keywords add `bbcode` and `userpage`.
+- `haruhime-ui` covers ui 0.5.0: `Tabs`, `CharCounter`, `VisibilitySelect` and `ReportDisclosure`.
+- `haruhime-next-kit` covers next-kit 0.2.1: the `/auth-react` account components (`SignInWithOsu`, `SignOutButton`, `AccountMenu`, `DeleteAccountForm`, bound with `createAuthComponents`), `osuAvatarSrc`, `signInErrorMessage`, the `@haruhimemoe/ui` ^0.5.0 peer, and `@haruhimemoe/osu` ^0.4.0 accepted as a peer.
+- `osu-api-v2` covers osu 0.4.0: `getUser` and `getUsers`, and the osu! user endpoints they call.
+- `hinai-mirror` covers hinai 0.3.1, which needs osu 0.4.x.
+- `haruhime-brand` covers brand 0.5.0: the `bb` product (`bb.`, hue 265) and haruhime's new tagline, "osu! tools for players, mappers and hosts".
+- `haruhimemoe-packages` covers every package at its npm version (pool 0.2.0, osu 0.4.0, hinai 0.3.1, compliance 0.1.1, bbcode 0.2.0, ui 0.5.0, brand 0.5.0, next-kit 0.2.1), adds `@haruhimemoe/bbcode` and player lookups, and says which versions go together.
+
 ## [0.2.0] - 2026-09-28
 
 ### Added
@@ -51,6 +67,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `haruhimemoe` marketplace; install with `/plugin install haruhime@haruhimemoe`.
 - A `claude plugin eval` suite with a case for every skill and near-miss negatives.
 
-[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/haruhimemoe/claude-plugin/compare/f73398f844d71f60ebedf5d89ec648c29bdb9f7d...v0.2.0
 [0.1.0]: https://github.com/haruhimemoe/claude-plugin/tree/f73398f844d71f60ebedf5d89ec648c29bdb9f7d

@@ -1,4 +1,4 @@
-<!-- Details for SKILL.md's "In code: @haruhimemoe/hinai", checked against hinai 0.3.0. The hinai repo's README is the source of truth: https://github.com/haruhimemoe/hinai#readme -->
+<!-- Details for SKILL.md's "In code: @haruhimemoe/hinai", checked against hinai 0.3.1. The hinai repo's README is the source of truth: https://github.com/haruhimemoe/hinai#readme -->
 
 # @haruhimemoe/hinai client: results, errors and test mocks
 
@@ -44,4 +44,4 @@ The handlers answer on `https://mirror.hinamizawa.ai` only. For another `baseUrl
 
 ## Compatibility
 
-Browsers need Safari 17.4+, Chrome 120+ or Firefox 124+. Servers need Node 22.12 or later. Dependencies: `zod` ^4.0.16 (peer) and `@haruhimemoe/osu` ^0.3.0.
+Browsers need Safari 17.4+, Chrome 120+ or Firefox 124+. Servers need Node 22.12 or later. Dependencies: `zod` ^4.0.16 (peer) and `@haruhimemoe/osu` ^0.4.0 (0.3.0 used ^0.3.0).

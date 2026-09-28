@@ -1,6 +1,6 @@
 ---
 name: osu-api-v2
-description: Use when writing code that calls the osu! API v2 (osu.ppy.sh/api/v2) or imports @haruhimemoe/osu, including its browser-safe /shapes types, links and cover image URLs in client components, its /format display text (m:ss, star ratings) or its /collections reader and writer for osu!stable's collection.db; setting up "sign in with osu!" OAuth or scopes; fetching beatmaps, beatmapsets or star ratings with mods; or deciding how often a tool may call osu!
+description: Use when writing code that calls the osu! API v2 (osu.ppy.sh/api/v2) or imports @haruhimemoe/osu, including its browser-safe /shapes types, links and cover image URLs in client components, its /format display text (m:ss, star ratings) or its /collections reader and writer for osu!stable's collection.db; setting up "sign in with osu!" OAuth or scopes; fetching beatmaps, beatmapsets, star ratings with mods or osu! users by id or name; or deciding how often a tool may call osu!
 ---
 
 # osu! API v2
@@ -35,12 +35,14 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 | Many difficulties | `GET /api/v2/beatmaps?ids[]=1&ids[]=2` | **up to 50 ids**. Each row's `beatmapset` carries `availability`, `track_id`, `tags` and `source` (the fields tournament checks read) |
 | One set, all difficulties | `GET /api/v2/beatmapsets/{id}` | the fallback when a row's `beatmapset` lacks those fields |
 | Star rating with mods | `POST /api/v2/beatmaps/{id}/attributes`, body `{"mods":["HD","HR"]}` | answer is `{ "attributes": { "star_rating": …, "max_combo": … } }`. `mods` may also be a bitmask. Omit `ruleset` to rate the map in its own mode |
+| One user | `GET /api/v2/users/{id}?key=id`, or `/api/v2/users/@{name}` | append `/{ruleset}` for that mode's stats; 404 for unknown |
+| Many users | `GET /api/v2/users?ids[]=1&ids[]=2` | up to 50 ids; deleted or restricted users are left out |
 | Lookup by checksum/filename | `GET /api/v2/beatmaps/lookup?checksum=…` | |
 
 - **Two id spaces:** a beatmap (difficulty) id and a beatmapset id are different numbers. Pools list difficulties; downloads and content rules work per set.
 - Missing ids are left out of `/beatmaps` answers, not errors. A deleted map on `/attributes` gives 404; mods osu! won't rate give 422.
 - HD changes star rating in current osu! (lazer-era difficulty), so ask osu! instead of assuming only DT/HT/HR/EZ/FL matter.
-- The `x-api-version` header selects newer response shapes on some endpoints; without it you get version 0.
+- `x-api-version` selects newer response shapes on some endpoints.
 
 ## In code: `@haruhimemoe/osu`
 
@@ -48,15 +50,15 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 
 - **`@haruhimemoe/osu/shapes`** is browser-safe: `BeatmapMeta`, osu!'s row schemas, `coverUrl`, `beatmapUrl`, `userUrl`, `OSU_OAUTH`, `OSU_SIGN_IN_SCOPES`, `toOsuUser`. Client components import from here.
 - **`@haruhimemoe/osu/collections`** is browser-safe and doesn't load zod: `readCollectionDb` and `writeCollectionDb` for osu!stable's `collection.db`, `addToCollection`, and `lazerImportFiles` for osu!lazer's setup wizard import. A collection lists difficulty MD5s (`BeatmapMeta.checksum`), not ids. The README's "Collections" section has the rules and error codes.
-- **`@haruhimemoe/osu/format`** (0.3.0 and later) imports nothing: `formatDuration` (`m:ss`), `formatLongDuration`, `formatStars` (two decimals), `formatBpm`, `formatStat` (CS/AR/OD/HP), `formatBytes` and `formatRange`, the text packs and pools show. Use it instead of writing your own.
-- **`@haruhimemoe/osu`** adds `createOsuClient` for servers and re-exports the other three. Its `userAgent` must be printable ASCII on one line (0.3.0 and later throw a `TypeError` for an emoji or accent; 0.2.0 let it through and then every request failed). It holds your client secret: **never import the root entry in browser code.** Typechecking it needs TypeScript 5.7 or later (or `skipLibCheck`).
+- **`@haruhimemoe/osu/format`** (0.3.0 and later) imports nothing: `formatDuration` (`m:ss`), `formatStars`, `formatBpm`, `formatStat` and the rest, the text packs and pools show.
+- **`@haruhimemoe/osu`** adds `createOsuClient` for servers and re-exports the other three. The client reads beatmaps, sets, star ratings and, from 0.4.0, users: `getUser(idOrName)` (an `OsuUser` or null) and `getUsers(ids)` (`{ found, missing, unchecked }`), both under `beforeCall`. Its `userAgent` must be printable ASCII on one line (0.3.0 and later throw `TypeError` otherwise). It holds your client secret: **never import the root entry in browser code.** It needs TypeScript 5.7+ (or `skipLibCheck`).
 - Before writing code with the client, read [client.md](client.md): what lands in `unchecked` vs `missing`, how `getBeatmapsets` keys its sets, when a call throws instead, the shared rate budget (`beforeCall`), and `OsuApiError`'s codes.
 
 ## Common mistakes
 
 - Calling osu! from the browser. The secret stays on your server; proxy and cache there.
 - Fetching the same rating or beatmap on every page view. Cache (ratings change rarely; a 30-day cache is reasonable) and put a CDN in front.
-- Assuming one callback URL per app, or one token per request.
+- One token per request.
 - Treating a 429 or 5xx as "map doesn't exist". It means "try later".
 
 ## Related
@@ -70,4 +72,4 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 - osu! API v2 documentation, https://osu.ppy.sh/docs (terms of use, scopes, beatmaps, attributes), checked 2026-09-23.
 - osu! wiki, [osu!api](https://osu.ppy.sh/wiki/en/osu!api), checked 2026-09-23.
 - Production use of these calls at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) and [CHANGELOG](https://github.com/haruhimemoe/osu/blob/main/CHANGELOG.md) 0.3.0, checked 2026-09-28.
+- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) and [CHANGELOG](https://github.com/haruhimemoe/osu/blob/main/CHANGELOG.md) 0.4.0, checked 2026-09-28.

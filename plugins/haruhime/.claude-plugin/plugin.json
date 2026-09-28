@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "haruhime",
-  "description": "osu! skills for Claude: the osu! API v2, tournament content rules and official support, mappools and pack keys, the hinai beatmap mirror, the packs.haruhime.moe pack builder and its API, the pools.haruhime.moe pool builder, haruhime.moe branding, UI components and Next.js server kit, and the @haruhimemoe packages.",
-  "version": "0.2.0",
+  "description": "osu! skills for Claude, from haruhime.moe's osu! tools for players, mappers and hosts: the osu! API v2, osu! BBCode for userpages, forum posts and beatmap descriptions, tournament content rules and official support, mappools and pack keys, the hinai beatmap mirror, the packs.haruhime.moe pack builder and its API, the pools.haruhime.moe pool builder, haruhime.moe branding, UI components and Next.js server kit, and the @haruhimemoe packages.",
+  "version": "0.3.0",
   "author": {
     "name": "David",
     "url": "https://dvh.sh"
@@ -16,6 +16,8 @@
     "tournament",
     "mappool",
     "beatmap",
-    "osu-api"
+    "osu-api",
+    "bbcode",
+    "userpage"
   ]
 }

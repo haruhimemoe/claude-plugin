@@ -31,7 +31,7 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 
 ## In code: `@haruhimemoe/hinai`
 
-`bun add @haruhimemoe/hinai zod` (zod 4.0.16+, a peer). It uses `@haruhimemoe/osu` for the shapes only, so it's safe in browsers. hinai 0.3.x needs osu 0.3.x: keep an app's own `@haruhimemoe/osu` on 0.3 too, so there's one copy. `createHinaiClient()` gives `getBeatmaps`, `getAvailability` and `downloadSet` (a `Blob`, zip signature checked). Results, timeouts, argument errors and the test mocks: [client.md](client.md).
+`bun add @haruhimemoe/hinai zod` (zod 4.0.16+, a peer). It uses `@haruhimemoe/osu` for the shapes only, so it's safe in browsers. hinai 0.3.1 needs osu 0.4.x (0.3.0 needed 0.3.x): keep an app's own `@haruhimemoe/osu` on the matching version, so there's one copy. `createHinaiClient()` gives `getBeatmaps`, `getAvailability` and `downloadSet` (a `Blob`, zip signature checked). Results, timeouts, argument errors and the test mocks: [client.md](client.md).
 
 - **`userAgent` is for servers.** In browsers and web workers it's ignored (pages can't set it, and a custom header would force a CORS preflight), so leave it out there. On a server, 0.3.0 throws `RangeError` for one that isn't a valid header value.
 - **A failed request rejects with a `HinaiError`** (`code`, `status`, `retryable`, `retryAfterMs`, `hint`, `requestId`, `forensicsUrl`; quote the last two when reporting a problem). Retry only when `retryable` is true, waiting `backoffDelayMs(attempt, error.retryAfterMs)`: the mirror's `Retry-After` when it sent one (capped at 60 s), else 1 s, 2 s, 4 s. Stop after a few attempts.
@@ -60,4 +60,4 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 - hinai OpenAPI 2.1.23, https://mirror.hinamizawa.ai/api/v1/hinai/openapi.json, checked 2026-09-24.
 - hinai docs, https://mirror.hinamizawa.ai/docs and https://mirror.hinamizawa.ai/llms.txt ("Integration" and "Downloads"), checked 2026-09-24.
 - Production use of the mirror at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/hinai README](https://github.com/haruhimemoe/hinai#readme) and [CHANGELOG](https://github.com/haruhimemoe/hinai/blob/main/CHANGELOG.md) 0.3.0, checked 2026-09-28.
+- [@haruhimemoe/hinai README](https://github.com/haruhimemoe/hinai#readme) and [CHANGELOG](https://github.com/haruhimemoe/hinai/blob/main/CHANGELOG.md) 0.3.1, checked 2026-09-28.
