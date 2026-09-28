@@ -1,6 +1,6 @@
 ---
 name: osu-api-v2
-description: Use when writing code that calls the osu! API v2 (osu.ppy.sh/api/v2) or imports @haruhimemoe/osu, including its browser-safe /shapes types, links and cover image URLs in client components or its /collections reader and writer for osu!stable's collection.db; setting up "sign in with osu!" OAuth or scopes; fetching beatmaps, beatmapsets or star ratings with mods; or deciding how often a tool may call osu!
+description: Use when writing code that calls the osu! API v2 (osu.ppy.sh/api/v2) or imports @haruhimemoe/osu, including its browser-safe /shapes types, links and cover image URLs in client components, its /format display text (m:ss, star ratings) or its /collections reader and writer for osu!stable's collection.db; setting up "sign in with osu!" OAuth or scopes; fetching beatmaps, beatmapsets or star ratings with mods; or deciding how often a tool may call osu!
 ---
 
 # osu! API v2
@@ -12,7 +12,7 @@ The official osu! web API. OAuth 2 only; the old v1 API (per-user API keys) is l
 - **Stay at or under 60 requests a minute.** osu! enforces higher internal limits with some burst, but going past 60 can get your tokens revoked, and serious abuse gets API access restricted.
 - The terms, in short: be a good citizen, keep usage modest, and check with the osu! team before building something big and long-lived on it. **Cache what you fetch.** Don't poll the same user or beatmap more than once a minute. Don't use the API as your database, harvest mass data (data.ppy.sh has dumps) or chase a competitive advantage.
 - **Budget per OAuth app**, not per handler or instance: everything using one client shares one counter, with headroom (about 50/min) for retries and token calls.
-- Send an honest `User-Agent` naming your app and a contact.
+- Send an honest `User-Agent` naming your app and a contact, in plain ASCII.
 
 ## Auth
 
@@ -44,11 +44,12 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 
 ## In code: `@haruhimemoe/osu`
 
-`bun add @haruhimemoe/osu zod` (zod 4.0.16+, a peer). Three entry points:
+`bun add @haruhimemoe/osu zod` (zod 4.0.16+, a peer). Four entry points:
 
 - **`@haruhimemoe/osu/shapes`** is browser-safe: `BeatmapMeta`, osu!'s row schemas, `coverUrl`, `beatmapUrl`, `userUrl`, `OSU_OAUTH`, `OSU_SIGN_IN_SCOPES`, `toOsuUser`. Client components import from here.
 - **`@haruhimemoe/osu/collections`** is browser-safe and doesn't load zod: `readCollectionDb` and `writeCollectionDb` for osu!stable's `collection.db`, `addToCollection`, and `lazerImportFiles` for osu!lazer's setup wizard import. A collection lists difficulty MD5s (`BeatmapMeta.checksum`), not ids. The README's "Collections" section has the rules and error codes.
-- **`@haruhimemoe/osu`** adds `createOsuClient` for servers and re-exports the other two. It holds your client secret: **never import the root entry in browser code.** Typechecking it needs TypeScript 5.7 or later (or `skipLibCheck`).
+- **`@haruhimemoe/osu/format`** (0.3.0 and later) imports nothing: `formatDuration` (`m:ss`), `formatLongDuration`, `formatStars` (two decimals), `formatBpm`, `formatStat` (CS/AR/OD/HP), `formatBytes` and `formatRange`, the text packs and pools show. Use it instead of writing your own.
+- **`@haruhimemoe/osu`** adds `createOsuClient` for servers and re-exports the other three. Its `userAgent` must be printable ASCII on one line (0.3.0 and later throw a `TypeError` for an emoji or accent; 0.2.0 let it through and then every request failed). It holds your client secret: **never import the root entry in browser code.** Typechecking it needs TypeScript 5.7 or later (or `skipLibCheck`).
 - Before writing code with the client, read [client.md](client.md): what lands in `unchecked` vs `missing`, how `getBeatmapsets` keys its sets, when a call throws instead, the shared rate budget (`beforeCall`), and `OsuApiError`'s codes.
 
 ## Common mistakes
@@ -69,4 +70,4 @@ Register an app at https://osu.ppy.sh/home/account/edit#oauth. An app can list *
 - osu! API v2 documentation, https://osu.ppy.sh/docs (terms of use, scopes, beatmaps, attributes), checked 2026-09-23.
 - osu! wiki, [osu!api](https://osu.ppy.sh/wiki/en/osu!api), checked 2026-09-23.
 - Production use of these calls at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) 0.2.0, checked 2026-09-25.
+- [@haruhimemoe/osu README](https://github.com/haruhimemoe/osu#readme) and [CHANGELOG](https://github.com/haruhimemoe/osu/blob/main/CHANGELOG.md) 0.3.0, checked 2026-09-28.
