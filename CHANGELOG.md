@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhime-brand` covers brand 0.4.0: the browser-safe `/palette` entry, `favicon.ico` counted as a conflict, and the CLI stopping at symlinks that lead outside `--root`. The `brand-edge` eval allows `/palette` in an edge runtime.
 - `osu-mappool-content-rules` covers compliance 0.1.1: hand-built facts without `moreInformation` need 0.1.1, and label tracks match by substring, so short track names flag unrelated titles.
 - `haruhimemoe-packages` covers every package at its current version (pool 0.2.0, osu 0.3.0, hinai 0.3.0, compliance 0.1.1, ui 0.4.0, brand 0.4.0) and the new `@haruhimemoe/next-kit` 0.1.0, with the `/format`, `/testing`, `/palette`, `/content-filter` and `/service` entry points, which versions go together, and that every version is published with npm provenance from a GitHub release. It no longer names sheets.haruhime.moe, which isn't live. The `packages-map` eval accepts next-kit for sign-in.
+- `pools` covers editor v2.1: templates on `/new` and slot targets (count 0 to 16, optional star range), slot notes that public pages show, covers and preview clips from osu!'s servers, undo (20 steps, no redo), export (IDs, `!mp map <id> 0` and `!mp mods` lines, CSV), Recent changes for the owner and editors, and drag and drop with keyboard buttons. The detail is in `pools/editor.md`, and the `pools-editor` eval covers export and undo.
 
 ### Fixed
 

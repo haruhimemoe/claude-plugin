@@ -31,6 +31,7 @@ Example: HR, 5 to 6 stars and AR 9.5 and up with HR, the pool's own maps hidden.
 - **Filtering.** The mirror filters star rating. BPM, length, AR and OD, the pool's own maps and maps played in past pools are taken off each page after it arrives, so a page can come back short; the browser says how many each one left out. Sets officially supported tournaments can't use are left out and counted, sets that need a closer look say **Check first**, and graveyard, pending and WIP sets are **Unranked**.
 - **Each difficulty:** how many past pools played it (linking its map page) and **Add**. A map already in the pool says **In this pool**.
 - **Where Add goes:** the bucket whose **Find maps** opened the browser, while the lens still matches it. Otherwise, for an NM, HD, HR or DT lens, that bucket; for any other lens, a custom bucket forced to exactly its mods; with no such bucket, a slot picker. **Choose slot** picks any slot, or none. A map lands at the end of its bucket.
+- **Find maps** on a slot opens the browser under that slot's lens (NM when the mirror doesn't offer it) on page 1, switching Qualified or Pending back to Ranked, and puts the slot's target star range, if it has one, in `sr`.
 - **Failure:** "Map search isn't working right now." with Retry. The pool keeps working.
 
 ## Search
