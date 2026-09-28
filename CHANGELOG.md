@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `hinai-mirror` covers hinai 0.3.0: it needs osu 0.3.x, the `/testing` msw mocks, a server `userAgent` or `baseUrl` that throws `RangeError`, an already-aborted signal and a safe `forensicsUrl`. Client details moved to `hinai-mirror/client.md`.
 - `osu-mappool-data` covers pool 0.2.0: the `clash` and `digits` code rules, `changesStarRating`, `ratingMods`, `speedRate`, `displayPoolName` for untrusted key names, and the `/content-filter` and `/service` entry points. `pack-key-format.md` checked against 0.2.0 (the spec is unchanged).
 - `haruhime-brand` covers brand 0.4.0: the browser-safe `/palette` entry, `favicon.ico` counted as a conflict, and the CLI stopping at symlinks that lead outside `--root`. The `brand-edge` eval allows `/palette` in an edge runtime.
+- `osu-mappool-content-rules` covers compliance 0.1.1: hand-built facts without `moreInformation` need 0.1.1, and label tracks match by substring, so short track names flag unrelated titles.
 
 ### Fixed
 
