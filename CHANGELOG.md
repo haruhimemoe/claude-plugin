@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `llms.txt`, listing every skill with a link to its `SKILL.md`.
 - Skill `pools`, for building an osu! tournament mappool on pools.haruhime.moe (in beta): osu! sign-in for anyone, `/new` and the editor (buckets, custom buckets with forced mods, paste, keyboard moves), the map browser's mod lens with its filters, sort and Add, the summary, co-editors, visibility, the synced pack with Download on packs, and Start from this pool. Past pools from otdb, tournament hosts and community submissions stay as reference: pool search by type (past, built or both), every osu! map (Check first, Unranked and explicit maps), map history, the check, Open in packs and sending a pool. Mod values come from the hinai mirror, and there's no public API. `pools/search-links.md` covers the map browser's `?browse=` link and every search param, and an eval case covers it.
 - A README banner, and the haruhime.moe Discord server wherever the docs list help (README, CONTRIBUTING, SECURITY and `llms.txt`).
+- Skill `haruhime-next-kit`, for building a haruhime.moe-style Next.js app's server side with `@haruhimemoe/next-kit` 0.1.0: the subpaths and their peers, wiring env, MongoDB, rate limits and osu! sign-in, a route handler, the osu! budget, bearer-auth routes and the test helpers. An eval case covers it, and the README, `llms.txt` and plugin description list it.
 
 ### Changed
 
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `osu-mappool-data` covers pool 0.2.0: the `clash` and `digits` code rules, `changesStarRating`, `ratingMods`, `speedRate`, `displayPoolName` for untrusted key names, and the `/content-filter` and `/service` entry points. `pack-key-format.md` checked against 0.2.0 (the spec is unchanged).
 - `haruhime-brand` covers brand 0.4.0: the browser-safe `/palette` entry, `favicon.ico` counted as a conflict, and the CLI stopping at symlinks that lead outside `--root`. The `brand-edge` eval allows `/palette` in an edge runtime.
 - `osu-mappool-content-rules` covers compliance 0.1.1: hand-built facts without `moreInformation` need 0.1.1, and label tracks match by substring, so short track names flag unrelated titles.
+- `haruhimemoe-packages` covers every package at its current version (pool 0.2.0, osu 0.3.0, hinai 0.3.0, compliance 0.1.1, ui 0.4.0, brand 0.4.0) and the new `@haruhimemoe/next-kit` 0.1.0, with the `/format`, `/testing`, `/palette`, `/content-filter` and `/service` entry points, which versions go together, and that every version is published with npm provenance from a GitHub release. It no longer names sheets.haruhime.moe, which isn't live. The `packages-map` eval accepts next-kit for sign-in.
 
 ### Fixed
 
