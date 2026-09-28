@@ -39,10 +39,10 @@ Values with mods come from the hinai mirror and can differ slightly from osu!'s.
 
 ## Sharing
 
-- **Editors:** the owner adds up to 10 by osu! username, even before they sign in. Editors change maps and details, and can leave; the owner removes them.
-- **Visibility** (owner only): private (default), unlisted (anyone with the link) or public (in search).
-- **Packs:** an unlisted or public pool with maps gets a pack on packs.haruhime.moe, owned by `haruhime pools`, crediting the builders and kept in step. The pool page shows **Download on packs**; the editor, **Update pack now**. Going private, or deleting the pool or account, removes it.
-- **Start from this pool** (`/new?from=<id>`), on a past or built pool you can see, copies its maps into a new private pool.
+- **Editors:** the owner adds up to 10 by osu! username, even before they sign in. Editors change maps and details, and can leave; the owner removes them, or hands the pool to one who has signed in (confirmed by typing its name).
+- **Visibility** (owner only): private (default), unlisted (link only) or public (in search).
+- **Packs:** an unlisted or public pool with maps gets a pack on packs.haruhime.moe, owned by `haruhime pools`, crediting the builders, kept in step. The pool page shows **Download on packs**; the editor, **Update pack now**. Going private, or deleting the pool or account, removes it.
+- **Start from this pool** (`/new?from=<id>`), on any pool you can see, copies its maps into a new private pool.
 
 ## Search and past pools
 
