@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhime-brand` covers brand 0.3.0: the parent haruhime brand, README banners and the 11 files the CLI writes. Sites take the palette tokens from `@haruhimemoe/ui`'s `theme.css`.
 - `haruhime-ui` covers ui 0.4.0: `InlineConfirm`, `TypeToConfirm`, `AsyncButton`, `Disclosure`, `RadioGroup`, `ChoiceChips`, `Badge`, `TextLink` and `linkClasses`, `LinkTabs`, `HeaderMenu`, the `Table` primitives, `StarRating`, `BeatmapStats`, `ModBadge`, `cx`, `Chip`'s `unavailableReason` and `Pagination`'s button mode. The component list moved to `haruhime-ui/components.md`, and an eval case covers the confirms.
 - `osu-api-v2` covers osu 0.3.0: the `/format` entry point, a `userAgent` that must be printable ASCII, `retryAfterMs` null for a malformed `Retry-After`, and `OSU_BEATMAPSET_FALLBACK_LIMIT`.
+- `hinai-mirror` covers hinai 0.3.0: it needs osu 0.3.x, the `/testing` msw mocks, a server `userAgent` or `baseUrl` that throws `RangeError`, an already-aborted signal and a safe `forensicsUrl`. Client details moved to `hinai-mirror/client.md`.
 
 ### Fixed
 

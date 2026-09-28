@@ -20,6 +20,7 @@ Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin
 ## Reference files
 
 - [osu-api-v2/client.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-api-v2/client.md): The `@haruhimemoe/osu` client's results, rate budget and errors.
+- [hinai-mirror/client.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/hinai-mirror/client.md): The `@haruhimemoe/hinai` client's results, timeouts, the errors that aren't a `HinaiError`, and the `/testing` mocks.
 - [osu-mappool-data/pack-key-format.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/osu-mappool-data/pack-key-format.md): A copy of the pack key spec from `@haruhimemoe/pool`, with every version's byte layout and the decoder rules.
 - [packs/api.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/packs/api.md): The packs API in detail: rate limits, errors, the pack object, stats and every endpoint.
 - [haruhime-ui/components.md](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-ui/components.md): Which `@haruhimemoe/ui` component fits each job, with the version each one arrived in and which are client components.
