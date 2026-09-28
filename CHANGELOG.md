@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-28
+
 ### Added
 
 - Skill `packs`, for building, sharing and downloading osu! mappool packs with packs.haruhime.moe: its pages (the owner's `/p/<slug>/edit` and `/brand` too), pack keys, the "Add to osu! collection" card (osu!stable's `collection.db`, the osu!lazer zip for the setup wizard, and the file staying in the browser), downloads through the hinai mirror, and the API with its keys, pack `stats`, pinned packs and the search index. `packs/api.md` is a copy of the live API docs. It says pools.haruhime.moe is in beta, and that its packs are pools built there and past pools from tournament hosts, community submissions and sources like otdb.
@@ -49,5 +51,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `haruhimemoe` marketplace; install with `/plugin install haruhime@haruhimemoe`.
 - A `claude plugin eval` suite with a case for every skill and near-miss negatives.
 
-[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/f73398f844d71f60ebedf5d89ec648c29bdb9f7d...HEAD
+[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/haruhimemoe/claude-plugin/compare/f73398f844d71f60ebedf5d89ec648c29bdb9f7d...v0.2.0
 [0.1.0]: https://github.com/haruhimemoe/claude-plugin/tree/f73398f844d71f60ebedf5d89ec648c29bdb9f7d
