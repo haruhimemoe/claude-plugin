@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `osu-api-v2` covers osu 0.3.0: the `/format` entry point, a `userAgent` that must be printable ASCII, `retryAfterMs` null for a malformed `Retry-After`, and `OSU_BEATMAPSET_FALLBACK_LIMIT`.
 - `hinai-mirror` covers hinai 0.3.0: it needs osu 0.3.x, the `/testing` msw mocks, a server `userAgent` or `baseUrl` that throws `RangeError`, an already-aborted signal and a safe `forensicsUrl`. Client details moved to `hinai-mirror/client.md`.
 - `osu-mappool-data` covers pool 0.2.0: the `clash` and `digits` code rules, `changesStarRating`, `ratingMods`, `speedRate`, `displayPoolName` for untrusted key names, and the `/content-filter` and `/service` entry points. `pack-key-format.md` checked against 0.2.0 (the spec is unchanged).
+- `haruhime-brand` covers brand 0.4.0: the browser-safe `/palette` entry, `favicon.ico` counted as a conflict, and the CLI stopping at symlinks that lead outside `--root`. The `brand-edge` eval allows `/palette` in an edge runtime.
 
 ### Fixed
 
@@ -37,6 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `osu-mappool-content-rules`: the Mlumìn // SoundWarper and MEGAREX gaps in the compliance data, and disallowed verdicts without a `reason`.
 - `haruhime-brand`: adding a product no longer tells you to release a version. Releases are cut by the maintainers.
 - `haruhime-brand`: `brandFiles` and `previewHtml` load the native PNG renderer too, not only `svgToPng` and the CLI.
+- `haruhime-brand`: sheets.haruhime.moe isn't live yet, so the product table no longer links it.
 
 ## [0.1.0] - 2026-09-23
 

@@ -12,7 +12,7 @@ haruhime.moe and every one of its tools are branded from one table in `@haruhime
 | haruhime (the parent site) | `h.` | 333 (pink) | haruhime.moe |
 | packs | `pk.` | 333 (pink) | packs.haruhime.moe |
 | pools | `pl.` | 200 (blue) | pools.haruhime.moe |
-| sheets | `sh.` | 150 (green) | sheets.haruhime.moe |
+| sheets | `sh.` | 150 (green) | not live yet: don't link it |
 
 - **Wordmark:** the lowercase name in Nunito ExtraBold plus a dot in the highlight color. haruhime's is stacked instead: "haruhime" over a half-size ".moe".
 - **Icon:** the mark plus the dot, at the same letter size for every product, so the icons match as a family.
@@ -32,9 +32,9 @@ It writes 11 files, for an app with `src/app` (or `app/`; it stops if there's ne
 - `public/brand/`: `pools-wordmark.svg` (dark backgrounds), `pools-wordmark-on-light.svg`, `pools-icon.svg` (schema.org `logo`), the README banners `pools-banner.svg`, `pools-banner-on-light.svg` and `pools-banner.png` (1280×320), and `pools-palette.json`.
 - `src/app/icon.svg` (favicon), `src/app/apple-icon.png` (180×180, square: iOS rounds it), `src/app/opengraph-image.png` (1200×630) and its `.alt.txt`.
 
-Next.js serves the `app/` files by name, so there's no route code and nothing renders per request. Commit the output. Rerun after upgrading the package; it prints `wrote` or `replaced` per file. `--dry-run` lists the paths first, marking the ones that exist. Other options: `--root`, `--public`, `--app` (both must be inside `--root`, and the app directory must already exist).
+Next.js serves the `app/` files by name, so there's no route code and nothing renders per request. Commit the output, and rerun after upgrading the package. `--dry-run` lists the paths first. Other options: `--root`, `--public`, `--app` (both must be inside `--root`, and the app directory must already exist).
 
-**When it stops and lists files** such as `opengraph-image.tsx`, `apple-icon.tsx`, `icon.png` or `twitter-image.jpg`: those already make an icon or preview another way, and Next.js would serve both. Delete them (the generated files replace them) and run it again. `--force` writes anyway; don't use it to keep both. On the first run for a product, a hand-made `icon.svg`, `apple-icon.png` or `opengraph-image.png` already in the app directory also stops it: check it's safe to replace, then rerun with `--force`.
+**When it stops and lists files** such as `opengraph-image.tsx`, `apple-icon.tsx`, `icon.png`, `twitter-image.jpg` or create-next-app's `favicon.ico` (0.4.0 and later): those already make an icon or preview another way, and Next.js would serve both. Delete them (the generated files replace them) and run it again. `--force` writes anyway; don't use it to keep both. It also stops (0.4.0 and later) when `public`, the app directory or a file in them is a symlink leading outside `--root`: point `--root` at the real folder. On the first run for a product, a hand-made `icon.svg`, `apple-icon.png` or `opengraph-image.png` already in the app directory also stops it: check it's safe to replace, then rerun with `--force`.
 
 `bunx haruhime-brand preview` writes `preview/index.html` with every product side by side (keep `preview/` out of git); `list` prints the table.
 
@@ -62,21 +62,21 @@ wordmarkSvg(PRODUCTS.pools, { background: "light" });
 bannerSvg(PRODUCTS.haruhime, { background: "light" });
 ```
 
-Importing the package doesn't load the native PNG renderer; only `svgToPng`, `brandFiles`, `previewHtml` and the CLI do, so palettes and SVGs work even where it isn't installed. Still, keep it to build time and Node 22.12+, never a browser or edge runtime. A hue outside 0–359 throws `RangeError` in `palette` and every drawing function, and so does a name that isn't lowercase `a-z0-9-` starting with a letter in `brandFiles`. The bundled fonts are subset to printable ASCII. Any other character (accents, CJK, tabs, non-breaking spaces) throws instead of drawing a blank box, so names, marks and taglines stay ASCII.
+Importing the package doesn't load the native PNG renderer; only `svgToPng`, `brandFiles`, `previewHtml` and the CLI do. Still, keep the root entry to build time and Node 22.12+, never a browser or edge runtime. The exception is `@haruhimemoe/brand/palette` (0.4.0 and later): `palette`, `TOKENS` and `hslToHex`, importing nothing, so a page or edge route can show swatches (install the package as a regular dependency then). Drawing and PNG rendering stay build-time. A hue that isn't an integer 0–359 throws `RangeError` in `palette` and every drawing function, as does a `brandFiles` name that isn't lowercase `a-z0-9-` starting with a letter. The fonts are subset to printable ASCII, so any other character throws: keep names, marks and taglines ASCII.
 
 ## Adding a product
 
-Add an entry to `PRODUCTS` in the brand repo's `src/products.ts`: a lowercase `name`, a one- or two-letter `mark` no other product uses, a hue no other tool uses, a one-line `tagline` and the `url` (`https://<name>.haruhime.moe`). Check it with `bun run preview`, and accept the new snapshots (`bun run test -u`) only after looking at the diffs. The repo's CONTRIBUTING lists every other place that names the products. Releases are cut by the maintainers; once the new version is out, run the CLI in the new app.
+Add an entry to `PRODUCTS` in the brand repo's `src/products.ts`: a lowercase `name`, a one- or two-letter `mark` no other product uses, a hue no other tool uses, a one-line `tagline` and the `url` (`https://<name>.haruhime.moe`). Check it with `bun run preview`; the repo's CONTRIBUTING lists the rest. Releases are cut by the maintainers; once the new version is out, run the CLI in the new app.
 
 ## Common mistakes
 
 - Writing `opengraph-image.tsx` or an `ImageResponse` route for a haruhime tool. The static files are cheaper and match the family.
 - Giving an existing product a new hue in app CSS. Hues live in `PRODUCTS`; set `--hue` to that value.
 - Using `h1` for accents on a light background.
-- Leaving an old `favicon.ico` in the app directory. The CLI doesn't check for it, and browsers may keep showing it instead of `icon.svg`: delete it yourself.
+- Leaving create-next-app's `favicon.ico` in the app directory: browsers may keep showing it. 0.4.0 stops on it; with 0.3.0, delete it yourself.
 
 ## Sources
 
-- [@haruhimemoe/brand README](https://github.com/haruhimemoe/brand#readme) 0.3.0, checked 2026-09-24.
-- [@haruhimemoe/brand CONTRIBUTING](https://github.com/haruhimemoe/brand/blob/main/CONTRIBUTING.md), "Adding a product", checked 2026-09-24.
+- [@haruhimemoe/brand README](https://github.com/haruhimemoe/brand#readme) and [CHANGELOG](https://github.com/haruhimemoe/brand/blob/main/CHANGELOG.md) 0.4.0, checked 2026-09-28.
+- [@haruhimemoe/brand CONTRIBUTING](https://github.com/haruhimemoe/brand/blob/main/CONTRIBUTING.md), "Adding a product", checked 2026-09-28.
 - [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#setup), "Setup" (the theme and `--hue`), checked 2026-09-24.
