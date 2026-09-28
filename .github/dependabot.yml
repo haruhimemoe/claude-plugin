@@ -1,6 +1,11 @@
 version: 2
 updates:
+  # Keeps the commit-SHA pins in .github/workflows current (and their version comments).
+  # No bun or npm ecosystem: the repo has no package.json, and the scripts use only Node.
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]

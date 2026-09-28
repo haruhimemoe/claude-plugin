@@ -1,0 +1,16 @@
+name: Skill request
+description: Suggest a new skill, or something a skill should cover
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What should Claude be able to answer?
+      description: A question or two, phrased the way you'd ask them.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Where is the answer documented?
+      description: Links to the osu! wiki, a package README or another public source.

@@ -14,7 +14,7 @@ No install step: the scripts use only Node's standard library. Use the Node vers
 
 ## Checks
 
-Every pull request needs these three to pass; CI runs them too:
+Every pull request needs these three to pass; CI runs them too, and the pull request template lists them with the rest of the checklist:
 
 ```sh
 node scripts/validate.mjs
@@ -36,4 +36,4 @@ claude plugin eval plugins/haruhime --runs 1 --max-cost-usd 5
 
 Note every change in `CHANGELOG.md` under `## [Unreleased]`, in the right [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) section.
 
-Releases are cut by the maintainers.
+Releases are cut by the maintainers. Claude Code updates an installed plugin only when the `version` in `plugins/haruhime/.claude-plugin/plugin.json` changes, so a merged change reaches existing installs with the next release.

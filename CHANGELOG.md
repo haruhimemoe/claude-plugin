@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Skill `pools`, for building an osu! tournament mappool on pools.haruhime.moe (in beta): osu! sign-in for anyone, `/new` and the editor (buckets, custom buckets with forced mods, paste, keyboard moves), the map browser's mod lens with its filters, sort and Add, the summary, co-editors, visibility, the synced pack with Download on packs, and Start from this pool. Past pools from otdb, tournament hosts and community submissions stay as reference: pool search by type (past, built or both), every osu! map (Check first, Unranked and explicit maps), map history, the check, Open in packs and sending a pool. Mod values come from the hinai mirror, and there's no public API. `pools/search-links.md` covers the map browser's `?browse=` link and every search param, and an eval case covers it.
 - A README banner, and the haruhime.moe Discord server wherever the docs list help (README, CONTRIBUTING, SECURITY and `llms.txt`).
 - Skill `haruhime-next-kit`, for building a haruhime.moe-style Next.js app's server side with `@haruhimemoe/next-kit` 0.1.0: the subpaths and their peers, wiring env, MongoDB, rate limits and osu! sign-in, a route handler, the osu! budget, bearer-auth routes and the test helpers. An eval case covers it, and the README, `llms.txt` and plugin description list it.
+- Issue templates (a wrong or broken skill, a skill request, and links to the Discord server and private vulnerability reporting), a pull request checklist and `CODEOWNERS`.
 
 ### Changed
 
@@ -35,6 +36,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhimemoe-packages` covers every package at its current version (pool 0.2.0, osu 0.3.0, hinai 0.3.0, compliance 0.1.1, ui 0.4.0, brand 0.4.0) and the new `@haruhimemoe/next-kit` 0.1.0, with the `/format`, `/testing`, `/palette`, `/content-filter` and `/service` entry points, which versions go together, and that every version is published with npm provenance from a GitHub release. It no longer names sheets.haruhime.moe, which isn't live. The `packages-map` eval accepts next-kit for sign-in.
 - `pools` covers editor v2.1: templates on `/new` and slot targets (count 0 to 16, optional star range), slot notes that public pages show, covers and preview clips from osu!'s servers, undo (20 steps, no redo), export (IDs, `!mp map <id> 0` and `!mp mods` lines, CSV), Recent changes for the owner and editors, and drag and drop with keyboard buttons. The detail is in `pools/editor.md`, and the `pools-editor` eval covers export and undo.
 - `scripts/validate.mjs` also checks that `llms.txt` lists exactly the skills and reference files there are, that both manifests carry the same description, that every eval case with a skill-fired grader also grades the answer, and that the `no-trigger-*` patterns catch every skill.
+- CONTRIBUTING and AGENTS.md say skill changes reach existing installs only when a release bumps the plugin's `version`.
 
 ### Fixed
 
@@ -45,6 +47,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `haruhime-brand`: `brandFiles` and `previewHtml` load the native PNG renderer too, not only `svgToPng` and the CLI.
 - `haruhime-brand`: sheets.haruhime.moe isn't live yet, so the product table no longer links it.
 - `packs`: `api.md` is a fresh copy of the live API docs, so it has what had drifted: `description` left out when empty, `ownerName` `Unknown player`, a moderator's hide and the pin on `PUT`, pinned packs not marked by `GET /packs`, and the search index's `s`, `n`, `o`, `c`, `d` and `u` fields. The page list adds `/p/<slug>/edit` and `/brand`.
+
+### Security
+- CI runs its actions from pinned commit SHAs, and Dependabot groups their updates. SECURITY.md lists GitHub private vulnerability reporting first, then email.
+
 
 ## [0.1.0] - 2026-09-23
 

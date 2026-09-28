@@ -1,0 +1,23 @@
+name: Wrong or broken skill
+description: A skill gave a wrong answer, didn't load, or loaded when it shouldn't have
+labels: [bug]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      placeholder: pools
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you asked Claude, what it answered, and what's right instead (with a link to the source if you have one).
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Plugin and Claude Code versions
+      placeholder: haruhime 0.1.0, Claude Code 2.1.280
