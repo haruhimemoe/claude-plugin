@@ -4,13 +4,15 @@
  *       under 1024 characters with `name` equal to the folder and a `description` starting with
  *       "Use when", a body under the word budget, relative links that resolve (in SKILL.md and
  *       its reference files), a "## Sources" section with a "checked YYYY-MM-DD" date in it, and
- *       at least one eval case whose skill-fired grader names it. Also checks the manifests
- *       agree on name, version and source, and that the README's skill table lists exactly the
- *       skills there are.
+ *       at least one eval case whose skill-fired grader names it. Every eval case with a
+ *       skill-fired grader also grades the answer, and every no-trigger case's negative pattern
+ *       catches every skill. Also checks the manifests agree on name, version, source and
+ *       description, and that the README's skill table and llms.txt's skill and reference file
+ *       lists name exactly the skills and reference files there are.
  *       Run: node scripts/validate.mjs
  * @author David @dvhsh (https://dvh.sh)
  * @created Wed Sep 23, 2026
- * @modified Wed Sep 23, 2026
+ * @modified Mon Sep 28, 2026
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -41,6 +43,9 @@ else {
   if (path.resolve(ROOT, entry.source ?? "") !== PLUGIN) {
     fail("marketplace.json", `source ${entry.source} isn't ./plugins/haruhime`);
   }
+  if (entry.description !== plugin.description) {
+    fail("marketplace.json", "the plugin entry's description differs from plugin.json's");
+  }
 }
 
 // Relative markdown links in `text` must resolve from `dir`.
@@ -50,17 +55,38 @@ const checkLinks = (where, dir, text) => {
   }
 };
 
-// Skill names each eval case's skill-fired grader expects.
+// Skill names each eval case's skill-fired grader expects. A case with one also needs a grader
+// on the answer. No-trigger cases' negative patterns (`max: 0`) are kept to test below.
 const evaluated = new Set();
+const negatives = [];
 for (const name of dirs(EVALS)) {
-  const grader = path.join(EVALS, name, "graders/skill-fired.md");
-  if (!existsSync(grader)) continue;
+  const graders = path.join(EVALS, name, "graders");
+  if (!existsSync(graders)) continue;
+  const files = readdirSync(graders).filter((file) => file.endsWith(".md"));
+  for (const file of files) {
+    const text = readFileSync(path.join(graders, file), "utf8");
+    const pattern = /^input_match:\s*'(.*)'\s*$/m.exec(text)?.[1];
+    if (pattern && /^max:\s*0\s*$/m.test(text)) negatives.push({ where: `evals/${name}/graders/${file}`, pattern });
+  }
+  if (!files.includes("skill-fired.md")) continue;
+  const grader = path.join(graders, "skill-fired.md");
   const skill = /\?([a-z0-9-]+)"'\s*$/m.exec(readFileSync(grader, "utf8"))?.[1];
   if (skill) evaluated.add(skill);
+  if (files.length < 2) fail(`evals/${name}`, "has a skill-fired grader but no grader on the answer");
 }
 
 const skills = dirs(SKILLS);
 if (skills.length === 0) fail("skills/", "no skills");
+
+// Every no-trigger pattern must catch every skill, with or without the plugin prefix.
+for (const { where, pattern } of negatives) {
+  const regex = new RegExp(pattern);
+  for (const dir of skills) {
+    if (!regex.test(`"skill":"${dir}"`) || !regex.test(`"skill": "haruhime:${dir}"`)) {
+      fail(where, `negative pattern doesn't catch the ${dir} skill`);
+    }
+  }
+}
 
 for (const dir of skills) {
   const where = `skills/${dir}/SKILL.md`;
@@ -109,6 +135,31 @@ for (const dir of skills) {
   listed.delete(dir);
 }
 for (const extra of listed) fail("README.md", `skill table lists ${extra}, which has no folder`);
+
+// llms.txt links every skill's SKILL.md under "## Skills" and every reference file under
+// "## Reference files", each at its path on main, and nothing else.
+const llms = readFileSync(path.join(ROOT, "llms.txt"), "utf8");
+const section = (title) => new RegExp(`^## ${title}$([\\s\\S]*?)(?=^## |(?![\\s\\S]))`, "m").exec(llms)?.[1] ?? "";
+const BLOB = "https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/";
+const bullets = (title) =>
+  [...section(title).matchAll(/^- \[([^\]]+)\]\(([^)]+)\)/gm)].map(([, label, href]) => ({ label, href }));
+const compare = (title, expected, labelOf) => {
+  const seen = new Map(bullets(title).map(({ label, href }) => [label, href]));
+  for (const file of expected) {
+    const label = labelOf(file);
+    if (!seen.has(label)) fail("llms.txt", `"## ${title}" has no line for ${label}`);
+    else if (seen.get(label) !== `${BLOB}${file}`) fail("llms.txt", `${label} should link ${BLOB}${file}`);
+    seen.delete(label);
+  }
+  for (const extra of seen.keys()) fail("llms.txt", `"## ${title}" lists ${extra}, which doesn't exist`);
+};
+compare("Skills", skills.map((dir) => `${dir}/SKILL.md`), (file) => file.split("/")[0]);
+const references = skills.flatMap((dir) =>
+  readdirSync(path.join(SKILLS, dir))
+    .filter((file) => file !== "SKILL.md" && file.endsWith(".md"))
+    .map((file) => `${dir}/${file}`),
+);
+compare("Reference files", references, (file) => file);
 
 if (errors.length > 0) {
   console.error(errors.join("\n"));

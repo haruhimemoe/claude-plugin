@@ -22,7 +22,7 @@ claude plugin validate . --strict
 claude plugin validate plugins/haruhime --strict
 ```
 
-`scripts/validate.mjs` checks each skill's frontmatter, word budget, links, sources, eval coverage, and the README's skill table. The `claude plugin validate` calls check the marketplace and plugin manifests.
+`scripts/validate.mjs` checks each skill's frontmatter, word budget, links, sources and eval coverage (a skill-fired grader plus a grader on the answer, and no-trigger patterns that catch every skill), the README's skill table, the skill and reference file lists in `llms.txt`, and that both manifests carry the same description. The `claude plugin validate` calls check the marketplace and plugin manifests.
 
 ## Evals
 
