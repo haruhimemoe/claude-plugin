@@ -5,7 +5,7 @@ description: Use when building the server side of a haruhime.moe-style Next.js a
 
 # @haruhimemoe/next-kit
 
-The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.2.1, the current release. Anything marked 0.2.0 isn't in 0.1.0.
+The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.4.0.
 
 **There's no root entry.** Import a subpath:
 
@@ -16,6 +16,7 @@ The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhi
 | `/mongo` | One MongoClient per process, Mongoose on it, safe index builds | `mongodb` ^7.6, `mongoose` ^9.10.2 |
 | `/auth` | better-auth with osu! as the only sign-in | `better-auth` ^1.7.5, `mongodb`, `@haruhimemoe/osu` 0.2, 0.3 or 0.4 (0.4 from 0.2.1) |
 | `/auth-react` | The browser half: signed-in marker, account store, `useAccount`, `RestoreSignedIn`, and (0.2.0) the account components | `react` ^19.3, `next` ^16.3.6, `@haruhimemoe/ui` ^0.5.0 (0.2.0) |
+| `/seo` | SEO builders (0.3.0) | none |
 | `/testing` | Vitest helpers | `vitest` ^5, `msw` ^2.15, `mongodb-memory-server` ^11.3 |
 
 ```sh
@@ -62,6 +63,10 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 
 **Account components (0.2.0),** styled with `@haruhimemoe/ui`: `createAuthComponents(authClient, kit)` in a `"use client"` module binds `SignInWithOsu` (errors read by `signInErrorMessage`), `SignOutButton`, `AccountMenu` (ui's `HeaderMenu`) and `DeleteAccountForm` (type the username, then `DELETE /api/account`). `osuAvatarSrc(url)` keeps an avatar only on `OSU_AVATAR_HOSTS` (a.ppy.sh, osu.ppy.sh); allow both in `img-src`.
 
+## SEO (0.3.0)
+
+`/seo`: metadata, robots, sitemap, JSON-LD and llms.txt from one `Site` record, never by hand. See [seo.md](seo.md).
+
 ## Tests
 
 `startMemoryMongo` as Vitest's globalSetup (one in-memory MongoDB per run), `setupTestDb` to empty collections before each test, `setupMsw(...handlers)` (an unhandled request is an error) and `stubOsuAppEnv()`. Mock the hinai mirror with `@haruhimemoe/hinai/testing`'s handlers.
@@ -74,12 +79,11 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 - Different marker cookie names on the two sides, or a new auth instance per request.
 - Calling `refuseWithoutBearer` without `await`: a promise is always truthy, so `if (denied) return denied` fires even for the right secret.
 - Hand-rolled error shapes, counters, redirects, sign-in buttons or account menus the kit already has.
-- next-kit 0.2.0 with osu 0.4: npm refuses it. Use 0.2.1.
 
 ## Related
 
-- `osu-api-v2` for the budget hook and sign-in scopes; `haruhime-ui` for the pages; `haruhimemoe-packages` for the other packages.
+- `osu-api-v2` (budget hook, sign-in scopes), `haruhime-ui` (pages), `haruhimemoe-packages` (the rest).
 
 ## Sources
 
-- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md) 0.2.1, checked 2026-09-28.
+- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md) 0.4.0, checked 2026-10-02.

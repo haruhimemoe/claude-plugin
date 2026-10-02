@@ -2,7 +2,7 @@
 
 # @haruhimemoe/ui: which component
 
-"(client)" marks a component whose file carries `"use client"`. "0.5.0" marks one that isn't in 0.4.0 (0.2.0, 0.3.0 and 0.4.0 likewise). Import everything from `@haruhimemoe/ui`.
+"(client)" marks a component whose file carries `"use client"`. "0.6.0" marks one that isn't in 0.5.0 (0.2.0 to 0.5.0 likewise). Import everything from `@haruhimemoe/ui`.
 
 ## Page frame
 
@@ -65,3 +65,7 @@
 | Icons and the parent wordmark | `GitHubIcon`, `DiscordIcon` (0.3.0), `HaruhimeWordmark`, `HaruhimeWordmarkLink` |
 
 The osu! pieces take plain numbers, not osu! API types, and are Server Components. For the same numbers as plain text elsewhere (`m:ss`, two-decimal stars), use `@haruhimemoe/osu/format` (osu 0.3.0 and later).
+
+## Footer tools column (0.6.0)
+
+`SiteFooter`'s `tools` prop (`{ current: "packs" | "pools" | "bb" }`) adds a "haruhime tools" column: the other live haruhime.moe tools as "name: blurb" links and "All tools" on www.haruhime.moe, with the current tool left out. `HARUHIME_TOOLS` (each `{ id, name, href, blurb }`) and `haruhimeToolsColumn(current)` give the same data for a custom footer. www's own footer doesn't use it: its Tools column already lists every tool.

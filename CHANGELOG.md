@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-02
+
+### Changed
+
+- `haruhime-ui` covers ui 0.6.0: `SiteFooter`'s `tools` prop (the "haruhime tools" column), `HARUHIME_TOOLS` and `haruhimeToolsColumn`.
+- `haruhime-next-kit` covers next-kit 0.4.0: the `/seo` subpath (0.3.0: `siteMetadata`, `homeMetadata`, `pageMetadata`, `notFoundMetadata`, `pageTitle`, `clampDescription`, `robots` and `AI_BOTS`, `sitemapEntries`, the `ld` JSON-LD builders and `HARUHIME_ORG`, `llmsTxt`, `llmsFull`, `textResponse`) and 0.4.0's short title suffix, with a new common mistake: hand-built metadata.
+- `haruhime-brand` covers brand 0.6.0: per-page link previews with `ogCardSvg` and `ogCard`, `OG_CARD`, `asciiText` and `fitLines`.
+- `osu-bbcode` covers bbcode 0.2.2: `OSU_WIDTHS` and `OSU_FONT_SIZES` for previews that wrap where osu! does.
+- `haruhimemoe-packages` lists every package at its npm version (bbcode 0.2.2, ui 0.6.0, brand 0.6.0, next-kit 0.4.0).
+- Every package skill points at its README rendered on haruhime.moe (`/libraries/<name>`, with live npm and GitHub numbers on `/libraries`).
+- bb.haruhime.moe is live (since 2026-09-28): `osu-bbcode`, `haruhime-brand`, the README and `llms.txt` no longer say it's launching soon.
+
+### Added
+
+- Reference files `haruhime-next-kit/seo.md` (the `/seo` helpers, each site's wiring, gotchas) and `haruhime-brand/page-cards.md` (per-page link previews).
+
 ## [0.3.0] - 2026-09-28
 
 ### Added

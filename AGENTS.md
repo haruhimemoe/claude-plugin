@@ -6,7 +6,7 @@ A Claude Code plugin of osu! skills from haruhime.moe, which makes osu! tools fo
 
 - `.claude-plugin/marketplace.json`: the `haruhimemoe` marketplace. It lists one plugin, `haruhime`, with `source` `./plugins/haruhime`.
 - `plugins/haruhime/.claude-plugin/plugin.json`: the plugin manifest (name, version, description). Its description and the marketplace entry's stay the same text.
-- `plugins/haruhime/skills/<name>/SKILL.md`: one skill per folder. Reference files sit next to the skill that links them (`osu-api-v2/client.md`, `osu-bbcode/tags.md`, `hinai-mirror/client.md`, `haruhime-ui/components.md`, `osu-mappool-data/pack-key-format.md`, `packs/api.md`, `pools/editor.md`, `pools/search-links.md`), and `llms.txt` lists each one.
+- `plugins/haruhime/skills/<name>/SKILL.md`: one skill per folder. Reference files sit next to the skill that links them (`osu-api-v2/client.md`, `osu-bbcode/tags.md`, `hinai-mirror/client.md`, `haruhime-ui/components.md`, `haruhime-next-kit/seo.md`, `haruhime-brand/page-cards.md`, `osu-mappool-data/pack-key-format.md`, `packs/api.md`, `pools/editor.md`, `pools/search-links.md`), and `llms.txt` lists each one.
 - `plugins/haruhime/evals/<case>/`: `prompt.md` and `graders/` for `claude plugin eval`. `evals/results/` is eval output and stays out of git.
 - `scripts/validate.mjs`: the checks CI runs on the skills, evals, manifests and README.
 - `README.md` is for users, `CONTRIBUTING.md` for contributors, and `llms.txt` lists the skills and reference files for LLMs, with a GitHub link to each.

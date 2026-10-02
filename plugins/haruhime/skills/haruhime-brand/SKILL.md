@@ -12,7 +12,7 @@ haruhime.moe (osu! tools for players, mappers and hosts) and every one of its to
 | haruhime (the parent site) | `h.` | 333 (pink) | haruhime.moe |
 | packs | `pk.` | 333 (pink) | packs.haruhime.moe |
 | pools | `pl.` | 200 (blue) | pools.haruhime.moe |
-| bb (0.5.0) | `bb.` | 265 (violet) | bb.haruhime.moe, launching soon: don't link it as live |
+| bb (0.5.0) | `bb.` | 265 (violet) | bb.haruhime.moe |
 | sheets | `sh.` | 150 (green) | not live yet: don't link it |
 
 - **Wordmark:** the lowercase name in Nunito ExtraBold plus a dot in the highlight color. haruhime's is stacked instead: "haruhime" over a half-size ".moe".
@@ -52,7 +52,7 @@ Once a site has deployed its brand files, its banners have stable URLs under `/b
 </a>
 ```
 
-Swap `haruhime` for the product and its site; the alt text is the name and tagline. From 0.5.0 haruhime's tagline is "osu! tools for players, mappers and hosts": rerun `haruhime-brand haruhime` to redraw its preview and banner. Use the host that answers without a redirect (`www.haruhime.moe`): GitHub's image proxy may not follow one. The PNG is for places that don't show SVG.
+Swap `haruhime` for the product and its site; the alt text is the name and tagline. Use the host that answers without a redirect (`www.haruhime.moe`): GitHub's image proxy may not follow one. The PNG is for places that don't show SVG.
 
 ## In code
 
@@ -64,6 +64,8 @@ bannerSvg(PRODUCTS.haruhime, { background: "light" });
 ```
 
 Importing the package doesn't load the native PNG renderer; only `svgToPng`, `brandFiles`, `previewHtml` and the CLI do. Still, keep the root entry to build time (Node 22.12+). The exception is `@haruhimemoe/brand/palette` (0.4.0 and later): `palette`, `TOKENS` and `hslToHex`, importing nothing, so a page or edge route can show swatches (install the package as a regular dependency then). Drawing and PNG rendering stay build-time. A hue that isn't an integer 0–359, or a `brandFiles` name that isn't lowercase `a-z0-9-` starting with a letter, throws `RangeError`. The fonts are subset to printable ASCII, so any other character throws: keep names, marks and taglines ASCII.
+
+Page cards (0.6.0): `ogCardSvg` and `ogCard` draw a 1200×630 preview per page (title, subtitle, eyebrow); see [page-cards.md](page-cards.md).
 
 ## Adding a product
 
@@ -78,6 +80,6 @@ Add an entry to `PRODUCTS` in the brand repo's `src/products.ts`: a lowercase `n
 
 ## Sources
 
-- [@haruhimemoe/brand README](https://github.com/haruhimemoe/brand#readme) and [CHANGELOG](https://github.com/haruhimemoe/brand/blob/main/CHANGELOG.md) 0.5.0, checked 2026-09-28.
+- [@haruhimemoe/brand README](https://github.com/haruhimemoe/brand#readme) and [CHANGELOG](https://github.com/haruhimemoe/brand/blob/main/CHANGELOG.md) 0.6.0, checked 2026-10-02.
 - [@haruhimemoe/brand CONTRIBUTING](https://github.com/haruhimemoe/brand/blob/main/CONTRIBUTING.md), "Adding a product", checked 2026-09-28.
-- [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#setup), "Setup" (the theme and `--hue`), checked 2026-09-24.
+- [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#setup), "Setup", checked 2026-09-24.

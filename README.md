@@ -18,7 +18,7 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | Skill | Use it when |
 | --- | --- |
 | `osu-api-v2` | Calling the osu! API v2: OAuth, scopes, rate limits, beatmaps, star ratings with mods, and `@haruhimemoe/osu`, including its `/collections` reader and writer for `collection.db`. |
-| `osu-bbcode` | Writing or fixing osu! BBCode for a userpage, forum post or beatmap description: the tags osu! reads, sizes, imagemaps, flags, gradients and the 60,000 character limit, and `@haruhimemoe/bbcode` to parse, render, lint, count and build it from code, including templates. bb.haruhime.moe, its editor, is launching soon. |
+| `osu-bbcode` | Writing or fixing osu! BBCode for a userpage, forum post or beatmap description: the tags osu! reads, sizes, imagemaps, flags, gradients and the 60,000 character limit, and `@haruhimemoe/bbcode` to parse, render, lint, count and build it from code, including templates. bb.haruhime.moe, its editor, is live. |
 | `osu-mappool-content-rules` | Checking whether a map may be used in an officially supported tournament, by hand or with `@haruhimemoe/compliance`. |
 | `osu-official-tournament-support` | Planning a tournament that wants badges and official support: eligibility, screening, badges, what to send the osu! team. |
 | `hinai-mirror` | Getting beatmap metadata or `.osz` downloads from mirror.hinamizawa.ai, by hand or with `@haruhimemoe/hinai`. |

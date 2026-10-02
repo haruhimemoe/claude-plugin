@@ -20,7 +20,7 @@ osu! reads a fixed set of lowercase BBCode tags in forum posts, userpages ("me!"
 - **Flags:** the old PNGs are small and fixed-size. The current SVG flags have no size of their own and stretch to the width they're shown in.
 - Tags from other forums (`[font]`, `[table]`, `[center]`) don't exist on osu!.
 
-## @haruhimemoe/bbcode (0.2.0)
+## @haruhimemoe/bbcode (0.2.2)
 
 Parse, render, lint and count osu! BBCode the way osu! does. No dependencies; browsers, Node 22.12+, Bun and Deno. `bun add @haruhimemoe/bbcode`. The [README](https://github.com/haruhimemoe/bbcode#readme) has every signature: read it instead of guessing.
 
@@ -31,6 +31,7 @@ Parse, render, lint and count osu! BBCode the way osu! does. No dependencies; br
 | `/imagemap` | `parseImagemap`, `validateImagemap`, `serializeImagemap`, `formatPercent` |
 | `/flags` | `COUNTRIES` (249), `findCountry`, `searchCountries`, `flagUrl`, `normalizeCountryCode` |
 | `/template` | `fillTemplate`, `templateFields`, `FIELD_KINDS` |
+| `OSU_WIDTHS`, `OSU_FONT_SIZES` (0.2.2) | osu!'s desktop width and font size (userpage 890/14, forum 750/14, beatmap 430/12) for previews that wrap as osu! does |
 | `/styles.css` | Styles for `render`; dark by default, `className: "bb--light"` for light |
 
 - **Show user input as typed:** `escapeBBCode(text)` breaks every tag osu! would read (a zero-width space after `[`). Never paste raw names or titles into generated BBCode.
@@ -48,9 +49,9 @@ Parse, render, lint and count osu! BBCode the way osu! does. No dependencies; br
 - Stricter values: URLs with spaces, odd imagemap numbers and odd YouTube ids are refused where osu! prints something broken.
 - Not rendered: smilies, image sizes, current profile names.
 
-## bb.haruhime.moe (launching soon)
+## bb.haruhime.moe
 
-An osu! BBCode editor built on this package, launching soon; don't send people to its URL as if it works yet. Its [README](https://github.com/haruhimemoe/bb.haruhime.moe#readme) lists what it will have: an editor with a live preview, lint underlines with fixes, a count per target and named drafts kept in the browser; color, gradient and flag pickers; a Players tool (up to 64 names, ids or links to flag-plus-profile lines); pool import from a public or unlisted pools.haruhime.moe pool; a collab maker for `[imagemap]` regions; `/docs` for every tag; and templates (built-in, your own after osu! sign-in, and a public gallery). It never hosts images.
+An osu! BBCode editor built on this package, live at https://bb.haruhime.moe: send people there to write, preview and lint. Its [README](https://github.com/haruhimemoe/bb.haruhime.moe#readme) lists what it has: an editor with a live preview, lint underlines with fixes, a count per target and named drafts kept in the browser; color, gradient and flag pickers; a Players tool (up to 64 names, ids or links to flag-plus-profile lines); pool import from a public or unlisted pools.haruhime.moe pool; a collab maker for `[imagemap]` regions; `/docs` for every tag; and templates (built-in, your own after osu! sign-in, and a public gallery). It never hosts images.
 
 ## Common mistakes
 
@@ -62,6 +63,6 @@ An osu! BBCode editor built on this package, launching soon; don't send people t
 
 ## Sources
 
-- [@haruhimemoe/bbcode README](https://github.com/haruhimemoe/bbcode#readme) and [CHANGELOG](https://github.com/haruhimemoe/bbcode/blob/main/CHANGELOG.md) 0.2.0, checked 2026-09-28.
+- [@haruhimemoe/bbcode README](https://github.com/haruhimemoe/bbcode#readme) and [CHANGELOG](https://github.com/haruhimemoe/bbcode/blob/main/CHANGELOG.md) 0.2.2, checked 2026-10-02.
 - [bb.haruhime.moe README](https://github.com/haruhimemoe/bb.haruhime.moe#readme), checked 2026-09-28.
 - osu!'s BBCode behavior as osu-web renders it (the package's tests follow it), checked 2026-09-28.

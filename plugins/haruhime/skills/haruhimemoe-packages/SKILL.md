@@ -5,7 +5,7 @@ description: Use when building an osu! tool on the @haruhimemoe npm packages (pa
 
 # The @haruhimemoe packages
 
-Small, separate packages, one repo each under github.com/haruhimemoe, shared by the haruhime.moe tools (osu! tools for players, mappers and hosts). Each does one job. Current versions: pool 0.2.0, osu 0.4.0, hinai 0.3.1, compliance 0.1.1, bbcode 0.2.0, ui 0.5.0, brand 0.5.0, next-kit 0.2.1.
+Small, separate packages, one repo each under github.com/haruhimemoe, shared by the haruhime.moe tools (osu! tools for players, mappers and hosts). Each does one job. Current versions: pool 0.2.0, osu 0.4.0, hinai 0.3.1, compliance 0.1.1, bbcode 0.2.2, ui 0.6.0, brand 0.6.0, next-kit 0.4.0. READMEs: https://www.haruhime.moe/libraries/<name>.
 
 | Job | Package or entry point | Runs in |
 | --- | --- | --- |
@@ -58,5 +58,5 @@ Small, separate packages, one repo each under github.com/haruhimemoe, shared by 
 
 ## Sources
 
-- READMEs and CHANGELOGs of [pool](https://github.com/haruhimemoe/pool#readme) 0.2.0, [osu](https://github.com/haruhimemoe/osu#readme) 0.4.0, [hinai](https://github.com/haruhimemoe/hinai#readme) 0.3.1, [compliance](https://github.com/haruhimemoe/compliance#readme) 0.1.1, [bbcode](https://github.com/haruhimemoe/bbcode#readme) 0.2.0, [ui](https://github.com/haruhimemoe/ui#readme) 0.5.0, [brand](https://github.com/haruhimemoe/brand#readme) 0.5.0 and [next-kit](https://github.com/haruhimemoe/next-kit#readme) 0.2.1, checked 2026-09-28.
+- READMEs and CHANGELOGs of [pool](https://github.com/haruhimemoe/pool#readme) 0.2.0, [osu](https://github.com/haruhimemoe/osu#readme) 0.4.0, [hinai](https://github.com/haruhimemoe/hinai#readme) 0.3.1, [compliance](https://github.com/haruhimemoe/compliance#readme) 0.1.1, [bbcode](https://github.com/haruhimemoe/bbcode#readme) 0.2.2, [ui](https://github.com/haruhimemoe/ui#readme) 0.6.0, [brand](https://github.com/haruhimemoe/brand#readme) 0.6.0 and [next-kit](https://github.com/haruhimemoe/next-kit#readme) 0.4.0, checked 2026-10-02.
 - Each package's release workflow (`.github/workflows/release.yml`: a published GitHub release, `npm publish --provenance`), checked 2026-09-28.
