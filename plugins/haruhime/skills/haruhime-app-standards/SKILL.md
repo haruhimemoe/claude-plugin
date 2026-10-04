@@ -20,7 +20,7 @@ Every haruhime app keeps its own users, keys and database, but they all behave t
 `createApiKeyGuard({ store, limiter, resolveCaller, messages, limits?, now? })` (same subpath) returns `withApiKey`; wrap every `/api/v1` handler with it: `export const GET = withApiKey(async (request, caller) => ...)`. Never write a second guard by hand.
 
 - `resolveCaller(userId)` looks the key's owner up and returns null for a deleted or system account (a 401). `stamp()` (recording `lastUsedAt`, at most once an hour) runs only once `resolveCaller` has returned a real caller, so a delete racing a request never stamps a key that no longer has an owner.
-- **Gotcha:** build the app's limiter with `now: () => Date.now()`, read per call, not a value captured at import. Otherwise a test's fake timers never reach it. pools' limiter is missing this; packs' has it.
+- **Gotcha:** build the app's limiter with `now: () => Date.now()`, read per call, not a value captured at import. Otherwise a test's fake timers never reach it.
 
 | scope | limit | window | subject |
 |---|---|---|---|
