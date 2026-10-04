@@ -34,7 +34,7 @@ packs' AGENTS.md section 7 is the reference copy of this pattern: a new content 
 - **packs** (`30c9530`): the template for the list above. `constants/guide.ts`, `docs.ts` and `legal.ts` merged into one `CONTENT` registry; `lib/docs.ts` and `utils/doc-markdown.ts` deleted; `/guide` is `/guides`.
 - **pools** (`79607c7`): added `/docs` (`content/docs/api.mdx` replacing its old TSX API page) and `/brand`. No `/guides` yet: pools has no guide content, so `next-kit check` doesn't require one. Legal moved onto the shared pages.
 - **bb** (`8c7e9a6`): `/docs/guides/*` is `/guides/*`. Tag pages stay at `/docs/tags/<tag>` as `extra.docs` (an app-made entry, not a registry one, in `defineContent`'s `extra` field). `DocsNav`, `DocsSearch` and `lib/guide-source.ts` are replaced by ui's `ContentNav`/`ContentSearch`; `LiveExample`, `TagReference`, `DocsFaq` and bb's `<Example>` MDX transform stay bb's own. `/docs/api` is MDX and shows in the nav. Added `/brand`.
-- **haruhime.moe** (in progress on `phase2`, not yet merged to main): adding `@next/mdx`; `/terms`, `/privacy`, `/disclaimer` become `content/legal/*.mdx` at `/legal/*`; `/brand` moves to `BrandPage` with `slots` (README banners, product family); no `/docs` (no API) and no `/guides`.
+- **haruhime.moe** (`79e9128`): `@next/mdx`; `/terms`, `/privacy`, `/disclaimer` are `content/legal/*.mdx` at `/legal/*`; `/brand` is `BrandPage` with `slots` (README banners, product family); no `/docs` (no API) and no `/guides`.
 
 ## Brand page
 

@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-04
+
 ### Changed
 
 - `haruhime-app-standards` covers the shipped app standards phase 2 (2026-10-04): `/docs`, `/guides`, `/legal` and `/brand` as one opt-in content registry, the cookie cutter file list, per-app rollout (packs `30c9530`, pools `79607c7`, bb `8c7e9a6`), and `next-kit check`'s `brand`/`legal`/`docs`/`guides` standards and `content/docs/api.mdx`. New reference file `content-pages.md`.
@@ -17,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - `haruhime-app-standards`: the "Crawl files" trim had dropped that bb's `robots.ts` also disallows `/me` (its separate "my templates" page) alongside `/account`; restored.
+- `haruhime-app-standards`: `content-pages.md` lists haruhime.moe as merged (`79e9128`), not in progress.
 - `haruhime-ui`: now says 0.11.1, not 0.11.0 (a `BrandPage` alt-text fix shipped after this task's first pass, and all four apps are on it: haruhime.moe `79e9128`, packs `ae59cb6`, pools `e132078`, bb `9dd347b`). Restored the dropped `unavailableReason` example ("EZ while HR is on").
 
 ## [0.5.0] - 2026-10-04
@@ -113,7 +116,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `haruhimemoe` marketplace; install with `/plugin install haruhime@haruhimemoe`.
 - A `claude plugin eval` suite with a case for every skill and near-miss negatives.
 
-[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.5.0...HEAD
+[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.2.0...v0.3.0
