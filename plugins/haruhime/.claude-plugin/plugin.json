@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "haruhime",
   "description": "osu! skills for Claude, from haruhime.moe's osu! tools for players, mappers and hosts: the osu! API v2, osu! BBCode for userpages, forum posts and beatmap descriptions, tournament content rules and official support, mappools and pack keys, the hinai beatmap mirror, the packs.haruhime.moe pack builder and its API, the pools.haruhime.moe pool builder and its API, bb.haruhime.moe's BBCode editor, the API key, rate limit and crawl-file standards every haruhime.moe app follows, haruhime.moe branding, UI components and Next.js server kit, and the @haruhimemoe packages.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": {
     "name": "David",
     "url": "https://dvh.sh"
