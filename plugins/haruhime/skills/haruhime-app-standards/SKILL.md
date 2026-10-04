@@ -33,14 +33,14 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 
 ## Routes every app with an API serves
 
-- `GET /api/v1/me`, `GET /api/v1/openapi.json` (both allowed in robots)
+- `GET /api/v1/me` (falls under the `/api/` disallow in robots, like the rest of the API), `GET /api/v1/openapi.json` (the one `/api/` path robots allows back in)
 - `GET|POST|DELETE /api/me/api-key` (session only, same-site via `refuseCrossSite`, the `key-create` limit on `POST`)
 - `/docs/api` (a dynamic `docs/[slug]/page.tsx` counts too)
 - a key panel on the account page (packs' is `ApiKeyCard`)
 
 ## Crawl files every app serves
 
-`robots.ts` (disallow `/api/` except the OpenAPI document, plus `/me`, `/admin` and `/signin`; `aiBots: "allow"`), `sitemap.ts` (real content dates only, never a build timestamp), `llms.txt` and `llms-full.txt` as route handlers, `.well-known/security.txt/route.ts` (`buildSecurityTxt`, with the policy at the repo's `SECURITY.md`; pass `contactUrl` for a GitHub private vulnerability report link, listed before the email).
+`robots.ts` (disallow `/api/` except the OpenAPI document, plus `/admin`, `/signin` and the app's account page: packs' is `/me`, pools' and bb's is `/account` (bb also disallows `/me`, its separate "my templates" page); `aiBots: "allow"`), `sitemap.ts` (real content dates only, never a build timestamp), `llms.txt` and `llms-full.txt` as route handlers, `.well-known/security.txt/route.ts` (`buildSecurityTxt`, with the policy at the repo's `SECURITY.md`; pass `contactUrl` for a GitHub private vulnerability report link, listed before the email).
 
 ## Check
 
