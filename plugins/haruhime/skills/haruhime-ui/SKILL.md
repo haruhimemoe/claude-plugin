@@ -7,7 +7,7 @@ description: Use when building a haruhime.moe tool's pages or another Next.js pa
 
 React components for the haruhime.moe tools, for **Next.js 16 (app router) only**: the osu!-web-style palette as a Tailwind 4 theme, plus buttons, links, badges, form fields and confirms, filters, tables, osu! beatmap pieces and the site shell. Every component is shown in its states at https://www.haruhime.moe/ui (the page names the version it runs). The [README](https://github.com/haruhimemoe/ui#readme) lists every prop: read it instead of guessing one.
 
-This covers 0.6.0, plus the Content components and `BrandPage` from 0.11.0. Anything marked with a version isn't in the one before it.
+This covers 0.6.0, plus the Content components and `BrandPage` from 0.11.0/0.11.1. Anything marked with a version isn't in the one before it.
 
 ## Setup
 
@@ -26,7 +26,7 @@ bun add -d tailwindcss @tailwindcss/postcss   # if the app doesn't have Tailwind
    @import "@haruhimemoe/ui/theme.css";
    ```
 
-   It adds the palette as Tailwind colors (`bg-b4`, `text-c1` in your own markup too), an `h1` focus ring, and an `@source` line so Tailwind generates the components' classes.
+   It adds the palette as Tailwind colors (`bg-b4`, `text-c1` too), an `h1` focus ring, and an `@source` line so Tailwind generates the components' classes.
 3. **Nunito:** `Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" })` from `next/font/google`, `className={nunito.variable}` on `<html>`. Without it `font-sans` falls back to the system font.
 4. **Hue (optional):** `:root { --hue: 200; }` after the imports; default 333 (pink). Use the product's hue from `@haruhimemoe/brand` (see `haruhime-brand`). Some hues fall under 4.5:1 contrast: `--h2-l` fixes white on `h2` (`42%` at 200, `35%` at 150, `31%` elsewhere from 23 to 205) and `--h1-l` fixes `h1` on `b4` (`77%` from 222 to 283).
 
@@ -41,7 +41,7 @@ Look for a component before writing markup: [components.md](components.md) maps 
 - **Actions and forms:** `Button`, `ButtonLink`, `CopyButton`, `Pagination` (button mode 0.4.0), the fields; `AsyncButton`, `InlineConfirm`, `TypeToConfirm`, `RadioGroup` (0.4.0); `VisibilitySelect`, `CharCounter`, `ReportDisclosure` (0.5.0).
 - **Filters:** `FilterPanel`, `FilterRow`, `ChipGroup`, `Chip` (`unavailableReason` 0.4.0), `RangeSlider`; `ChoiceChips` (0.4.0) for one choice.
 - **osu!:** `StarRating`, `BeatmapStats`, `ModBadge` (0.4.0). **Classes:** `cx` (0.4.0).
-- **Content pages and brand (0.11.0):** `ContentLayout`, `ContentNav`, `ContentSearch`, `ContentIndex`, `ContentPage`, `CopyMarkdownButton` for a docs/guides/legal section; `BrandPage` and `BrandSwatch` for `/brand`, filled from `@haruhimemoe/brand`'s `brandPageData` (typed structurally, no runtime dependency on brand).
+- **Content pages and brand (0.11.0/0.11.1):** `ContentLayout`, `ContentNav`, `ContentSearch`, `ContentIndex`, `ContentPage`, `CopyMarkdownButton` for a docs/guides/legal section; `BrandPage` and `BrandSwatch` for `/brand`, filled from `@haruhimemoe/brand`'s `brandPageData` (typed structurally, no runtime dependency on brand).
 
 Never write a `window.confirm()` or a modal for a destructive action: use `InlineConfirm`, or `TypeToConfirm` when it can't be undone. Sign-in buttons, the account menu and account deletion come from `@haruhimemoe/next-kit/auth-react` 0.2.0; icons and link previews from `@haruhimemoe/brand`.
 
@@ -55,14 +55,14 @@ Never write a `window.confirm()` or a modal for a destructive action: use `Inlin
 
 ## Accessibility
 
-The package's tests run axe-core (WCAG 2.0-2.2, A/AA) on every component, plus keyboard tests on the interactive ones. What's left to you:
+The package's tests run axe-core (WCAG 2.0-2.2, A/AA) on every component, plus keyboard tests on interactive ones. What's left to you:
 
 - Give each field a unique `id`: the label, hint and error hang off it. An `error` sets `aria-invalid` and is announced.
 - Inside a `FilterRow`, give `ChipGroup` and `RangeSlider` `hideLabel`, so each row is announced once.
 - A `live` info or warning `Notice` is only reliably announced when its text changes while mounted: keep it mounted, `<Notice live>{saved ? "Saved." : ""}</Notice>`. Error notices are always announced.
 - A titled `Card` is a region landmark; under another heading, `headingLevel={3}`.
-- A chip that can't be picked right now: `unavailableReason`, not `disabled`, so keyboard users still reach it and hear why.
-- When an `InlineConfirm` removes its own item, move focus somewhere sensible yourself, such as the list's heading.
+- A chip that can't be picked right now (EZ while HR is on): `unavailableReason`, not `disabled`, so keyboard users still reach it and hear why.
+- When an `InlineConfirm` removes its own item, move focus somewhere sensible, such as the list's heading.
 - Give a `Table` a `caption` (`hideCaption` if a heading names it).
 - You write the text: `aria-label` on icon-only buttons, meaningful `label` props, a label on any link around `GitHubIcon`/`DiscordIcon` (hidden from screen readers).
 - At a hue other than 333, check contrast and set `--h1-l` or `--h2-l` (Setup, step 4).
@@ -73,9 +73,9 @@ The package's tests run axe-core (WCAG 2.0-2.2, A/AA) on every component, plus k
 - Passing `onChange`, `onConfirm` or `onClear` from a Server Component page.
 - Using it outside Next.js 16 or with Tailwind 3.
 - Hex colors in app CSS instead of the tokens.
-- Hand-rolling a table, tabs, badge, star pill, visibility picker or character counter the package has.
+- Hand-rolling a table, tabs, badge, star pill, visibility picker, character counter the package has.
 
 ## Sources
 
-- [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#readme) and [CHANGELOG](https://github.com/haruhimemoe/ui/blob/main/CHANGELOG.md) 0.11.0, checked 2026-10-04.
-- Component showcase, https://www.haruhime.moe/ui (running 0.11.0), checked 2026-10-04.
+- [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#readme) and [CHANGELOG](https://github.com/haruhimemoe/ui/blob/main/CHANGELOG.md) 0.11.1, checked 2026-10-04.
+- Component showcase, https://www.haruhime.moe/ui (running 0.11.1), checked 2026-10-04.

@@ -85,6 +85,8 @@ A content section (`/docs`, `/guides`, `/legal`) is built from these, typed agai
 
 New types: `ContentNavItem`, `ContentNavGroup`, `ContentSearchItem`.
 
-## Brand page (0.11.0)
+## Brand page (0.11.0, alt fix 0.11.1)
 
 `<BrandPage {...brandPageData("pools")} />` (`@haruhimemoe/brand`'s `brandPageData`, typed structurally) renders a product's `/brand` page: Name (how to write it), Logo (each file previewed on a dark or light tile with a `download` link), Colors (`BrandSwatch`, click to copy the hex), Type (`fonts`, default Nunito), Do's and don'ts, osu! (not affiliated with ppy), Family (only with `familyHref`), Contact (`mailto:`). `BrandPageProps` also takes `slots.afterLogo`, `slots.afterColors` and `slots.end` for extra sections (haruhime.moe's README banners and product family). `BrandSwatch` (client) and `BrandPage` both ship finished class strings, no tailwind-merge. New types: `BrandPageProps`, `BrandPageAsset`, `BrandPageFont`, `BrandSwatchProps`.
+
+0.11.1 fix: the Logo tile previews use an empty `alt` (the file's name is already on its `download` link, right next to the image), so axe no longer flags `image-redundant-alt` there.

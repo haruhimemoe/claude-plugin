@@ -33,22 +33,22 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 
 ## Routes every app with an API serves
 
-- `GET /api/v1/me` (falls under the `/api/` disallow in robots, like the rest of the API), `GET /api/v1/openapi.json` (the one `/api/` path robots allows back in)
-- `GET|POST|DELETE /api/me/api-key` (session only, same-site via `refuseCrossSite`, the `key-create` limit on `POST`)
+- `GET /api/v1/me` (falls under `/api/`'s disallow in robots, like the rest of the API), `GET /api/v1/openapi.json` (the one `/api/` path robots allows back in)
+- `GET|POST|DELETE /api/me/api-key` (session-only, same-site via `refuseCrossSite`, the `key-create` limit on `POST`)
 - `/docs/api` (`content/docs/api.mdx`, below)
 - a key panel on the account page (packs' is `ApiKeyCard`)
 
 ## Crawl files every app serves
 
-`robots.ts` (disallow `/api/` except the OpenAPI document, plus `/admin`, `/signin` and the app's account page: packs' is `/me`, pools' and bb's is `/account`; `aiBots: "allow"`), `sitemap.ts` (real content dates only, never a build timestamp), `llms.txt` and `llms-full.txt` as route handlers, `.well-known/security.txt/route.ts` (`buildSecurityTxt`, policy at the repo's `SECURITY.md`; pass `contactUrl` for a GitHub private vulnerability report link, listed before the email).
+`robots.ts` (disallow `/api/` except the OpenAPI document, plus `/admin`, `/signin` and the app's account page: packs' is `/me`, pools' and bb's is `/account` (bb also disallows `/me`, its separate "my templates" page); `aiBots: "allow"`), `sitemap.ts` (real content dates only, never a build timestamp), `llms.txt` and `llms-full.txt` as route handlers, `.well-known/security.txt/route.ts` (`buildSecurityTxt`, policy at the repo's `SECURITY.md`; pass `contactUrl` for a GitHub private vulnerability report link, listed before the email).
 
 ## Content pages, llms and brand
 
-`/docs`, `/guides`, `/legal` and `/brand` come from one content registry (`@haruhimemoe/next-kit/docs`) and ui's content and `BrandPage` components. Sections are opt-in: `/legal` and `/brand` always; `/docs` once there's an API or `content/docs/*.mdx`; `/guides` once there's `content/guides/*.mdx`. Each section is `/<section>`, `/<section>/<slug>` and a `.md` mirror; an empty section ships no routes. No redirects: packs' `/guide/*` is now `/guides/*`, bb's `/docs/guides/*` is `/guides/*`. `/brand` is `<BrandPage {...brandPageData("packs")} />`, contact `haruhime@haruhime.moe`. URL table, the cookie cutter file list and per-app notes: [content-pages.md](content-pages.md).
+`/docs`, `/guides`, `/legal` and `/brand` come from one content registry (`@haruhimemoe/next-kit/docs`) and ui's content/`BrandPage` components. Sections are opt-in: `/legal` and `/brand` always; `/docs` once there's an API or `content/docs/*.mdx`; `/guides` once there's `content/guides/*.mdx`. Each section is `/<section>`, `/<section>/<slug>` and a `.md` mirror; an empty section ships no routes. No redirects: packs' `/guide/*` is now `/guides/*`, bb's `/docs/guides/*` is `/guides/*`. `/brand` is `<BrandPage {...brandPageData("packs")} />`, contact `haruhime@haruhime.moe`. URL table, the cookie cutter file list and per-app notes: [content-pages.md](content-pages.md).
 
 ## Check
 
-`next-kit check [dir]` (the bin is `next-kit`, so `bunx next-kit check`) walks `src/app` and `content/`, always checks the crawl files above plus `brand` and `legal` (`content/legal/terms.mdx`, `privacy.mdx`), checks `docs` and `guides` once required (above), and checks the API routes (`content/docs/api.mdx` replaces the phase 1 `/docs/api` route) once `src/app/api/v1/` exists. It prints one `pass`/`FAIL` line per standard, names the missing files, and exits 1 on a failure (or when `src/app` is missing). Route groups like `(public)/` don't change the URL, so the check drops them first. `contentFileDrift(content, { root })` (`@haruhimemoe/next-kit/docs/files`) runs the same drift check from a test. Each app pins next-kit and names it as a `standards` script, run in CI right after Biome:
+`next-kit check [dir]` (the bin is `next-kit`, so `bunx next-kit check`) walks `src/app` and `content/`, always checks the crawl files above plus `brand` and `legal` (`content/legal/terms.mdx`, `privacy.mdx`), checks `docs`/`guides` once required (above), and the API routes (`content/docs/api.mdx` replaces the phase 1 `/docs/api` route) once `src/app/api/v1/` exists. It prints one `pass`/`FAIL` line per standard, names the missing files, and exits 1 on a failure (or when `src/app` is missing). Route groups like `(public)/` don't change the URL, so the check drops them first. `contentFileDrift(content, { root })` (`@haruhimemoe/next-kit/docs/files`) runs the same drift check from a test. Each app pins next-kit and names it as a `standards` script, run in CI right after Biome:
 
 ```json
 "standards": "next-kit check"
@@ -68,7 +68,7 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 
 ## Related
 
-- `haruhime-next-kit` for the rest of the kit (`seo`, `server`, `mongo`, `auth`) this skill's `api-keys` and `check` pieces live beside.
+- `haruhime-next-kit` for the rest of the kit (`seo`, `server`, `mongo`, `auth`) this skill's `api-keys`/`check` pieces live beside.
 - `packs` and `pools` for each app's own API endpoints past `/api/v1/me`.
 - `haruhime-repo-standards` for changelogs and version bumps.
 
