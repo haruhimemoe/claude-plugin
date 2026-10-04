@@ -19,6 +19,7 @@ Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin
 - [haruhime-next-kit](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-next-kit/SKILL.md): A haruhime.moe-style Next.js app's server side with `@haruhimemoe/next-kit`: route helpers, rate limits and osu! budgets in MongoDB, env parsing, the MongoDB client, sign in with osu! through better-auth, and Vitest helpers.
 - [haruhime-brand](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-brand/SKILL.md): The wordmark, icons, link preview, README banners and palette for haruhime.moe and its tools, with `@haruhimemoe/brand`.
 - [haruhime-app-standards](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-app-standards/SKILL.md): The rules every haruhime.moe app (packs, pools, bb or a new one) follows: the API key format and registry, the `/api/v1` guard and its rate limits, the routes an API serves, the crawl files, and the `next-kit check` standards check.
+- [haruhime-repo-standards](https://github.com/haruhimemoe/claude-plugin/blob/main/plugins/haruhime/skills/haruhime-repo-standards/SKILL.md): How every haruhimemoe repo keeps its CHANGELOG.md: Keep a Changelog sections, `[Unreleased]`, dated semver releases for packages and apps, compare links, and which version bump a change needs.
 
 ## Reference files
 

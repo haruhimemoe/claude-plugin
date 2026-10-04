@@ -30,6 +30,7 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | `haruhime-next-kit` | Building a haruhime.moe-style Next.js app's server side with `@haruhimemoe/next-kit`: route handlers, rate limits and osu! budgets in MongoDB, env, the MongoDB client, sign in with osu! through better-auth, and test helpers. |
 | `haruhime-brand` | Giving haruhime.moe or one of its tools its wordmark, icons, link preview, README banners and palette with `@haruhimemoe/brand`. |
 | `haruhime-app-standards` | The rules every haruhime.moe app (packs, pools, bb or a new one) follows for its public API, API keys, rate limits, error responses, robots.txt, sitemap, llms.txt, llms-full.txt and security.txt. |
+| `haruhime-repo-standards` | How every haruhimemoe repo keeps its CHANGELOG.md: Keep a Changelog sections, `[Unreleased]`, dated semver releases for packages and apps, compare links, and which bump a change needs. |
 
 ## Update
 

@@ -70,6 +70,7 @@ Shared guides/docs pages, llms files built from the docs, a brand page per app.
 
 - `haruhime-next-kit` for the rest of the kit (`seo`, `server`, `mongo`, `auth`) this skill's `api-keys` and `check` pieces live beside.
 - `packs` and `pools` for each app's own API endpoints past `/api/v1/me`.
+- `haruhime-repo-standards` for changelogs and version bumps.
 
 ## Sources
 

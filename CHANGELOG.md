@@ -8,12 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Skill `haruhime-repo-standards`: how every haruhimemoe repo, packages and apps alike, keeps its CHANGELOG.md (Keep a Changelog 1.1.0 sections, an always-present `[Unreleased]`, dated semver releases, compare links) and which version bump a change needs on 0.x.
 - Skill `haruhime-app-standards`: the rulebook every haruhime.moe app (packs, pools, bb or a new one) follows for its API key format and prefix registry (`hpk_` packs, `hpl_` pools, `hbb_` bb), the `/api/v1` guard and its rate limits, the routes an app's API serves, the crawl files (robots.txt, sitemap, llms.txt, llms-full.txt, security.txt) and the `next-kit check` standards check, plus a new-app checklist. Covers `@haruhimemoe/next-kit`'s `api-keys` entry point and `next-kit check` bin, both unreleased on `main`.
 
 ### Changed
 
 - `haruhime-next-kit` covers the unreleased `/api-keys` subpath (`createApiKeyStore`, `createApiKeyGuard`) and the `next-kit check` bin, pointing at `haruhime-app-standards` for the shared rules.
 - `packs` and `pools` point their key format and rate-limit details at `haruhime-app-standards`; `pools`' "No public API" became "The API", covering its new `GET /api/v1/me` route (`hpl_` keys).
+- `haruhime-app-standards` points at `haruhime-repo-standards` for changelogs.
+
+### Fixed
+
+- The changelog links 0.4.0 and compares Unreleased from it.
 
 ## [0.4.0] - 2026-10-02
 
@@ -92,7 +98,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `haruhimemoe` marketplace; install with `/plugin install haruhime@haruhimemoe`.
 - A `claude plugin eval` suite with a case for every skill and near-miss negatives.
 
-[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/haruhimemoe/claude-plugin/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/haruhimemoe/claude-plugin/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/haruhimemoe/claude-plugin/compare/f73398f844d71f60ebedf5d89ec648c29bdb9f7d...v0.2.0
 [0.1.0]: https://github.com/haruhimemoe/claude-plugin/tree/f73398f844d71f60ebedf5d89ec648c29bdb9f7d
