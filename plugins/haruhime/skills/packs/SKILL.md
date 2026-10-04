@@ -29,9 +29,9 @@ A pack key holds a whole pool (name, slots, custom slots and their mods) as one 
 
 Base URL `https://packs.haruhime.moe/api/v1`, JSON over HTTPS, documented at `/docs/api` (a machine-readable OpenAPI 3.1 document sits at `/api/v1/openapi.json`). It's for scripts and bots, not for browsers: it sends no CORS headers, so keep your key in a server or a secret store, never in a public repo or client-side code.
 
-- **Get a key**: sign in with osu!, open `/me`, press **Create API key**. It's shown once; regenerating replaces it and revokes the old one right away.
-- **Auth**: `Authorization: Bearer hpk_…` on every request. No key gets `401 unauthorized`; a bad, revoked or replaced one gets `401 invalid_api_key`.
-- **Endpoints**: read and page public or your own packs (the API doesn't mark or move up pinned packs), and create, replace or delete your own. Pack objects carry `stats` (star rating, length and BPM ranges, mods, rulesets) a few seconds after a save. Full parameters, response shapes, rate limits, pagination and error codes are in [api.md](api.md), copied from the source of truth: don't guess a field or a limit.
+Follows `haruhime-app-standards`: the key format, the `/me` key panel, the `/api/v1` guard and its rate limits all come from there. packs' prefix is `hpk_`.
+
+- **Endpoints**: read and page public or your own packs (the API doesn't mark or move up pinned packs), and create, replace or delete your own. Pack objects carry `stats` (star rating, length and BPM ranges, mods, rulesets) a few seconds after a save. An admin's key skips the 200-saved-pack cap (`409 conflict` for everyone else), same as the site. Full parameters, response shapes, pagination and error codes are in [api.md](api.md), copied from the source of truth: don't guess a field or a limit.
 - `ownerName` is the owner's osu! username, `Unknown player` when there's none (not an error), or `haruhime pools` for ordinary packs from pools.haruhime.moe (in beta): shared built pools, and past pools from hosts, community submissions and sources like otdb. `description` is left out when empty.
 - To list public packs without a key, fetch the static search index at `/packs/index.json` (up to 5,000, newest created first, no rate limit). Entries use short keys (`s` slug, `n` name, `o` owner, `c` map count, stats; see [api.md](api.md)) and carry no maps: call `GET /api/v1/packs/{slug}` for those.
 
@@ -59,6 +59,7 @@ The file stays in the browser. Steps: `/guide/osu-collections`.
 - `osu-mappool-data` for the pool model and pack key format packs uses.
 - `hinai-mirror` for the beatmap downloads a pack is built from.
 - `haruhimemoe-packages` for how `@haruhimemoe/pool` and `@haruhimemoe/hinai` fit together.
+- `haruhime-app-standards` for the key format, the `/api/v1` guard and its limits.
 
 ## Sources
 

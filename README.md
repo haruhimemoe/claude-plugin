@@ -2,7 +2,7 @@
 
 # haruhime: osu! skills for Claude
 
-A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills from haruhime.moe, which makes osu! tools for players, mappers and hosts. It covers the osu! API v2, osu! BBCode (userpages, forum posts, beatmap descriptions and `@haruhimemoe/bbcode`), the rules for officially supported tournaments, the hinai beatmap mirror, the packs.haruhime.moe pack builder, the pools.haruhime.moe pool builder, and the `@haruhimemoe/*` packages, including the shared UI components, the brand kit and the Next.js server kit.
+A [Claude Code plugin](https://code.claude.com/docs/en/plugins) of skills from haruhime.moe, which makes osu! tools for players, mappers and hosts. It covers the osu! API v2, osu! BBCode (userpages, forum posts, beatmap descriptions and `@haruhimemoe/bbcode`), the rules for officially supported tournaments, the hinai beatmap mirror, the packs.haruhime.moe pack builder and its API, the pools.haruhime.moe pool builder, the API key, rate limit and crawl-file standards every haruhime.moe app (including bb.haruhime.moe) follows, and the `@haruhimemoe/*` packages, including the shared UI components, the brand kit and the Next.js server kit.
 
 Skills only. No MCP server, no hooks, no commands. Each skill is short and points at the source it summarizes (the osu! wiki, the osu! API docs, a package README) so it stays true when those change.
 
@@ -24,11 +24,12 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | `hinai-mirror` | Getting beatmap metadata or `.osz` downloads from mirror.hinamizawa.ai, by hand or with `@haruhimemoe/hinai`. |
 | `osu-mappool-data` | Modeling a mappool in code: slots, custom slots and their mods, pasted pools, and pack keys (`pk1.`…), with `@haruhimemoe/pool` or in another language. |
 | `packs` | Making, opening, sharing or downloading a mappool pack with packs.haruhime.moe, by hand or through its API. |
-| `pools` | Building an osu! tournament mappool on pools.haruhime.moe (in beta): templates and slot targets, searching maps under a mod, the editor (notes, undo, export as IDs, `!mp` lines or CSV, recent changes), co-editors, visibility and its pack on packs, plus past pools as reference, search and map browser links, and sending a past pool. |
+| `pools` | Building an osu! tournament mappool on pools.haruhime.moe (in beta): templates and slot targets, searching maps under a mod, the editor (notes, undo, export as IDs, `!mp` lines or CSV, recent changes), co-editors, visibility and its pack on packs, plus past pools as reference, search and map browser links, sending a past pool, and its small `GET /api/v1/me` API. |
 | `haruhimemoe-packages` | Building on the `@haruhimemoe/*` packages (pool, osu, hinai, compliance, bbcode, ui, brand, next-kit): which one or which entry point does what, where each runs, which versions go together, and installing them. |
 | `haruhime-ui` | Building a haruhime.moe tool's pages, or another Next.js page, with `@haruhimemoe/ui`: setup, the theme, which component fits, client vs server, accessibility. |
 | `haruhime-next-kit` | Building a haruhime.moe-style Next.js app's server side with `@haruhimemoe/next-kit`: route handlers, rate limits and osu! budgets in MongoDB, env, the MongoDB client, sign in with osu! through better-auth, and test helpers. |
 | `haruhime-brand` | Giving haruhime.moe or one of its tools its wordmark, icons, link preview, README banners and palette with `@haruhimemoe/brand`. |
+| `haruhime-app-standards` | The rules every haruhime.moe app (packs, pools, bb or a new one) follows for its public API, API keys, rate limits, error responses, robots.txt, sitemap, llms.txt, llms-full.txt and security.txt. |
 
 ## Update
 

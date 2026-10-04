@@ -41,9 +41,9 @@ Values with mods come from the hinai mirror and can differ slightly from osu!'s;
 
 ## Sharing
 
-- **Editors:** the owner adds up to 10 by osu! username, even before they sign in. Editors edit and can leave; the owner removes them, or hands the pool to one who has signed in (typing its name).
+- **Editors:** the owner adds up to 10 by osu! username, even before they sign in. Editors edit and can leave; the owner removes them, or hands the pool to one signed in (typing its name).
 - **Visibility** (owner only): private, unlisted (link only) or public (in search).
-- **Packs:** an unlisted or public pool with maps gets a pack on packs.haruhime.moe, owned by `haruhime pools`, crediting the builders, kept in step. The pool page shows **Download on packs**. Going private, or deleting the pool or account, removes it.
+- **Packs:** an unlisted or public pool with maps gets a pack on packs.haruhime.moe, owned by `haruhime pools`, crediting the builders, kept in step. Going private, or deleting the pool or account, removes it.
 - **Start from this pool** (`/new?from=<id>`) copies any pool you can see into a new private one.
 
 ## Search and past pools
@@ -65,9 +65,9 @@ Every param and the browser's details: [search-links.md](search-links.md).
 
 `/submit`: hosts and community members send past pools, with maps and credits, in the haruhime.moe Discord server (https://discord.gg/bKy9kjMV4y) or to contact@haruhime.moe. An admin checks each by hand.
 
-## No public API
+## The API
 
-pools has no public API. Its `/api` routes serve its own pages, and writes need a signed-in session: don't script them or invent endpoints. Share links, or read pools as packs through the packs API (see `packs`).
+pools' public API: `GET /api/v1/me`, an `hpl_` key's owner (OpenAPI `/api/v1/openapi.json`, docs `/docs/api`, key panel `/account`). Follows `haruhime-app-standards` for the key, guard and limits. Everything else under `/api` needs a signed-in session: don't script it. Read or write pools by script through the packs API instead (see `packs`).
 
 ## Common mistakes
 

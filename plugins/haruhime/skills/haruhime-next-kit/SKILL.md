@@ -5,7 +5,7 @@ description: Use when building the server side of a haruhime.moe-style Next.js a
 
 # @haruhimemoe/next-kit
 
-The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.4.0.
+The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.4.0, plus `api-keys` (unreleased).
 
 **There's no root entry.** Import a subpath:
 
@@ -18,19 +18,20 @@ The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhi
 | `/auth-react` | The browser half: signed-in marker, account store, `useAccount`, `RestoreSignedIn`, and (0.2.0) the account components | `react` ^19.3, `next` ^16.3.6, `@haruhimemoe/ui` ^0.5.0 (0.2.0) |
 | `/seo` | SEO builders (0.3.0) | none |
 | `/testing` | Vitest helpers | `vitest` ^5, `msw` ^2.15, `mongodb-memory-server` ^11.3 |
+| `/api-keys` | Shared API key format, store and `/api/v1` guard (unreleased) | `mongodb` ^7.6.0 |
 
 ```sh
 bun add @haruhimemoe/next-kit zod   # zod 4.6.5 or later in 4.x is the one required peer
 ```
 
-Only `/auth-react` runs in the browser. The rest are for Node 22.12+ on the server (`/server` loads `node:crypto`).
+Only `/auth-react` runs in the browser; the rest run on Node 22.12+ (`/server` loads `node:crypto`).
 
 ## Wiring an app
 
 One file per piece, binding the kit to your names:
 
-1. **`src/env.ts`:** `createServerEnv({ schema: osuAppEnvSchema, placeholders: OSU_APP_PLACEHOLDERS, secretKeys: OSU_APP_SECRET_KEYS })`, exporting its `get`. That's `MONGODB_URI`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `OSU_CLIENT_ID` and `OSU_CLIENT_SECRET`. It parses on first use, never at import. `SKIP_ENV_VALIDATION` lets a CI build run on placeholders (a production server throws instead). Errors name variables, never values. Read admin lists with `readIdSet("ADMIN_OSU_IDS")` on every call, so a removed admin loses access at the next request.
-2. **`src/lib/db.ts`:** `createMongo({ dbName, globalKey, uri, onConnect })`, with `onConnect` running `ensureIndexes(db, [...AUTH_INDEX_SPECS, counterTtlIndex()])`. A failed connect is retried on the next call; `ensureIndexes` never throws (a unique index duplicates break is skipped and logged).
+1. **`src/env.ts`:** `createServerEnv({ schema: osuAppEnvSchema, placeholders: OSU_APP_PLACEHOLDERS, secretKeys: OSU_APP_SECRET_KEYS })`, exporting its `get`. That's `MONGODB_URI`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `OSU_CLIENT_ID` and `OSU_CLIENT_SECRET`. It parses on first use, never at import. `SKIP_ENV_VALIDATION` lets a CI build run on placeholders (a production server throws instead). Errors name variables, never values. Read admin lists with `readIdSet("ADMIN_OSU_IDS")` on every call.
+2. **`src/lib/db.ts`:** `createMongo({ dbName, globalKey, uri, onConnect })`, with `onConnect` running `ensureIndexes(db, [...AUTH_INDEX_SPECS, counterTtlIndex()])`. A failed connect retries next call; `ensureIndexes` never throws (skips and logs a duplicate-breaking index).
 3. **`src/lib/rate-limit.ts`:** `createRateLimiter({ db: connectedDb })`.
 4. **`src/lib/auth.ts` (server):** `createOsuAuth({ clientId, clientSecret, baseURL, secret, db, client, markerCookie })`, built once (memoize the getter).
 5. **`src/lib/account.ts` (`"use client"`):** `createSignedInMarker(name)` and `createAccount(authClient, marker)` with your better-auth client. Use the same cookie name as the server.
@@ -50,18 +51,19 @@ return jsonError(404, "Pack not found.");
 ```
 
 - Errors are `{ error: { code, message } }`; the code comes from `ERROR_CODES` by status. `parseJsonBody` answers 415, 413 (past 16 KB, or your `maxBytes`) or 400.
-- Rate limits are fixed windows counted in MongoDB. Counting fails open (and logs), and a 429 is no-store with `RateLimit-*` headers. Key by IP (`rateLimitSubject`, IPv6 by its /64) or by user (`userSubject(osuId)`).
-- **osu! API budget:** `createBudget({ db, global, perSubject })`, and pass a fresh `budget.gate()` per request as `@haruhimemoe/osu`'s `beforeCall`: every instance shares one counter, and once the gate says no it stays no for that request (see `osu-api-v2`).
-- **Cron and service routes:** `await refuseWithoutBearer(request, { secret, label, notConfigured })`. It's async, compares digests in constant time, and answers 503 `not_configured` when the secret isn't set.
-- After sign-in, redirect only through `safeNextPath`, which keeps `next` on your site.
+- Rate limits are fixed windows in MongoDB. Counting fails open (and logs); a 429 is no-store with `RateLimit-*` headers. Key by IP (`rateLimitSubject`, IPv6 by its /64) or by user (`userSubject(osuId)`).
+- **osu! API budget:** `createBudget({ db, global, perSubject })`, and pass a fresh `budget.gate()` per request as `@haruhimemoe/osu`'s `beforeCall`: one shared counter, sticky once it says no (see `osu-api-v2`).
+- **Cron and service routes:** `await refuseWithoutBearer(request, { secret, label, notConfigured })`: async, constant-time, 503 `not_configured` when unset.
+- After sign-in, redirect only through `safeNextPath`, keeping `next` on your site.
+- **API keys (unreleased):** `/api-keys`'s `createApiKeyStore`/`createApiKeyGuard` → `withApiKey(handler)` for `/api/v1`. Spread `apiKeyIndexSpecs()` into your index list; never call its own `ensureIndexes()` from `onConnect` (deadlocks). Prefixes, limits and the check bin: `haruhime-app-standards`.
 
 ## Sign in with osu!
 
-`createOsuAuth` is better-auth on MongoDB with osu! as the only way in (`identify` and `public`, PKCE). osu!'s tokens are never stored, `/update-user` is off, and API errors land on `/signin?error=<code>`. The `before*` hooks refuse a write by returning false; `afterUserCreate` never fails a sign-in. `getOsuUser(auth, headers)` gives `{ id, osuId, username, avatarUrl }` or null.
+`createOsuAuth` is better-auth on MongoDB with osu! as the only way in (`identify` and `public`, PKCE). osu!'s tokens are never stored, `/update-user` is off, and API errors land on `/signin?error=<code>`. `before*` hooks refuse a write by returning false; `afterUserCreate` never fails a sign-in. `getOsuUser(auth, headers)` gives `{ id, osuId, username, avatarUrl }` or null.
 
 In the browser, the marker cookie holds no secret: it only says whether to ask for a session, so a signed-out page makes no session request. Read the account with `useAccount()`, render `RestoreSignedIn` where a session might exist without the marker, and pass `osuSignIn(next)` to `authClient.signIn.social`.
 
-**Account components (0.2.0),** styled with `@haruhimemoe/ui`: `createAuthComponents(authClient, kit)` in a `"use client"` module binds `SignInWithOsu` (errors read by `signInErrorMessage`), `SignOutButton`, `AccountMenu` (ui's `HeaderMenu`) and `DeleteAccountForm` (type the username, then `DELETE /api/account`). `osuAvatarSrc(url)` keeps an avatar only on `OSU_AVATAR_HOSTS` (a.ppy.sh, osu.ppy.sh); allow both in `img-src`.
+**Account components (0.2.0),** styled with `@haruhimemoe/ui`: `createAuthComponents(authClient, kit)` in a `"use client"` module binds `SignInWithOsu`, `SignOutButton`, `AccountMenu` (ui's `HeaderMenu`) and `DeleteAccountForm` (type the username, then `DELETE /api/account`). `osuAvatarSrc(url)` keeps an avatar only on `OSU_AVATAR_HOSTS` (a.ppy.sh, osu.ppy.sh).
 
 ## SEO (0.3.0)
 
@@ -69,7 +71,7 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 
 ## Tests
 
-`startMemoryMongo` as Vitest's globalSetup (one in-memory MongoDB per run), `setupTestDb` to empty collections before each test, `setupMsw(...handlers)` (an unhandled request is an error) and `stubOsuAppEnv()`. Mock the hinai mirror with `@haruhimemoe/hinai/testing`'s handlers.
+`startMemoryMongo` as Vitest's globalSetup (one in-memory MongoDB per run), `setupTestDb` to empty collections before each test, `setupMsw(...handlers)` (an unhandled request errors) and `stubOsuAppEnv()`. Mock the hinai mirror with `@haruhimemoe/hinai/testing`'s handlers.
 
 ## Common mistakes
 
@@ -77,13 +79,13 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 - Importing `/server`, `/env`, `/mongo` or `/auth` into a client component.
 - Reading secrets from `process.env` instead of the parsed env.
 - Different marker cookie names on the two sides, or a new auth instance per request.
-- Calling `refuseWithoutBearer` without `await`: a promise is always truthy, so `if (denied) return denied` fires even for the right secret.
+- Calling `refuseWithoutBearer` without `await`: a promise is truthy, so `if (denied) return denied` fires even for the right secret.
 - Hand-rolled error shapes, counters, redirects, sign-in buttons or account menus the kit already has.
 
 ## Related
 
-- `osu-api-v2` (budget hook, sign-in scopes), `haruhime-ui` (pages), `haruhimemoe-packages` (the rest).
+- `osu-api-v2` (budget, scopes), `haruhime-ui` (pages), `haruhimemoe-packages` (the rest), `haruhime-app-standards` (`/api-keys`'s rules).
 
 ## Sources
 
-- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md) 0.4.0, checked 2026-10-02.
+- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), 0.4.0 plus Unreleased, checked 2026-10-03.

@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Skill `haruhime-app-standards`: the rulebook every haruhime.moe app (packs, pools, bb or a new one) follows for its API key format and prefix registry (`hpk_` packs, `hpl_` pools, `hbb_` bb), the `/api/v1` guard and its rate limits, the routes an app's API serves, the crawl files (robots.txt, sitemap, llms.txt, llms-full.txt, security.txt) and the `next-kit check` standards check, plus a new-app checklist. Covers `@haruhimemoe/next-kit`'s `api-keys` entry point and `next-kit check` bin, both unreleased on `main`.
+
+### Changed
+
+- `haruhime-next-kit` covers the unreleased `/api-keys` subpath (`createApiKeyStore`, `createApiKeyGuard`) and the `next-kit check` bin, pointing at `haruhime-app-standards` for the shared rules.
+- `packs` and `pools` point their key format and rate-limit details at `haruhime-app-standards`; `pools`' "No public API" became "The API", covering its new `GET /api/v1/me` route (`hpl_` keys).
+
 ## [0.4.0] - 2026-10-02
 
 ### Changed
