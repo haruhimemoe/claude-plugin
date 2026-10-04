@@ -69,3 +69,22 @@ The osu! pieces take plain numbers, not osu! API types, and are Server Component
 ## Footer tools column (0.6.0)
 
 `SiteFooter`'s `tools` prop (`{ current: "packs" | "pools" | "bb" }`) adds a "haruhime tools" column: the other live haruhime.moe tools as "name: blurb" links and "All tools" on www.haruhime.moe, with the current tool left out. `HARUHIME_TOOLS` (each `{ id, name, href, blurb }`) and `haruhimeToolsColumn(current)` give the same data for a custom footer. www's own footer doesn't use it: its Tools column already lists every tool.
+
+## Content pages: docs, guides, legal (0.11.0)
+
+A content section (`/docs`, `/guides`, `/legal`) is built from these, typed against `@haruhimemoe/next-kit/docs`'s `ContentEntry`/`ContentSection` shape (`import type` only, no runtime dependency on next-kit):
+
+| Need | Use |
+| --- | --- |
+| The section's side nav, current page marked | `ContentNav` (client): `groups` (`ContentNavGroup[]`, each an optional `heading` and `ContentNavItem[]`), an index link, `aria-current="page"`, `navTitle ?? title` clamped to two lines (full title in the link's `title` attribute), an optional `badge` |
+| The nav plus the page in a grid | `ContentLayout` (server): a 14rem nav column from `lg` up; takes `nav` as an already-rendered slot, so it's section-agnostic |
+| Search the section's entries | `searchContent(items, query)` (pure: blank query returns everything, else every typed word must appear in `title`, `navTitle`, `description`, `badge` or `keywords`, title-prefix first) plus `ContentSearch` (client): `TextInput` and a polite live-region count ("12 pages.", `countNoun`, default `["page", "pages"]`) over `ContentIndex` |
+| A bare card grid (too few entries to search: `/legal`, a handful of guides) | `ContentIndex` (server) |
+| A content page: header, last updated, copy-markdown, JSON-LD | `ContentPage` (server): `PageHeader` (`title`, `description` as `lead`), a meta row with `lastUpdated` (`<time dateTime>`) and, when `markdownHref` is set, `CopyMarkdownButton`, plus `actions`; optional `jsonLd` (one object, passed to `JsonLd`); body in `Prose` |
+| Copy a page's Markdown mirror | `CopyMarkdownButton` (client): fetches `href`, copies the response body, reports like `CopyButton`; any failure (fetch, response, clipboard) shows the same message and never throws |
+
+New types: `ContentNavItem`, `ContentNavGroup`, `ContentSearchItem`.
+
+## Brand page (0.11.0)
+
+`<BrandPage {...brandPageData("pools")} />` (`@haruhimemoe/brand`'s `brandPageData`, typed structurally) renders a product's `/brand` page: Name (how to write it), Logo (each file previewed on a dark or light tile with a `download` link), Colors (`BrandSwatch`, click to copy the hex), Type (`fonts`, default Nunito), Do's and don'ts, osu! (not affiliated with ppy), Family (only with `familyHref`), Contact (`mailto:`). `BrandPageProps` also takes `slots.afterLogo`, `slots.afterColors` and `slots.end` for extra sections (haruhime.moe's README banners and product family). `BrandSwatch` (client) and `BrandPage` both ship finished class strings, no tailwind-merge. New types: `BrandPageProps`, `BrandPageAsset`, `BrandPageFont`, `BrandSwatchProps`.

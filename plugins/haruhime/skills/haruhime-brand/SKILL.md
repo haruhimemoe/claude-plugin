@@ -17,7 +17,7 @@ haruhime.moe (osu! tools for players, mappers and hosts) and every one of its to
 
 - **Wordmark:** the lowercase name in Nunito ExtraBold plus a dot in the highlight color. haruhime's is stacked instead: "haruhime" over a half-size ".moe".
 - **Icon:** the mark plus the dot, at the same letter size for every product, so the icons match as a family.
-- **Palette from the hue:** backgrounds `b1`–`b6` (light to dark), text `c1`–`c4`, highlights `h1` and `h2`. On light backgrounds use `h2`; `h1` is too pale there. This package gives them as hex values (`palette`, `<name>-palette.json`) and ships no CSS.
+- **Palette from the hue:** backgrounds `b1`–`b6` (light to dark), text `c1`–`c4`, highlights `h1`/`h2`. On light backgrounds use `h2`; `h1` is too pale there. This package gives them as hex values (`palette`, `<name>-palette.json`) and ships no CSS.
 - **Sites get the tokens from `@haruhimemoe/ui`:** its `theme.css` builds the same palette as Tailwind colors from one `--hue`. Import it and set `--hue` to the product's hue on `:root` (see `haruhime-ui`).
 - All text is outlined to paths, so the SVGs need no fonts and the PNGs are identical on every machine.
 
@@ -63,13 +63,13 @@ wordmarkSvg(PRODUCTS.pools, { background: "light" });
 bannerSvg(PRODUCTS.haruhime, { background: "light" });
 ```
 
-Importing the package doesn't load the native PNG renderer; only `svgToPng`, `brandFiles`, `previewHtml` and the CLI do. Still, keep the root entry to build time (Node 22.12+). The exception is `@haruhimemoe/brand/palette` (0.4.0 and later): `palette`, `TOKENS` and `hslToHex`, importing nothing, so a page or edge route can show swatches (install the package as a regular dependency then). Drawing and PNG rendering stay build-time. A hue that isn't an integer 0–359, or a `brandFiles` name that isn't lowercase `a-z0-9-` starting with a letter, throws `RangeError`. The fonts are subset to printable ASCII, so any other character throws: keep names, marks and taglines ASCII.
+Importing the package doesn't load the native PNG renderer; only `svgToPng`, `brandFiles`, `previewHtml` and the CLI do, but keep the root entry to build time (Node 22.12+). Two subpaths are browser-safe, importing nothing heavy: `/palette` (0.4.0: `palette`, `TOKENS`, `hslToHex`, so a page or edge route can show swatches) and `/products` (0.7.0: `brandPageData(key)`, everything a `/brand` page needs, name, `writing` (how to write it in running text), `dos`/`donts`, the palette, the seven `public/brand/` files in display order, `BRAND_CONTACT` (`haruhime@haruhime.moe`, same on every app's page) and a link to haruhime.moe/brand, plus re-exported `PRODUCTS`, `fullName`, `isProductKey`). `@haruhimemoe/ui`'s `BrandPage` renders it: `<BrandPage {...brandPageData("pools")} />`. A hue that isn't an integer 0–359, or a `brandFiles` name that isn't lowercase `a-z0-9-` starting with a letter, throws `RangeError`; the fonts are ASCII-only, so keep names, marks and taglines ASCII.
 
 Page cards (0.6.0): `ogCardSvg` and `ogCard` draw a 1200×630 preview per page (title, subtitle, eyebrow); see [page-cards.md](page-cards.md).
 
 ## Adding a product
 
-Add an entry to `PRODUCTS` in the brand repo's `src/products.ts`: a lowercase `name`, a one- or two-letter `mark` no other product uses, a hue no other tool uses, a one-line `tagline` and the `url` (`https://<name>.haruhime.moe`). Check it with `bun run preview`; the repo's CONTRIBUTING lists the rest. Releases are cut by the maintainers; once the new version is out, run the CLI in the new app.
+Add an entry to `PRODUCTS` in the brand repo's `src/products.ts`: lowercase `name`, a one- or two-letter `mark` no other product uses, a hue no other tool uses, a one-line `tagline` and `url`. Check with `bun run preview`; CONTRIBUTING lists the rest. Releases are cut by the maintainers; run the CLI in the new app once it's out.
 
 ## Common mistakes
 
@@ -80,6 +80,6 @@ Add an entry to `PRODUCTS` in the brand repo's `src/products.ts`: a lowercase `n
 
 ## Sources
 
-- [@haruhimemoe/brand README](https://github.com/haruhimemoe/brand#readme) and [CHANGELOG](https://github.com/haruhimemoe/brand/blob/main/CHANGELOG.md) 0.6.0, checked 2026-10-02.
+- [@haruhimemoe/brand README](https://github.com/haruhimemoe/brand#readme) and [CHANGELOG](https://github.com/haruhimemoe/brand/blob/main/CHANGELOG.md) 0.7.0, checked 2026-10-04.
 - [@haruhimemoe/brand CONTRIBUTING](https://github.com/haruhimemoe/brand/blob/main/CONTRIBUTING.md), "Adding a product", checked 2026-09-28.
 - [@haruhimemoe/ui README](https://github.com/haruhimemoe/ui#setup), "Setup", checked 2026-09-24.

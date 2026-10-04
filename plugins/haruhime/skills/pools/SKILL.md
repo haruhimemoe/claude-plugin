@@ -1,6 +1,6 @@
 ---
 name: pools
-description: Use when someone wants to build, edit or share an osu! tournament mappool on pools.haruhime.moe, plan slot targets or start from a template, add slot notes, undo, export a pool as IDs, !mp lines or CSV, search osu! maps for a pool under a mod (star rating, AR or OD with HR, DT or a combo), add co-editors or download a built pool on packs, looks for past tournament pools or where a map was played before, checks or sends a pool, or mentions pools.haruhime.moe or its links (`/new`, `/pools/<id>`, `/pools/<id>/edit`, `/search`, `/maps/<id>`)
+description: Use when someone wants to build, edit or share an osu! tournament mappool on pools.haruhime.moe, plan slot targets or start from a template, add slot notes, undo, export a pool as IDs, !mp lines or CSV, search osu! maps for a pool under a mod (star rating, AR or OD with HR, DT or a combo), add co-editors or download a built pool on packs, look for past tournament pools or where a map was played before, check or send a pool, or mentions pools.haruhime.moe or its links (`/new`, `/pools/<id>`, `/pools/<id>/edit`, `/search`, `/maps/<id>`)
 ---
 
 # pools (pools.haruhime.moe)
@@ -11,17 +11,17 @@ Past tournament pools are reference: some from otdb's public export (by Sheppsu,
 
 ## Pages
 
-`/new`, `/pools/<id>/edit` (the editor), `/pools/<id>` (a pool, built here with a `b-` id, or past), `/account` (your pools; deleting your account), `/search`, `/maps/<beatmap id>` (every past pool that played a map), `/check`, `/submit`, `/data`, `/llms.txt`.
+`/new`, `/pools/<id>/edit` (the editor), `/pools/<id>` (a pool, built here with a `b-` id, or past), `/account` (your pools; deleting your account), `/search`, `/maps/<beatmap id>` (every past pool that played a map), `/check`, `/submit`, `/data`, `/docs` (just `/docs/api`), `/legal`, `/brand`, `/llms.txt`.
 
 ## Making a pool
 
 Anyone with an osu! account signs in and makes a pool at `/new`, blank or from a template (Qualifiers, Group stage, Knockout, Finals) that only sets each slot's map count. It starts private and empty; one person owns at most 50. In the editor (details: [editor.md](editor.md)):
 
-- **Slots:** NM, HD, HR, DT, FM, TB and up to 8 custom slots (no mods, forced mods or freemod). At most 64 maps, no map twice.
+- **Slots:** NM, HD, HR, DT, FM, TB and up to 8 custom slots (no mods, forced mods, freemod). At most 64 maps, no map twice.
 - **Targets:** per slot, a map count (0 to 16) and an optional star range under its mods, shown as placeholder rows and out-of-range badges.
 - **Moving:** drag a map by its handle, or the Up, Down and Move buttons (keyboard). **Paste** slot lines (`NM1 129891`), IDs or links.
 - **Notes:** one line per map, up to 280 characters. Public pool pages show them.
-- **Saving and undo:** each change saves at once (someone else's change first reloads the pool). Undo (Ctrl+Z / Cmd+Z) takes back up to 20 of your own changes this session. No redo.
+- **Saving and undo:** each change saves at once (someone else's change first reloads the pool). Undo (Ctrl+Z / Cmd+Z) takes back up to 20 of your own changes this session; no redo.
 - **Previews:** covers and preview clips from osu!'s servers.
 - **Export,** on the pool page too: IDs with slot labels, `!mp map <id> 0` and `!mp mods` per slot (`None`, the forced mods, or `Freemod`), and a CSV.
 - **Recent changes:** the last 20 and who made them, for the owner and editors only.
@@ -48,7 +48,7 @@ Values with mods come from the hinai mirror and can differ slightly from osu!'s;
 
 ## Search and past pools
 
-Search covers past tournament pools (the default), public built pools or both; every osu! map through the [hinai mirror](../hinai-mirror/SKILL.md), with **Check first** and **Unranked** tags; and the maps played in past pools. The check is guidance: the osu! Tournament Committee decides.
+Search covers past tournament pools (the default), public built pools or both; every osu! map via the [hinai mirror](../hinai-mirror/SKILL.md) (**Check first**, **Unranked** tags); and maps played in past pools. The check is guidance: the osu! Tournament Committee decides.
 
 ## Links
 
@@ -63,11 +63,11 @@ Every param and the browser's details: [search-links.md](search-links.md).
 
 ## Sending a past pool
 
-`/submit`: hosts and community members send past pools, with maps and credits, in the haruhime.moe Discord server (https://discord.gg/bKy9kjMV4y) or to contact@haruhime.moe. An admin checks each by hand.
+`/submit`: hosts and community members send past pools, with maps and credits, in the haruhime.moe Discord (https://discord.gg/bKy9kjMV4y) or to contact@haruhime.moe. An admin checks each by hand.
 
 ## The API
 
-pools' public API: `GET /api/v1/me`, an `hpl_` key's owner (OpenAPI `/api/v1/openapi.json`, docs `/docs/api`, key panel `/account`). Follows `haruhime-app-standards` for the key, guard and limits. Everything else under `/api` needs a signed-in session: don't script it. Read or write pools by script through the packs API instead (see `packs`).
+pools' public API: `GET /api/v1/me`, an `hpl_` key's owner (OpenAPI `/api/v1/openapi.json`, docs `/docs/api`, key panel `/account`). Follows `haruhime-app-standards` for the key, guard and limits. Everything else under `/api` needs a signed-in session: don't script it. Read or write pools by script through the packs API instead (`packs`).
 
 ## Common mistakes
 
@@ -78,5 +78,5 @@ pools' public API: `GET /api/v1/me`, an `hpl_` key's owner (OpenAPI `/api/v1/ope
 
 ## Sources
 
-- pools.haruhime.moe [README](https://github.com/haruhimemoe/pools.haruhime.moe#readme) and CHANGELOG (editor v2.1), checked 2026-09-28.
-- Pages: https://pools.haruhime.moe/new, `/search`, `/check`, `/data`, `/submit` and `/llms.txt`, checked 2026-09-28.
+- pools.haruhime.moe [README](https://github.com/haruhimemoe/pools.haruhime.moe#readme) and CHANGELOG (`79607c7`), checked 2026-10-04.
+- Pages: https://pools.haruhime.moe/new, `/search`, `/check`, `/data`, `/submit`, `/docs`, `/brand` and `/llms.txt`, checked 2026-10-04.

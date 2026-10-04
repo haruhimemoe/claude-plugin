@@ -1,11 +1,11 @@
 ---
 name: haruhime-app-standards
-description: Use when building or reviewing a haruhime.moe app (packs, pools, bb, haruhime.moe or a new one) and touching its public API, API keys, rate limits, error responses, robots.txt, sitemap, llms.txt, llms-full.txt or security.txt, or when adding a new app to the family
+description: Use when building or reviewing a haruhime.moe app (packs, pools, bb, haruhime.moe or a new one) and touching its public API, API keys, rate limits, error responses, robots.txt, sitemap, llms.txt, llms-full.txt, security.txt, its /docs, /guides, /legal or /brand pages, or when adding a new app to the family
 ---
 
 # haruhime app standards
 
-Every haruhime app keeps its own users, keys and database, but they all behave the same way: the same key format, the same limits, the same crawl files. The shared code lives in `@haruhimemoe/next-kit`'s `/api-keys` subpath and its `next-kit check` bin (see `haruhime-next-kit`); this skill is the rulebook that ties them together.
+Every haruhime app keeps its own users, keys and database, but behaves the same way: same key format, same limits, same crawl files. The shared code lives in `@haruhimemoe/next-kit`'s `/api-keys` and `/docs` subpaths and its `next-kit check` bin (see `haruhime-next-kit`); this skill is the rulebook that ties them together.
 
 ## API keys
 
@@ -35,16 +35,20 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 
 - `GET /api/v1/me` (falls under the `/api/` disallow in robots, like the rest of the API), `GET /api/v1/openapi.json` (the one `/api/` path robots allows back in)
 - `GET|POST|DELETE /api/me/api-key` (session only, same-site via `refuseCrossSite`, the `key-create` limit on `POST`)
-- `/docs/api` (a dynamic `docs/[slug]/page.tsx` counts too)
+- `/docs/api` (`content/docs/api.mdx`, below)
 - a key panel on the account page (packs' is `ApiKeyCard`)
 
 ## Crawl files every app serves
 
-`robots.ts` (disallow `/api/` except the OpenAPI document, plus `/admin`, `/signin` and the app's account page: packs' is `/me`, pools' and bb's is `/account` (bb also disallows `/me`, its separate "my templates" page); `aiBots: "allow"`), `sitemap.ts` (real content dates only, never a build timestamp), `llms.txt` and `llms-full.txt` as route handlers, `.well-known/security.txt/route.ts` (`buildSecurityTxt`, with the policy at the repo's `SECURITY.md`; pass `contactUrl` for a GitHub private vulnerability report link, listed before the email).
+`robots.ts` (disallow `/api/` except the OpenAPI document, plus `/admin`, `/signin` and the app's account page: packs' is `/me`, pools' and bb's is `/account`; `aiBots: "allow"`), `sitemap.ts` (real content dates only, never a build timestamp), `llms.txt` and `llms-full.txt` as route handlers, `.well-known/security.txt/route.ts` (`buildSecurityTxt`, policy at the repo's `SECURITY.md`; pass `contactUrl` for a GitHub private vulnerability report link, listed before the email).
+
+## Content pages, llms and brand
+
+`/docs`, `/guides`, `/legal` and `/brand` come from one content registry (`@haruhimemoe/next-kit/docs`) and ui's content and `BrandPage` components. Sections are opt-in: `/legal` and `/brand` always; `/docs` once there's an API or `content/docs/*.mdx`; `/guides` once there's `content/guides/*.mdx`. Each section is `/<section>`, `/<section>/<slug>` and a `.md` mirror; an empty section ships no routes. No redirects: packs' `/guide/*` is now `/guides/*`, bb's `/docs/guides/*` is `/guides/*`. `/brand` is `<BrandPage {...brandPageData("packs")} />`, contact `haruhime@haruhime.moe`. URL table, the cookie cutter file list and per-app notes: [content-pages.md](content-pages.md).
 
 ## Check
 
-`next-kit check [dir]` (the bin is `next-kit`, so `bunx next-kit check`) walks `src/app`, always checks the crawl files above, and checks the API routes once the app has `src/app/api/v1/`. It prints one `pass`/`FAIL` line per standard, names the missing files, and exits 1 on a failure (or when `src/app` is missing). Route groups like `(public)/` don't change the URL, so the check drops them before matching. Each app pins next-kit and names it as a `standards` script, run in CI right after Biome:
+`next-kit check [dir]` (the bin is `next-kit`, so `bunx next-kit check`) walks `src/app` and `content/`, always checks the crawl files above plus `brand` and `legal` (`content/legal/terms.mdx`, `privacy.mdx`), checks `docs` and `guides` once required (above), and checks the API routes (`content/docs/api.mdx` replaces the phase 1 `/docs/api` route) once `src/app/api/v1/` exists. It prints one `pass`/`FAIL` line per standard, names the missing files, and exits 1 on a failure (or when `src/app` is missing). Route groups like `(public)/` don't change the URL, so the check drops them first. `contentFileDrift(content, { root })` (`@haruhimemoe/next-kit/docs/files`) runs the same drift check from a test. Each app pins next-kit and names it as a `standards` script, run in CI right after Biome:
 
 ```json
 "standards": "next-kit check"
@@ -59,12 +63,8 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 
 1. Pick a free prefix (two lowercase letters) and add it to the registry above.
 2. Wire next-kit's `seo`, `server` and `api-keys`: `SEO_SITE`, a limiter built with `now: () => Date.now()`, `createApiKeyStore`, `createApiKeyGuard`.
-3. Ship the crawl files, `/api/v1/me`, `openapi.json`, `/docs/api` and the account page's key panel.
+3. Ship the crawl files, `/api/v1/me`, `openapi.json`, `/legal`, `/brand` and the account page's key panel.
 4. Add `"standards": "next-kit check"` to `package.json` and run it in CI.
-
-## Coming in phase 2
-
-Shared guides/docs pages, llms files built from the docs, a brand page per app.
 
 ## Related
 
@@ -74,5 +74,5 @@ Shared guides/docs pages, llms files built from the docs, a brand page per app.
 
 ## Sources
 
-- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) ("Standards check", the `api-keys` subpath table) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), 0.5.0, checked 2026-10-04.
-- packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe source (`src/lib/api-keys.ts`, `src/lib/api-auth.ts`, `src/lib/rate-limit.ts`, `src/app/api/v1/`, `src/app/.well-known/security.txt/route.ts`), checked 2026-10-03.
+- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), 0.6.1, checked 2026-10-04.
+- packs.haruhime.moe (30c9530), pools.haruhime.moe (79607c7) and bb.haruhime.moe (8c7e9a6) source, checked 2026-10-04.

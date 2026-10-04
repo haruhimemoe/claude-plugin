@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- `haruhime-app-standards` covers the shipped app standards phase 2 (2026-10-04): `/docs`, `/guides`, `/legal` and `/brand` as one opt-in content registry, the cookie cutter file list, per-app rollout (packs `30c9530`, pools `79607c7`, bb `8c7e9a6`), and `next-kit check`'s `brand`/`legal`/`docs`/`guides` standards and `content/docs/api.mdx`. New reference file `content-pages.md`.
+- `haruhime-next-kit` covers next-kit 0.6.1's `docs` and `docs/files` entry points: `defineContent`, `mdxToMarkdown`, the llms/sitemap/rewrite builders, `readContentMarkdown`, `contentFileDrift`. New reference file `docs.md`.
+- `haruhime-ui` covers ui 0.11.0's `ContentLayout`, `ContentNav`, `ContentSearch`, `ContentIndex`, `ContentPage`, `CopyMarkdownButton`, `BrandPage` and `BrandSwatch`, detailed in `components.md`.
+- `haruhime-brand` covers brand 0.7.0's `brandPageData`, `BRAND_CONTACT` and the browser-safe `/products` entry.
+- `packs` and `pools` point at their shipped content pages: packs' `/guide` is `/guides`, plus a `/legal` row; pools gains `/docs` (API only, no guides yet), `/legal` and `/brand`.
+
 ## [0.5.0] - 2026-10-04
 
 ### Added
