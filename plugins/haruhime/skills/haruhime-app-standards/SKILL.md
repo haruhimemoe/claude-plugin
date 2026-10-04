@@ -44,10 +44,15 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 
 ## Check
 
-`next-kit check [dir]` (the bin is `next-kit`, so `bunx next-kit check`) walks `src/app`, always checks the crawl files above, and checks the API routes once the app has `src/app/api/v1/`. It prints one `pass`/`FAIL` line per standard, names the missing files, and exits 1 on a failure (or when `src/app` is missing). Route groups like `(public)/` don't change the URL, so the check drops them before matching. Add it to CI:
+`next-kit check [dir]` (the bin is `next-kit`, so `bunx next-kit check`) walks `src/app`, always checks the crawl files above, and checks the API routes once the app has `src/app/api/v1/`. It prints one `pass`/`FAIL` line per standard, names the missing files, and exits 1 on a failure (or when `src/app` is missing). Route groups like `(public)/` don't change the URL, so the check drops them before matching. Each app pins next-kit and names it as a `standards` script, run in CI right after Biome:
+
+```json
+"standards": "next-kit check"
+```
 
 ```yaml
-- run: bunx next-kit check
+- name: Standards
+  run: bun run standards
 ```
 
 ## New app checklist
@@ -68,5 +73,5 @@ Shared guides/docs pages, llms files built from the docs, a brand page per app.
 
 ## Sources
 
-- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) ("Standards check", the `api-keys` subpath table) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), Unreleased, checked 2026-10-03.
+- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) ("Standards check", the `api-keys` subpath table) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), 0.5.0, checked 2026-10-04.
 - packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe source (`src/lib/api-keys.ts`, `src/lib/api-auth.ts`, `src/lib/rate-limit.ts`, `src/app/api/v1/`, `src/app/.well-known/security.txt/route.ts`), checked 2026-10-03.

@@ -5,7 +5,7 @@ description: Use when building the server side of a haruhime.moe-style Next.js a
 
 # @haruhimemoe/next-kit
 
-The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.4.0, plus `api-keys` (unreleased).
+The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.5.0, including `api-keys` and the `next-kit check` bin.
 
 **There's no root entry.** Import a subpath:
 
@@ -18,7 +18,7 @@ The Next.js server plumbing packs.haruhime.moe, pools.haruhime.moe and bb.haruhi
 | `/auth-react` | The browser half: signed-in marker, account store, `useAccount`, `RestoreSignedIn`, and (0.2.0) the account components | `react` ^19.3, `next` ^16.3.6, `@haruhimemoe/ui` ^0.5.0 (0.2.0) |
 | `/seo` | SEO builders (0.3.0) | none |
 | `/testing` | Vitest helpers | `vitest` ^5, `msw` ^2.15, `mongodb-memory-server` ^11.3 |
-| `/api-keys` | Shared API key format, store and `/api/v1` guard (unreleased) | `mongodb` ^7.6.0 |
+| `/api-keys` | Shared API key format, store and `/api/v1` guard (0.5.0) | `mongodb` ^7.6.0 |
 
 ```sh
 bun add @haruhimemoe/next-kit zod   # zod 4.6.5 or later in 4.x is the one required peer
@@ -55,7 +55,7 @@ return jsonError(404, "Pack not found.");
 - **osu! API budget:** `createBudget({ db, global, perSubject })`, and pass a fresh `budget.gate()` per request as `@haruhimemoe/osu`'s `beforeCall`: one shared counter, sticky once it says no (see `osu-api-v2`).
 - **Cron and service routes:** `await refuseWithoutBearer(request, { secret, label, notConfigured })`: async, constant-time, 503 `not_configured` when unset.
 - After sign-in, redirect only through `safeNextPath`, keeping `next` on your site.
-- **API keys (unreleased):** `/api-keys`'s `createApiKeyStore`/`createApiKeyGuard` → `withApiKey(handler)` for `/api/v1`. Spread `apiKeyIndexSpecs()` into your index list; never call its own `ensureIndexes()` from `onConnect` (deadlocks). Prefixes, limits and the check bin: `haruhime-app-standards`.
+- **API keys (0.5.0):** `/api-keys`'s `createApiKeyStore`/`createApiKeyGuard` → `withApiKey(handler)` for `/api/v1`. Spread `apiKeyIndexSpecs()` into your index list; never call its own `ensureIndexes()` from `onConnect` (deadlocks). Prefixes, limits and the check bin: `haruhime-app-standards`.
 
 ## Sign in with osu!
 
@@ -88,4 +88,4 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 
 ## Sources
 
-- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), 0.4.0 plus Unreleased, checked 2026-10-03.
+- [@haruhimemoe/next-kit README](https://github.com/haruhimemoe/next-kit#readme) and [CHANGELOG](https://github.com/haruhimemoe/next-kit/blob/main/CHANGELOG.md), 0.5.0, checked 2026-10-04.
