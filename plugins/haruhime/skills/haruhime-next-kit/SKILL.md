@@ -32,8 +32,8 @@ Only `/auth-react` runs in the browser; the rest need Node 22.12+ (`/server` loa
 
 One file per piece, binding the kit to your names:
 
-1. **`src/env.ts`:** `createServerEnv({ schema: osuAppEnvSchema, placeholders: OSU_APP_PLACEHOLDERS, secretKeys: OSU_APP_SECRET_KEYS })`, exporting its `get`: `MONGODB_URI`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `OSU_CLIENT_ID`, `OSU_CLIENT_SECRET`. Parses on first use, never at import; `SKIP_ENV_VALIDATION` lets CI build on placeholders. Errors name variables, never values; read admin lists with `readIdSet("ADMIN_OSU_IDS")`.
-2. **`src/lib/db.ts`:** `createMongo({ dbName, globalKey, uri, onConnect })`, `onConnect` running `ensureIndexes(db, [...AUTH_INDEX_SPECS, counterTtlIndex()])`. A failed connect retries next call; `ensureIndexes` never throws.
+1. **`src/env.ts`:** `createServerEnv({ schema: osuAppEnvSchema, placeholders: OSU_APP_PLACEHOLDERS, secretKeys: OSU_APP_SECRET_KEYS })`, exporting its `get`: `MONGODB_URI`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `OSU_CLIENT_ID`, `OSU_CLIENT_SECRET`. Parses on first use, never at import; `SKIP_ENV_VALIDATION` lets CI build on placeholders. Errors name variables, never values.
+2. **`src/lib/db.ts`:** `createMongo({ dbName, globalKey, uri, onConnect })`, `onConnect` running `ensureIndexes(db, [...AUTH_INDEX_SPECS, counterTtlIndex()])`. A failed connect retries next call.
 3. **`src/lib/rate-limit.ts`:** `createRateLimiter({ db: connectedDb })`.
 4. **`src/lib/auth.ts` (server):** `createOsuAuth({ clientId, clientSecret, baseURL, secret, db, client, markerCookie })`, built once.
 5. **`src/lib/account.ts` (`"use client"`):** `createSignedInMarker(name)` and `createAccount(authClient, marker)`, same cookie name as the server.
@@ -53,10 +53,10 @@ return jsonError(404, "Pack not found.");
 ```
 
 - Errors are `{ error: { code, message } }`, code from `ERROR_CODES` by status; `parseJsonBody` answers 415, 413 (past 16 KB or your `maxBytes`) or 400.
-- Rate limits are fixed windows in MongoDB. Counting fails open; a 429 is no-store with `RateLimit-*` headers. Key by IP (`rateLimitSubject`, IPv6 by its /64) or by user (`userSubject(osuId)`).
-- **osu! API budget:** `createBudget({ db, global, perSubject })`, pass a fresh `budget.gate()` per request as `@haruhimemoe/osu`'s `beforeCall`: one shared counter, sticky once it says no (`osu-api-v2`).
+- Rate limits are fixed windows in MongoDB. Counting fails open; a 429 is no-store with `RateLimit-*` headers. Key by IP (`rateLimitSubject`) or by user (`userSubject(osuId)`).
+- **osu! API budget:** `createBudget({ db, global, perSubject })`, pass a fresh `budget.gate()` per request as `@haruhimemoe/osu`'s `beforeCall`: one shared counter, sticky once refused (`osu-api-v2`).
 - **Cron/service routes:** `await refuseWithoutBearer(request, { secret, label, notConfigured })`: async, constant-time, 503 `not_configured` when unset.
-- After sign-in, redirect only through `safeNextPath`, keeping `next` on-site.
+- After sign-in, redirect only through `safeNextPath` (keeps `next` on-site).
 - **API keys (0.5.0):** `/api-keys`'s `createApiKeyStore`/`createApiKeyGuard` → `withApiKey(handler)` for `/api/v1`. Spread `apiKeyIndexSpecs()` into your index list; never call its own `ensureIndexes()` from `onConnect` (deadlocks). Prefixes, limits and the check bin: `haruhime-app-standards`.
 
 ## Sign in with osu!
@@ -65,7 +65,7 @@ return jsonError(404, "Pack not found.");
 
 In the browser, the marker cookie holds no secret: it only says whether to ask for a session, so a signed-out page makes no session request. Read the account with `useAccount()`, render `RestoreSignedIn` where a session might exist without the marker, and pass `osuSignIn(next)` to `authClient.signIn.social`.
 
-**Account components (0.2.0):** `createAuthComponents(authClient, kit)` binds `SignInWithOsu`, `SignOutButton`, `AccountMenu` (ui's `HeaderMenu`) and `DeleteAccountForm` (type the username, `DELETE /api/account`). `osuAvatarSrc(url)` allows only `OSU_AVATAR_HOSTS` (a.ppy.sh, osu.ppy.sh).
+**Account components (0.2.0):** `createAuthComponents(authClient, kit)` binds `SignInWithOsu`, `SignOutButton`, `AccountMenu` (ui's `HeaderMenu`) and `DeleteAccountForm` (from 0.8.0 a "Delete my account" button opening ui's `ConfirmDialog`, username typed there, then `DELETE /api/account`; needs ui 0.14.0). `osuAvatarSrc(url)` allows only `OSU_AVATAR_HOSTS` (a.ppy.sh, osu.ppy.sh).
 
 ## SEO (0.3.0)
 
@@ -84,7 +84,7 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 - `import … from "@haruhimemoe/next-kit"`: there's no root. Use a subpath.
 - Importing `/server`, `/env`, `/mongo` or `/auth` into a client component, or reading secrets from `process.env` instead of the parsed env.
 - Different marker cookie names on the two sides, or a new auth instance per request.
-- Calling `refuseWithoutBearer` without `await`: a promise is truthy, so `if (denied) return denied` fires even for the right secret.
+- Calling `refuseWithoutBearer` without `await`: a promise is truthy, so `if (denied) return denied` fires for the right secret too.
 - Hand-rolled error shapes, counters, redirects, sign-in buttons or account menus the kit already has.
 
 ## Related

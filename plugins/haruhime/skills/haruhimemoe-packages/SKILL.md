@@ -19,7 +19,7 @@ Small, separate packages, one repo each under github.com/haruhimemoe, shared by 
 | Mocking the hinai mirror in tests (msw 2) | `@haruhimemoe/hinai/testing` | tests |
 | Whether a map's music is allowed in a badged tournament (DMCA, restricted artists) | `@haruhimemoe/compliance` | anywhere (through a bundler in browsers) |
 | osu! BBCode: parse, render, lint, count; flags, gradients, imagemaps, templates | `@haruhimemoe/bbcode` (+ `/helpers`, `/imagemap`, `/flags`, `/template`, `/styles.css`) | anywhere (no dependencies) |
-| The tools' look: the palette as a Tailwind 4 theme, buttons, forms, confirms, tables, filters, the site shell | `@haruhimemoe/ui` | **Next.js 16 apps only** (mostly Server Components) |
+| The tools' look: a Tailwind 4 theme, buttons, confirms, dialogs, tables, filters, sortable lists, map cards, MDX content, the site shell | `@haruhimemoe/ui` | **Next.js 16 apps only** (mostly Server Components) |
 | Logo, favicon, link preview image, README banners | `@haruhimemoe/brand` (dev dependency, CLI) | **build time only** |
 | Palette hex values in a page | `@haruhimemoe/brand/palette` | anywhere (imports nothing) |
 | A Next.js app's server side: JSON routes, rate limits and osu! budgets in MongoDB, env, the MongoDB client, osu! sign-in, account components | `@haruhimemoe/next-kit/<subpath>` (no root entry) | **servers**; only `/auth-react` in the browser |

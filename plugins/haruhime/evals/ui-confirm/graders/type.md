@@ -1,4 +1,4 @@
 ---
 type: regex
-pattern: 'TypeToConfirm'
+pattern: '[Tt]ypeToConfirm'
 ---
