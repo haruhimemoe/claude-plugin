@@ -54,7 +54,7 @@ Boilerplate comes from `@haruhimemoe/next-kit/legal`, not copy-paste:
 
 - `src/constants/legal-site.ts` holds the app's `LegalSite` (siteName, operator, contactEmail, effectiveDate, stores, processors, cookies, optional `hosting` sentence for the DMCA block). Only true facts: list Vercel, MongoDB Atlas, osu! OAuth and so on only when the app really uses them.
 - The registry's legal array is `legalEntries(site, overrides)`.
-- MDX pages drop in the blocks (`LegalContact`, `DataWeKeep`, `Processors`, `YourRights`, `DmcaNotice`, `NoWarranty`, `Changes`, the last with an optional per-page `date`), registered in the app's mdxComponents, and keep app-specific prose around them.
+- MDX pages drop in the blocks (`LegalContact`, `DataWeKeep`, `Processors`, `YourRights`, `DmcaNotice`, `NoWarranty`, `Changes`, the last with an optional per-page `date`), registered in the app's mdxComponents, and keep app-specific prose around them. The legal `.md` mirror and llms-full.txt need `legalMarkdownTransform(LEGAL_SITE)` (next-kit 0.11.0) in their `mdxToMarkdown` transforms, or the blocks vanish from the Markdown.
 - No redirects when a slug changes (haruhime.moe's and pools' `disclaimer` became `disclaimers`). Legal text still needs a lawyer pass.
 
 ## Command palette

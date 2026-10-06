@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - haruhime-ui covers `@haruhimemoe/ui` 0.16.0: MapCard, MapSetCard, MapGroup, MapCover, MapPreviewButton, MapCopyScope and CopyButton's status placement.
 - haruhime-ui covers `@haruhimemoe/ui` 0.17.0: `Toc`, `Kbd`, the MDX article pieces (`Figure`, `Steps`, `Embed`, `MdxLinkCard`, `Schedule`, `Glossary`, `Term`), the sanitize helpers and `ContentPage`'s byline/reading-time/toc/footer. `haruhimemoe-packages` names ui's dialogs, sortable lists, map cards and MDX content.
 - haruhime-ui covers `@haruhimemoe/ui` 0.18.0: chevron Up/Down move buttons, Button `size="sm"`, `orientation`.
-- haruhime-app-standards: the five legal pages every app ships (`terms`, `privacy`, `your-privacy-rights`, `copyright`, `disclaimers`), the `@haruhimemoe/next-kit/legal` blocks and `LegalSite` config, `next-kit check` 0.10.0 requiring all five, and the site-wide command palette (`AppPalette`). haruhime-next-kit covers 0.10.0 and its `legal` entry point.
+- haruhime-app-standards: the five legal pages every app ships (`terms`, `privacy`, `your-privacy-rights`, `copyright`, `disclaimers`), the `@haruhimemoe/next-kit/legal` blocks and `LegalSite` config, `next-kit check` 0.10.0 requiring all five, and the site-wide command palette (`AppPalette`). haruhime-next-kit covers 0.11.0 and its `legal` entry point, including `legalMarkdownTransform` for the `.md` mirrors.
 
 ## [0.6.0] - 2026-10-04
 

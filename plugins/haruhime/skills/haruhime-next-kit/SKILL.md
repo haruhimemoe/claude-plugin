@@ -5,7 +5,7 @@ description: Use when building the server side of a haruhime.moe-style Next.js a
 
 # @haruhimemoe/next-kit
 
-The Next.js server plumbing packs, pools and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.10.0.
+The Next.js server plumbing packs, pools and bb.haruhime.moe share, for app router apps on MongoDB. Names, paths, limits and messages come from your app. The [README](https://github.com/haruhimemoe/next-kit#readme) has every export: read it instead of guessing a signature. This covers 0.11.0.
 
 **There's no root entry.** Import a subpath:
 
@@ -73,7 +73,7 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 
 ## Docs, guides and legal (0.6.0)
 
-`/docs`: the content registry (`defineContent`), path helpers, `mdxToMarkdown` and the llms/sitemap builders, built from one registry, no runtime imports. `/docs/files`: `readContentMarkdown` and `contentFileDrift`, loading `node:fs`. URLs and the cookie cutter: `haruhime-app-standards`. Every export: [docs.md](docs.md). `/legal` (0.9.0): `LegalSite`, seven MDX blocks, `legalEntries`.
+`/docs`: the content registry (`defineContent`), path helpers, `mdxToMarkdown` and the llms/sitemap builders, built from one registry, no runtime imports. `/docs/files`: `readContentMarkdown` and `contentFileDrift`, loading `node:fs`. URLs and the cookie cutter: `haruhime-app-standards`. Every export: [docs.md](docs.md). `/legal` (0.9.0): `LegalSite`, seven MDX blocks, `legalEntries`, `legalMarkdownTransform` (0.11.0).
 
 ## Tests
 
