@@ -63,7 +63,7 @@ Every param and the browser's details: [search-links.md](search-links.md).
 
 ## Sending a past pool
 
-`/submit`: hosts and community members send past pools, with maps and credits, in the haruhime.moe Discord (https://discord.gg/bKy9kjMV4y) or to contact@haruhime.moe. An admin checks each by hand.
+`/submit`: hosts and community members send past pools, with maps and credits, in the haruhime.moe Discord (https://haruhime.moe/discord) or to haruhime@haruhime.moe. An admin checks each by hand.
 
 ## The API
 

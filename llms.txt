@@ -44,7 +44,7 @@ Install from Claude Code with `/plugin marketplace add haruhimemoe/claude-plugin
 - [@haruhimemoe/bbcode](https://github.com/haruhimemoe/bbcode#readme): Parse, render, lint and count osu! BBCode the way osu! does.
 - [Component showcase](https://www.haruhime.moe/ui): Every `@haruhimemoe/ui` component in its states.
 - [pools.haruhime.moe](https://pools.haruhime.moe): Build an osu! tournament mappool, in beta. Past pools, from tournament hosts, community submissions and sources like otdb, are there as reference. It publishes past pools, and unlisted or public built pools with maps, to packs as packs owned by haruhime pools.
-- [Discord](https://discord.gg/bKy9kjMV4y): The haruhime.moe Discord server, for questions and help.
+- [Discord](https://haruhime.moe/discord): The haruhime.moe Discord server, for questions and help.
 
 ## Optional
 

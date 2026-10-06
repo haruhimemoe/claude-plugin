@@ -1,6 +1,6 @@
 # Contributing
 
-Read [AGENTS.md](AGENTS.md) first: it has the rules for writing and testing a skill. Open an issue before a big change. Questions are welcome in the haruhime.moe [Discord server](https://discord.gg/bKy9kjMV4y).
+Read [AGENTS.md](AGENTS.md) first: it has the rules for writing and testing a skill. Open an issue before a big change. Questions are welcome in the haruhime.moe [Discord server](https://haruhime.moe/discord).
 
 ## Layout
 

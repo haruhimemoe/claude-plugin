@@ -33,6 +33,6 @@ A Claude Code plugin of osu! skills from haruhime.moe, which makes osu! tools fo
 - Run `node scripts/validate.mjs`, `claude plugin validate . --strict` and `claude plugin validate plugins/haruhime --strict` before committing. The validator also checks the README table, `llms.txt`, the manifests' descriptions and the eval graders.
 - GitHub Actions in `.github/workflows` are pinned to full commit SHAs with the version in a comment; Dependabot (`github-actions`) opens the updates.
 - Run the evals when a skill or its description changes. They call the model and bill the account they run on, so ask before running them: `claude plugin eval plugins/haruhime --runs 1 --max-cost-usd 5` while iterating, the default 3 runs before a release.
-- The haruhime.moe Discord server (https://discord.gg/bKy9kjMV4y) goes wherever the docs list help: `README.md`, `CONTRIBUTING.md`, `SECURITY.md` and `llms.txt`.
+- The haruhime.moe Discord server (https://haruhime.moe/discord) goes wherever the docs list help: `README.md`, `CONTRIBUTING.md`, `SECURITY.md` and `llms.txt`.
 - Note every change in `CHANGELOG.md` under `## [Unreleased]`, in the right [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) section. Never edit a released entry.
 - Don't bump the version, tag or publish. Releases are cut by the maintainers. Claude Code updates an installed plugin only when `version` in `plugin.json` changes, so skill changes on `main` reach existing installs with the next release, not before.
