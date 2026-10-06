@@ -7,7 +7,7 @@ description: Use when building a haruhime.moe tool's pages or another Next.js pa
 
 React components for the haruhime.moe tools, for **Next.js 16 (app router) only**: the osu!-web-style palette as a Tailwind 4 theme, plus buttons, dialogs, filters, tables, sortable lists, osu! map pieces, MDX content and the site shell. Every component is shown at https://www.haruhime.moe/ui (names the version running). The [README](https://github.com/haruhimemoe/ui#readme) lists every prop: read it instead of guessing one.
 
-This covers 0.17.0. Anything marked with a version isn't in the one before it.
+This covers 0.18.0. Anything marked with a version isn't in the one before it.
 
 ## Setup
 

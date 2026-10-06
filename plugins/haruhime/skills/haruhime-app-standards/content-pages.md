@@ -36,6 +36,31 @@ packs' AGENTS.md section 7 is the reference copy of this pattern: a new content 
 - **bb** (`8c7e9a6`): `/docs/guides/*` is `/guides/*`. Tag pages stay at `/docs/tags/<tag>` as `extra.docs` (an app-made entry, not a registry one, in `defineContent`'s `extra` field). `DocsNav`, `DocsSearch` and `lib/guide-source.ts` are replaced by ui's `ContentNav`/`ContentSearch`; `LiveExample`, `TagReference`, `DocsFaq` and bb's `<Example>` MDX transform stay bb's own. `/docs/api` is MDX and shows in the nav. Added `/brand`.
 - **haruhime.moe** (`79e9128`): `@next/mdx`; `/terms`, `/privacy`, `/disclaimer` are `content/legal/*.mdx` at `/legal/*`; `/brand` is `BrandPage` with `slots` (README banners, product family); no `/docs` (no API) and no `/guides`.
 
+## Legal pages (next-kit 0.9.0)
+
+Every app ships exactly five legal pages, same slugs everywhere:
+
+| Slug | Page |
+| --- | --- |
+| `terms` | Terms of service |
+| `privacy` | Privacy policy; names every processor that touches user data |
+| `your-privacy-rights` | GDPR and CCPA rights and how to use them |
+| `copyright` | DMCA takedown and counter-notice |
+| `disclaimers` | Plural, never `disclaimer` |
+
+`next-kit check` (0.10.0) fails when any of `content/legal/{terms,privacy,your-privacy-rights,copyright,disclaimers}.mdx` is missing.
+
+Boilerplate comes from `@haruhimemoe/next-kit/legal`, not copy-paste:
+
+- `src/constants/legal-site.ts` holds the app's `LegalSite` (siteName, operator, contactEmail, effectiveDate, stores, processors, cookies, optional `hosting` sentence for the DMCA block). Only true facts: list Vercel, MongoDB Atlas, osu! OAuth and so on only when the app really uses them.
+- The registry's legal array is `legalEntries(site, overrides)`.
+- MDX pages drop in the blocks (`LegalContact`, `DataWeKeep`, `Processors`, `YourRights`, `DmcaNotice`, `NoWarranty`, `Changes`, the last with an optional per-page `date`), registered in the app's mdxComponents, and keep app-specific prose around them.
+- No redirects when a slug changes (haruhime.moe's and pools' `disclaimer` became `disclaimers`). Legal text still needs a lawyer pass.
+
+## Command palette
+
+Every app mounts ui's `CommandPalette` once, site-wide, from a client `src/components/layout/AppPalette.tsx` in the root layout: `siteCommands({ pages, tools: "<self>", repo, account })` plus app extras (packs and pools add a search provider), and a `CommandPaletteButton` in the header. Signed-in state comes from the client `useAccount()`, which keeps the layout static. Sign-out isn't a GET route, so "Sign out" is a custom command calling `authClient.signOut()`. Never mount a second palette on a page: the Ctrl K hotkey is page-global.
+
 ## Brand page
 
 `<BrandPage {...brandPageData("packs")} />` (ui 0.11.0 + brand 0.7.0's `brandPageData`, `@haruhimemoe/brand/products`) renders, in order: name and how to write it, logo/icon/wordmark/banners with downloads, colors (`BrandSwatch`, click to copy hex), type, do's and don'ts, osu! (not affiliated with ppy), family (a link to haruhime.moe/brand, hidden on haruhime.moe itself), contact. Contact is `haruhime@haruhime.moe` (`BRAND_CONTACT`) on every app's brand page; other contact addresses (security.txt, legal pages) are unchanged per app. haruhime.moe passes extra sections through `BrandPage`'s `slots` prop (`afterLogo`, `afterColors`, `end`).
