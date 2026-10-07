@@ -29,14 +29,17 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 - **Check the bytes:** a real `.osz` is a zip and starts with `PK\x03\x04`. Reject anything else: a download can answer 200 with a small JSON body instead of an archive.
 - Debugging: every response has `x-hinai-request-id`, and `x-hinai-forensics` is a lookup URL for that request (CORS exposes both, and `retry-after`). Include both when reporting a problem.
 
-## In code: `@haruhimemoe/hinai`
+## In code: `@haruhimemoe/mirror`
 
-`bun add @haruhimemoe/hinai zod` (zod 4.0.16+, a peer). It uses `@haruhimemoe/osu` for the shapes only, so it's safe in browsers. hinai 0.3.1 needs osu 0.4.x (0.3.0 needed 0.3.x): keep an app's own `@haruhimemoe/osu` on the matching version, so there's one copy. `createHinaiClient()` gives `getBeatmaps`, `getAvailability` and `downloadSet` (a `Blob`, zip signature checked). Results, timeouts, argument errors and the test mocks: [client.md](client.md).
+`bun add @haruhimemoe/mirror zod` (zod 4.0.16+, a peer). It replaces the deprecated `@haruhimemoe/hinai` (same API, new path); remove the old package, or `instanceof HinaiError` fails across copies. Shapes come from `@haruhimemoe/osu` (mirror 0.1.0 needs osu 0.4.x; keep an app's own osu matched).
 
-- **`userAgent` is for servers.** In browsers and web workers it's ignored (pages can't set it, and a custom header would force a CORS preflight), so leave it out there. On a server, 0.3.0 throws `RangeError` for one that isn't a valid header value.
+- **`@haruhimemoe/mirror/hinai`:** `createHinaiClient()` gives `getBeatmaps`, `getAvailability` and `downloadSet` (a `Blob`, zip signature checked), hinai only. Details: [client.md](client.md).
+- **`@haruhimemoe/mirror`:** `createMirrorClient()`'s `downloadSet` tries hinai first, then osu.direct, Mino and Sayobot, and resolves `{ blob, mirror, failed }`. It rejects with a `MirrorError` (`not_found`, `unavailable` with `retryAfterMs`, `download_disabled`).
+
+- **`userAgent` is for servers.** In browsers and web workers it's ignored (pages can't set it, and a custom header would force a CORS preflight), so leave it out there. On a server, one that isn't a valid header value throws `RangeError`.
 - **A failed request rejects with a `HinaiError`** (`code`, `status`, `retryable`, `retryAfterMs`, `hint`, `requestId`, `forensicsUrl`; quote the last two when reporting a problem). Retry only when `retryable` is true, waiting `backoffDelayMs(attempt, error.retryAfterMs)`: the mirror's `Retry-After` when it sent one (capped at 60 s), else 1 s, 2 s, 4 s. Stop after a few attempts.
 - **An abort rejects with `signal.reason`**, not a `HinaiError`: a `DOMException` named `AbortError` for a plain `abort()`, or the reason you passed. Check `signal.aborted` before treating it as a failure.
-- **Tests:** mock the mirror with `@haruhimemoe/hinai/testing` (0.3.0 and later; install `msw` 2 yourself), not hand-written copies.
+- **Tests:** mock the mirror with `@haruhimemoe/mirror/testing` (install `msw` 2 yourself), not hand-written copies.
 
 ## Etiquette
 
@@ -60,4 +63,4 @@ A public osu! beatmap mirror: `.osz` downloads plus beatmap metadata in the osu!
 - hinai OpenAPI 2.1.23, https://mirror.hinamizawa.ai/api/v1/hinai/openapi.json, checked 2026-09-24.
 - hinai docs, https://mirror.hinamizawa.ai/docs and https://mirror.hinamizawa.ai/llms.txt ("Integration" and "Downloads"), checked 2026-09-24.
 - Production use of the mirror at packs.haruhime.moe, checked 2026-09-23.
-- [@haruhimemoe/hinai README](https://github.com/haruhimemoe/hinai#readme) and [CHANGELOG](https://github.com/haruhimemoe/hinai/blob/main/CHANGELOG.md) 0.3.1, checked 2026-09-28.
+- [@haruhimemoe/mirror README](https://github.com/haruhimemoe/mirror#readme) and [CHANGELOG](https://github.com/haruhimemoe/mirror/blob/main/CHANGELOG.md) 0.1.0, checked 2026-10-07.

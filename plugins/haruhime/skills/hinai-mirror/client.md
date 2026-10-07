@@ -1,6 +1,6 @@
-<!-- Details for SKILL.md's "In code: @haruhimemoe/hinai", checked against hinai 0.3.1. The hinai repo's README is the source of truth: https://github.com/haruhimemoe/hinai#readme -->
+<!-- Details for SKILL.md's "In code: @haruhimemoe/mirror", checked against mirror 0.1.0 (its /hinai entry is hinai 0.3.1 unchanged). The mirror repo's README is the source of truth: https://github.com/haruhimemoe/mirror#the-hinai-client -->
 
-# @haruhimemoe/hinai client: results, errors and test mocks
+# @haruhimemoe/mirror/hinai client: results, errors and test mocks
 
 ## Methods
 
@@ -22,12 +22,12 @@
 
 `HinaiError.forensicsUrl` is the mirror's `x-hinai-forensics` only when that's an absolute http(s) URL, else null (0.3.0 and later), so it's safe to render as a link.
 
-## Test mocks: `@haruhimemoe/hinai/testing`
+## Test mocks: `@haruhimemoe/mirror/testing`
 
-0.3.0 and later. [msw](https://mswjs.io) 2 handlers that answer like the mirror, the same ones the package tests itself with. `msw` ^2.0.0 is an optional peer: install it yourself.
+[msw](https://mswjs.io) 2 handlers that answer like the mirror, the same ones the package tests itself with. `msw` ^2.0.0 is an optional peer: install it yourself.
 
 ```ts
-import { hinaiHandlers, hinaiUnknownSetHandler } from "@haruhimemoe/hinai/testing";
+import { hinaiHandlers, hinaiUnknownSetHandler } from "@haruhimemoe/mirror/testing";
 import { setupServer } from "msw/node";
 
 const server = setupServer(...hinaiHandlers);

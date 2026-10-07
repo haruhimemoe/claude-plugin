@@ -59,7 +59,7 @@ The file stays in the browser. Steps: `/guides/osu-collections`.
 
 - `osu-mappool-data` for the pool model and pack key format packs uses.
 - `hinai-mirror` for the beatmap downloads a pack is built from.
-- `haruhimemoe-packages` for how `@haruhimemoe/pool` and `@haruhimemoe/hinai` fit together.
+- `haruhimemoe-packages` for how `@haruhimemoe/pool` and `@haruhimemoe/mirror` fit together.
 - `haruhime-app-standards` for the key format, the `/api/v1` guard and its limits.
 
 ## Sources

@@ -77,7 +77,7 @@ In the browser, the marker cookie holds no secret: it only says whether to ask f
 
 ## Tests
 
-`startMemoryMongo` as Vitest's globalSetup (one in-memory MongoDB per run), `setupTestDb` to empty collections, `setupMsw(...handlers)` (unhandled requests error) and `stubOsuAppEnv()`. Mock the hinai mirror with `@haruhimemoe/hinai/testing`.
+`startMemoryMongo` as Vitest's globalSetup (one in-memory MongoDB per run), `setupTestDb` to empty collections, `setupMsw(...handlers)` (unhandled requests error) and `stubOsuAppEnv()`. Mock the hinai mirror with `@haruhimemoe/mirror/testing`.
 
 ## Common mistakes
 

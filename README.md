@@ -21,7 +21,7 @@ Skills only. No MCP server, no hooks, no commands. Each skill is short and point
 | `osu-bbcode` | Writing or fixing osu! BBCode for a userpage, forum post or beatmap description: the tags osu! reads, sizes, imagemaps, flags, gradients and the 60,000 character limit, and `@haruhimemoe/bbcode` to parse, render, lint, count and build it from code, including templates. bb.haruhime.moe, its editor, is live. |
 | `osu-mappool-content-rules` | Checking whether a map may be used in an officially supported tournament, by hand or with `@haruhimemoe/compliance`. |
 | `osu-official-tournament-support` | Planning a tournament that wants badges and official support: eligibility, screening, badges, what to send the osu! team. |
-| `hinai-mirror` | Getting beatmap metadata or `.osz` downloads from mirror.hinamizawa.ai, by hand or with `@haruhimemoe/hinai`. |
+| `hinai-mirror` | Getting beatmap metadata or `.osz` downloads from mirror.hinamizawa.ai, by hand or with `@haruhimemoe/mirror`. |
 | `osu-mappool-data` | Modeling a mappool in code: slots, custom slots and their mods, pasted pools, and pack keys (`pk1.`…), with `@haruhimemoe/pool` or in another language. |
 | `packs` | Making, opening, sharing or downloading a mappool pack with packs.haruhime.moe, by hand or through its API. |
 | `pools` | Building an osu! tournament mappool on pools.haruhime.moe (in beta): templates and slot targets, searching maps under a mod, the editor (notes, undo, export as IDs, `!mp` lines or CSV, recent changes), co-editors, visibility and its pack on packs, plus past pools as reference, search and map browser links, sending a past pool, and its small `GET /api/v1/me` API. |
