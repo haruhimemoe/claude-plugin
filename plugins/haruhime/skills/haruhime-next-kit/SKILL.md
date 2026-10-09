@@ -14,19 +14,20 @@ The Next.js server plumbing packs, pools and bb.haruhime.moe share, for app rout
 | `/server` | Route helpers: JSON errors, body parsing, cross-site guard, client IP, rate limits/budgets, bearer auth, `safeNextPath`, security.txt | `mongodb` types |
 | `/env` | zod env parsing, the osu! app's five variables | none |
 | `/mongo` | One MongoClient per process, Mongoose on it, safe index builds | `mongodb` ^7.6, `mongoose` ^9.10.2 |
-| `/auth` | better-auth, osu! the only sign-in | `better-auth` ^1.7.5, `mongodb`, `@haruhimemoe/osu` 0.2, 0.3 or 0.4 (0.4 from 0.2.1) |
-| `/auth-react` | The browser half: signed-in marker, account store, `useAccount`, `RestoreSignedIn`, and (0.2.0) the account components | `react` ^19.3, `next` ^16.3.6, `@haruhimemoe/ui` ^0.5.0 (0.2.0) |
+| `/auth` | better-auth, osu! the only sign-in | `better-auth` ^1.7.5, `mongodb`, `@haruhimemoe/osu` 0.2 to 0.4 |
+| `/auth-react` | The browser half: signed-in marker, account store, `useAccount`, `RestoreSignedIn`, the account components | `react` ^19.3, `next` ^16.3.6, `@haruhimemoe/ui` |
 | `/seo` | SEO builders (0.3.0) | none |
 | `/testing` | Vitest helpers | `vitest` ^5, `msw` ^2.15, `mongodb-memory-server` ^11.3 |
 | `/api-keys` | Shared API key format, store and `/api/v1` guard (0.5.0) | `mongodb` ^7.6.0 |
 | `/docs` | Content registry, markdown, llms/sitemap builders (0.6.0) | none |
 | `/docs/files` | Reads an entry's markdown; registry/file drift (0.6.0) | `node:fs` |
+| `/pwa` | PWA ([mobile-pwa.md](../haruhime-app-standards/mobile-pwa.md)) | `react` |
 
 ```sh
 bun add @haruhimemoe/next-kit zod   # zod 4.6.5 or later in 4.x is the one required peer
 ```
 
-Only `/auth-react` runs in the browser; the rest need Node 22.12+ (`/server` loads `node:crypto`).
+Only `/auth-react` and `/pwa`'s registrar run in the browser; the rest need Node 22.12+.
 
 ## Wiring an app
 

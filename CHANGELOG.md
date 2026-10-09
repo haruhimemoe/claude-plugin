@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- haruhime-app-standards: mobile and PWA rules in a new `mobile-pwa.md`. Build at 375px, no sideways scroll, `relative` on clipping boxes that hold `.sr-only` text, 44px touch targets through ui's `coarse:` variant, a Playwright phone check, and the `/pwa` wiring every app ships (manifest, service worker, viewport and iOS metadata, icons) with what the service worker may and may not cache. haruhime-ui and haruhime-next-kit point to it and cover ui 0.24.0 and next-kit 0.16.0's `/pwa`. New `mobile-pwa` eval.
+
 ### Changed
 
 - hinai-mirror and haruhimemoe-packages point at `@haruhimemoe/mirror` 0.1.0 instead of the deprecated `@haruhimemoe/hinai`: `/hinai` for the hinai client, `/testing` for the msw mocks, and the root `createMirrorClient` for failover across mirrors (hinai first). The hinai-abort-retry eval asks about the new import path.

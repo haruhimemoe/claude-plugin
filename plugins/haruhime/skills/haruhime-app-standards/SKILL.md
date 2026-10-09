@@ -1,11 +1,11 @@
 ---
 name: haruhime-app-standards
-description: Use when building or reviewing a haruhime.moe app (packs, pools, bb, haruhime.moe or a new one) and touching its public API, API keys, rate limits, error responses, robots.txt, sitemap, llms.txt, llms-full.txt, security.txt, its /docs, /guides, /legal or /brand pages, or when adding a new app to the family
+description: Use when building or reviewing a haruhime.moe app (packs, pools, bb, haruhime.moe or a new one) and touching its public API, API keys, rate limits, error responses, robots.txt, sitemap, llms.txt, llms-full.txt, security.txt, its /docs, /guides, /legal or /brand pages, how it looks and works on a phone (layout, touch targets, sideways scroll), its web app manifest, service worker, offline page or home-screen install, or when adding a new app to the family
 ---
 
 # haruhime app standards
 
-Every haruhime app keeps its own users, keys and database, but behaves the same way: same key format, same limits, same crawl files. The shared code lives in `@haruhimemoe/next-kit`'s `/api-keys` and `/docs` subpaths and its `next-kit check` bin (see `haruhime-next-kit`); this skill is the rulebook that ties them together.
+Every haruhime app keeps its own users, keys and database, but behaves the same way. The shared code lives in `@haruhimemoe/next-kit`'s `/api-keys` and `/docs` subpaths and its `next-kit check` bin (see `haruhime-next-kit`); this skill is the rulebook that ties them together.
 
 ## API keys
 
@@ -45,6 +45,10 @@ These are `API_LIMITS` from the same subpath. Tighten only, never loosen. Every 
 ## Content pages, llms and brand
 
 `/docs`, `/guides`, `/legal` and `/brand` come from one content registry (`@haruhimemoe/next-kit/docs`) and ui's content/`BrandPage` components. Sections are opt-in: `/legal` and `/brand` always; `/docs` once there's an API or `content/docs/*.mdx`; `/guides` once there's `content/guides/*.mdx`. Each section is `/<section>`, `/<section>/<slug>` and a `.md` mirror; an empty section ships no routes. No redirects: packs' `/guide/*` is now `/guides/*`, bb's `/docs/guides/*` is `/guides/*`. `/brand` is `<BrandPage {...brandPageData("packs")} />`, contact `haruhime@haruhime.moe`. URL table, cookie cutter files, five legal pages, command palette, per-app notes: [content-pages.md](content-pages.md).
+
+## Mobile and install
+
+Phone and `/pwa` rules: [mobile-pwa.md](mobile-pwa.md).
 
 ## Check
 

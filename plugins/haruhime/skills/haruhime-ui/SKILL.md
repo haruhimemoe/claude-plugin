@@ -5,7 +5,7 @@ description: Use when building a haruhime.moe tool's pages or another Next.js pa
 
 # @haruhimemoe/ui
 
-React components for the haruhime.moe tools, for **Next.js 16 (app router) only**: the osu!-web-style palette as a Tailwind 4 theme, plus buttons, dialogs, filters, tables, sortable lists, osu! map pieces, MDX content and the site shell. Every component is shown at https://www.haruhime.moe/ui (names the version running). The [README](https://github.com/haruhimemoe/ui#readme) lists every prop: read it instead of guessing one.
+React components for the haruhime.moe tools, for **Next.js 16 (app router) only**: the osu!-web-style palette as a Tailwind 4 theme, plus buttons, dialogs, filters, tables, sortable lists, osu! map pieces, MDX content and the site shell. Every component is shown at https://www.haruhime.moe/ui. The [README](https://github.com/haruhimemoe/ui#readme) lists every prop: read it instead of guessing one.
 
 This covers 0.18.0. Anything marked with a version isn't in the one before it.
 
@@ -28,7 +28,7 @@ bun add -d tailwindcss @tailwindcss/postcss   # if the app doesn't have Tailwind
 
    Adds the palette as Tailwind colors (`bg-b4`, `text-c1`), an `h1` focus ring, and an `@source` line for the components' classes.
 3. **Nunito:** `Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" })` from `next/font/google`, `className={nunito.variable}` on `<html>`, or `font-sans` falls back to the system font.
-4. **Hue (optional):** `:root { --hue: 200; }` after the imports; default 333 (pink), from `@haruhimemoe/brand` (see `haruhime-brand`). Some hues drop under 4.5:1 contrast; `--h2-l`/`--h1-l` fix it (see Accessibility).
+4. **Hue (optional):** `:root { --hue: 200; }` after the imports; default 333 (pink), from `@haruhimemoe/brand` (see `haruhime-brand`). Some hues drop under 4.5:1 contrast; `--h2-l`/`--h1-l` fix it.
 
 Tokens: `b1`-`b6` backgrounds, `c1`-`c4` text, `h1` bright accent, `h2` deeper (primary buttons). Dark only.
 
@@ -68,6 +68,10 @@ The package's tests run axe-core (WCAG 2.0-2.2, A/AA) on every component, plus k
 - Give a `Table` a `caption` (`hideCaption` if a heading names it).
 - Write the text yourself: `aria-label` on icon-only buttons, a label on `GitHubIcon`/`DiscordIcon` links.
 - At a hue other than 333, check contrast and set `--h1-l`/`--h2-l` (Setup, step 4).
+
+## Phones and touch
+
+Touch rules: [mobile-pwa.md](../haruhime-app-standards/mobile-pwa.md).
 
 ## Common mistakes
 
