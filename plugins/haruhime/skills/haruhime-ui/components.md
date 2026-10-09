@@ -135,7 +135,7 @@ New types: `ContentNavItem`, `ContentNavGroup`, `ContentSearchItem`, `ContentAut
 | Serving a page's raw Markdown mirror alongside MDX | `mdxMarkdownTransforms` (0.17.0) as `transforms` to next-kit's `mdxToMarkdown`: degrades `Figure`/`Embed`/`MdxLinkCard` to plain Markdown; `Schedule`, `Glossary`, `MapCard` and `MapGroup` have no Markdown shape and are left as JSX |
 | MDX exporting its own `toc`/`readingMinutes`/`words` | `remarkHaruhime`'s `mdxExports` option (0.17.0, off by default); `collect` for react-markdown, which can't pass a function through Turbopack's plugin options |
 
-Turbopack only takes MDX plugins as module names, not imported functions: `remarkPlugins: ["remark-gfm", "@haruhimemoe/ui/remark"]`, or `[["@haruhimemoe/ui/remark", { mdxExports: true }]]` for the one option safe to pass as a tuple.
+Turbopack only takes MDX plugins as module names, not imported functions: `remarkPlugins: ["remark-gfm", "@haruhimemoe/ui/remark"]`, or `["remark-gfm", ["@haruhimemoe/ui/remark", { mdxExports: true }]]` for the one option safe to pass as a tuple. Keep `remark-gfm` in every app (pinned): without it a pipe table renders as a plain paragraph.
 
 ## Brand page (0.11.0, alt fix 0.11.1)
 
