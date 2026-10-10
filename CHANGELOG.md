@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- haruhimemoe-packages lists today's versions (osu 0.7.0, ui 0.24.0, next-kit 0.16.0 and the rest) and adds tourney, time, invites, crowdfund and vcs to the routing table. Peers and runtimes moved to a new `fit.md` to keep the skill under 900 words. The README and llms.txt package lists match.
+- CI: CodeQL and a gitleaks history scan run on every push and pull request.
 - hinai-mirror and haruhimemoe-packages point at `@haruhimemoe/mirror` 0.1.0 instead of the deprecated `@haruhimemoe/hinai`: `/hinai` for the hinai client, `/testing` for the msw mocks, and the root `createMirrorClient` for failover across mirrors (hinai first). The hinai-abort-retry eval asks about the new import path.
 - haruhime-ui: the confirm rule follows @haruhimemoe/ui 0.14.0: no confirm with an Undo, `InlineConfirm` in the row, `ConfirmDialog` for destructive actions that affect others or sit in a table cell or menu, `typeToConfirm` for accounts and ownership. `Dialog`, `ConfirmDialog` and the `danger` button are listed. haruhime-next-kit: `DeleteAccountForm` opens a dialog from next-kit 0.8.0.
 - The ui-confirm eval asks about ui 0.14.0 and accepts `ConfirmDialog` with `typeToConfirm`; it still fails a hand-built modal.
