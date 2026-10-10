@@ -5,7 +5,7 @@ description: Use when building an osu! tool on the @haruhimemoe npm packages (pa
 
 # The @haruhimemoe packages
 
-Small, separate packages, one repo each under github.com/haruhimemoe, shared by the haruhime.moe tools (osu! tools for players, mappers and hosts). Each does one job. Current versions: pool 0.3.0, osu 0.7.0, mirror 0.1.0, compliance 0.1.1, bbcode 0.2.2, tourney 0.2.0, time 0.1.0, invites 0.1.0, crowdfund 0.1.0, vcs 0.1.0, ui 0.24.0, brand 0.10.0, next-kit 0.16.0. `@haruhimemoe/hinai` is deprecated: use `@haruhimemoe/mirror/hinai`. READMEs: https://www.haruhime.moe/libraries/<name>.
+Small, separate packages, one repo each under github.com/haruhimemoe, shared by the haruhime.moe tools (osu! tools for players, mappers and hosts). Each does one job. Current versions: pool 0.4.0, osu 0.7.0, mirror 0.2.0, compliance 0.1.1, bbcode 0.2.3, tourney 0.2.1, time 0.1.0, invites 0.1.0, crowdfund 0.1.0, vcs 0.1.0, ui 0.25.0, brand 0.10.0, next-kit 0.17.1. `@haruhimemoe/hinai` is deprecated: use `@haruhimemoe/mirror/hinai`. READMEs: https://www.haruhime.moe/libraries/<name>.
 
 | Job | Package or entry point | Runs in |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ Small, separate packages, one repo each under github.com/haruhimemoe, shared by 
 - **Map metadata in the browser:** `@haruhimemoe/mirror/hinai`. The osu! API needs a secret, so only your server calls it.
 - **Checking a pool's music:** get each set's fields with `@haruhimemoe/osu` on the server, then `factsFromOsuBeatmapset` and `evaluateBeatmapset` from `@haruhimemoe/compliance` (see `osu-mappool-content-rules`).
 - **Adding maps to a player's osu! collections:** `@haruhimemoe/osu/collections`, in the page, so the file stays with the player (see `osu-api-v2`).
-- **Sharing a pool:** `encodePackKey` / `decodePackKey` from `@haruhimemoe/pool` (see `osu-mappool-data`).
+- **Sharing a pool:** `encodePackKey` / `decodePackKey` from `@haruhimemoe/pool` (see `osu-mappool-data`). Saving packs under your own rules: `createPackInputSchema` from `/service`.
 - **A tool's pages:** `@haruhimemoe/ui`: import its `theme.css` after Tailwind and set `--hue` (see `haruhime-ui`).
 - **osu! BBCode** previews, lint or generators: `@haruhimemoe/bbcode`; escape typed text with `escapeBBCode` (see `osu-bbcode`).
 - **Looking up players** on the server: `getUser` / `getUsers` (see `osu-api-v2`).
