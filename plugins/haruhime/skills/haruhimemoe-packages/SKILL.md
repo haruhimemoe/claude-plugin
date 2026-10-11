@@ -5,7 +5,7 @@ description: Use when building an osu! tool on the @haruhimemoe npm packages (pa
 
 # The @haruhimemoe packages
 
-Small, separate packages, one repo each under github.com/haruhimemoe, shared by the haruhime.moe tools (osu! tools for players, mappers and hosts). Each does one job. Current versions: pool 0.4.0, osu 0.7.0, mirror 0.2.0, compliance 0.1.1, bbcode 0.2.3, tourney 0.2.1, time 0.1.0, invites 0.1.0, crowdfund 0.1.0, vcs 0.1.0, ui 0.25.0, brand 0.10.0, next-kit 0.17.1. `@haruhimemoe/hinai` is deprecated: use `@haruhimemoe/mirror/hinai`. READMEs: https://www.haruhime.moe/libraries/<name>.
+Small, separate packages, one repo each under github.com/haruhimemoe, shared by the haruhime.moe tools (osu! tools for players, mappers and hosts). Each does one job. Current versions: pool 0.4.0, osu 0.7.0, mirror 0.2.0, compliance 0.1.1, bbcode 0.2.3, tourney 0.2.1, time 0.1.0, invites 0.1.0, crowdfund 0.1.0, vcs 0.1.0, ui 0.25.0, brand 0.10.0, next-kit 0.18.0. `@haruhimemoe/hinai` is deprecated: use `@haruhimemoe/mirror/hinai`. READMEs: https://www.haruhime.moe/libraries/<name>.
 
 | Job | Package or entry point | Runs in |
 | --- | --- | --- |
@@ -27,7 +27,7 @@ Small, separate packages, one repo each under github.com/haruhimemoe, shared by 
 | The tools' look: a Tailwind 4 theme, buttons, confirms, dialogs, tables, filters, sortable lists, map cards, MDX content, the site shell | `@haruhimemoe/ui` | **Next.js 16 apps only** (mostly Server Components) |
 | Logo, favicon, link preview image, README banners | `@haruhimemoe/brand` (dev dependency, CLI) | **build time only** |
 | Palette hex values in a page | `@haruhimemoe/brand/palette` | anywhere (imports nothing) |
-| A Next.js app's server side: JSON routes, rate limits and osu! budgets in MongoDB, env, the MongoDB client, osu! sign-in, account components | `@haruhimemoe/next-kit/<subpath>` (no root entry) | **servers**; only `/auth-react` in the browser |
+| A Next.js app's server side: JSON routes, rate limits and osu! budgets in MongoDB, env, the MongoDB client, osu! sign-in, account components, user display preferences (`/preferences`, `/preferences/server`) | `@haruhimemoe/next-kit/<subpath>` (no root entry) | **servers**; only `/auth-react` and `/preferences` in the browser |
 
 ## Which one?
 
